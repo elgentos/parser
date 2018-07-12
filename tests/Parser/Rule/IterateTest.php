@@ -10,6 +10,7 @@
 namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
+use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsFalse;
 use PHPUnit\Framework\TestCase;
 
@@ -81,6 +82,29 @@ class IterateTest extends TestCase
         $rule->expects($this->exactly(100))
                 ->method('executeRule')
                 ->willReturn(false);
+
+        $this->assertTrue($rule->parse($context));
+    }
+
+    public function testParseWithRule()
+    {
+        $context = $this->context;
+
+        /** @var Iterate $rule */
+        $rule = new Iterate(true);
+
+        $subRule = $this->getMockBuilder(RuleInterface::class)
+                ->getMock();
+
+        $subRule->expects($this->exactly(10))
+                ->method('parse')
+                ->willReturn(true);
+
+        $rule->addRule($subRule);
+
+        $root = &$context->getRoot();
+        $repeat = array_fill(0, 10, 'deep');
+        $root = array_fill(0, 10, $repeat);
 
         $this->assertTrue($rule->parse($context));
     }
