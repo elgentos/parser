@@ -14,6 +14,12 @@ require_once __DIR__ . '/MatcherAbstract.php';
 class MatchAllTest extends MatcherAbstract
 {
 
+    public function testConstructorArguments()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new MatchAll();
+    }
+
     public function testValidateTrue()
     {
         $context = $this->context;

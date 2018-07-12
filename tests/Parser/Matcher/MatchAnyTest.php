@@ -14,6 +14,12 @@ require_once __DIR__ . '/MatcherAbstract.php';
 class MatchAnyTest extends MatcherAbstract
 {
 
+    public function testConstructorArguments()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new MatchAny();
+    }
+
     public function testValidateTrue()
     {
         $context = $this->context;
@@ -24,7 +30,7 @@ class MatchAnyTest extends MatcherAbstract
         $this->assertTrue($matcher->validate($context));
     }
 
-    public function testValidateFalse()
+    public function testValidateSomeTrue()
     {
         $context = $this->context;
 
@@ -36,6 +42,17 @@ class MatchAnyTest extends MatcherAbstract
 
         $matcher = new MatchAny($false, $true);
         $this->assertTrue($matcher->validate($context));
+    }
+
+
+    public function testValidateFalse()
+    {
+        $context = $this->context;
+
+        $false = new IsFalse;
+
+        $matcher = new MatchAny($false, $false);
+        $this->assertFalse($matcher->validate($context));
     }
 
     public function testValidateMany()

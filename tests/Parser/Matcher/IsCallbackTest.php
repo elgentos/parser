@@ -18,21 +18,21 @@ class IsCallbackTest extends MatcherAbstract
     public function testValidateTrue()
     {
         $context = $this->context;
-        $true = new IsCallback(function(Context $context){
+        $matcher = new IsCallback(function(Context $context){
             return true;
         });
 
-        $this->assertTrue($true->validate($context));
+        $this->assertTrue($matcher->validate($context));
     }
 
     public function testValidateFalse()
     {
         $context = $this->context;
-        $true = new IsCallback(function(Context $context){
+        $matcher = new IsCallback(function(Context $context){
             return false;
         });
 
-        $this->assertFalse($true->validate($context));
+        $this->assertFalse($matcher->validate($context));
     }
 
 }

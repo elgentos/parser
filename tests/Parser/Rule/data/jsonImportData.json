@@ -1,0 +1,8 @@
+{
+  "test": "content",
+  "recursive": [
+    {
+      "key": "value"
+    }
+  ]
+}
