@@ -36,12 +36,14 @@ class Iterate extends RuleAbstract
         foreach ($root as $key => &$value) {
             $context->setIndex((string)$key);
 
+            if ($this->executeRule($context)) {
+                continue;
+            }
+
             if ($this->recursive && is_array($value)) {
                 $this->parse(new Context($value));
                 continue;
             }
-
-            $this->executeRule($context);
         }
 
         return true;

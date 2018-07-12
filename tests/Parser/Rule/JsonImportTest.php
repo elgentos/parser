@@ -59,7 +59,7 @@ class JsonImportTest extends TestCase
 
         $rule = new JsonImport(self::DATAPATH ,false);
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertFalse($rule->parse($context));
         $this->assertSame($this->jsonContent, $context->getRoot());
 
         $context->setIndex('__notimport');

@@ -20,7 +20,7 @@ abstract class RuleAbstract implements RuleInterface
     final public function executeRule(Context $context): bool
     {
         if (null === $this->rule) {
-            return true;
+            return false;
         }
 
         return $this->rule->parse($context);

@@ -35,7 +35,7 @@ class RuleAbstractTest extends TestCase
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $this->assertTrue($rule->executeRule($context));
+        $this->assertFalse($rule->executeRule($context));
 
         $ruleMock->expects($this->once())
                 ->method('parse')
