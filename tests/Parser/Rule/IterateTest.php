@@ -39,6 +39,7 @@ class IterateTest extends TestCase
         $rule = new Iterate(false, new IsFalse());
 
         $this->assertFalse($rule->match($context));
+        $this->assertFalse($rule->parse($context));
     }
 
     public function testParse()
