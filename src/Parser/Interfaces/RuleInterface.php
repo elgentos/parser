@@ -16,6 +16,8 @@ interface RuleInterface
     public function match(Context $context): bool;
 
     public function parse(Context $context): bool;
+
     public function addRule(RuleInterface $rule);//: void;
+    public function executeRule(Context $context): bool;
 
 }
