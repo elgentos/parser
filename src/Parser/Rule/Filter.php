@@ -43,10 +43,6 @@ class Filter extends RuleAbstract
         $root = &$context->getRoot();
         unset($root[$context->getIndex()]);
 
-        if (! is_array($filter)) {
-            return false;
-        }
-
         if (! $this->filter(
                 $context,
                 (string)($filter['path'] ?? '0'),

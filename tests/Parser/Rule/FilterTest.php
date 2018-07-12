@@ -80,12 +80,13 @@ class FilterTest extends TestCase
                     ]
                 ],
         ];
+
+        // Test filter 1 one value
         $root['__filter'] = [
                 'path' => 'test/1/values',
                 'index' => 'key',
                 'value' => 'test'
         ];
-
         unset($test['test'][1]['values'][1]);
 
         $context = new Context($root);
@@ -96,6 +97,7 @@ class FilterTest extends TestCase
         $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getRoot());
 
+        // Test filter 2 values which is no array
         $root['__filter'] = [
                 'path' => 'test/1/values/skip',
                 'index' => 'key',
@@ -105,9 +107,20 @@ class FilterTest extends TestCase
         $this->assertFalse($rule->parse($context));
         $this->assertSame($test, $context->getRoot());
 
+        // Test filter 3 filter values with same result
         $root['__filter'] = [
                 'path' => 'test/2/values',
                 'index' => 'key',
+                'value' => ['test2', 'blah2']
+        ];
+
+        $this->assertTrue($rule->parse($context));
+        $this->assertSame($test, $context->getRoot());
+
+        // Test filter 4 no array
+        $root['__filter'] = [
+                'path' => 'test/2/values',
+                'index' => 'nonexistant',
                 'value' => ['test2', 'blah2']
         ];
 
