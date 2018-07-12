@@ -8,6 +8,9 @@
 
 namespace Dutchlabelshop\Parser;
 
+use Dutchlabelshop\Parser\Exceptions\ContextPathNoArrayException;
+use Dutchlabelshop\Parser\Exceptions\ContextPathNotFoundException;
+
 class Context
 {
 
@@ -45,6 +48,25 @@ class Context
     public function &getCurrent()
     {
         return $this->root[$this->index];
+    }
+
+    public function search(string $path, string $seperator = '/'): Context
+    {
+        $path = explode($seperator, $path);
+
+        $root = &$this->getRoot();
+        foreach ($path as $index) {
+            if (! isset($root[$index])) {
+                throw new ContextPathNotFoundException('Path not found');
+            }
+            if (! is_array($root[$index])) {
+                throw new ContextPathNoArrayException('Path is not an array');
+            }
+
+            $root = &$root[$index];
+        }
+
+        return new Context($root);
     }
 
 }
