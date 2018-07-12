@@ -63,5 +63,10 @@ class ContextTest extends TestCase
 
         $context->setIndex('key2');
         $this->assertSame('value2', $context->getCurrent());
+
+        $current = &$context->getCurrent();
+        $current = 'piet';
+
+        $this->assertSame('piet', $context->getCurrent());
     }
 }
