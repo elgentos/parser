@@ -10,6 +10,7 @@
 namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
+use Dutchlabelshop\Parser\Matcher\IsFalse;
 use PHPUnit\Framework\TestCase;
 
 class IterateTest extends TestCase
@@ -32,12 +33,23 @@ class IterateTest extends TestCase
         $this->assertTrue($rule->match($context));
     }
 
+    public function testMatcherFalse()
+    {
+        $context = $this->context;
+        $rule = new Iterate(false, new IsFalse());
+
+        $this->assertFalse($rule->match($context));
+    }
+
     public function testParse()
     {
         $context = $this->context;
-        $rule = $this->getMockBuilder(Iterate::class)
+
+        $ruleMock = $this->getMockBuilder(Iterate::class)
                 ->setMethods(['executeRule'])
                 ->getMock();
+
+        $rule = new $ruleMock(false);
 
         $root = &$context->getRoot();
         $root = array_fill(0, 10, 'value');
@@ -46,16 +58,19 @@ class IterateTest extends TestCase
                 ->method('executeRule')
                 ->willReturn(false);
 
+        /** @var Iterate $rule */
         $this->assertTrue($rule->parse($context));
     }
 
     public function testParseRecursive()
     {
         $context = $this->context;
+
         $ruleMock = $this->getMockBuilder(Iterate::class)
                 ->setMethods(['executeRule'])
                 ->getMock();
 
+        /** @var Iterate $rule */
         $rule = new $ruleMock(true);
 
         $root = &$context->getRoot();
