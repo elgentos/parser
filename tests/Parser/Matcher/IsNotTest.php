@@ -11,14 +11,15 @@ namespace Dutchlabelshop\Parser\Matcher;
 
 require_once __DIR__ . '/MatcherAbstract.php';
 
-class IsTrueTest extends MatcherAbstract
+class IsNotTest extends MatcherAbstract
 {
+
     public function testValidate()
     {
         $context = $this->context;
-        $matcher = new IsTrue();
+        $matcher = new IsNot(new IsTrue());
 
-        $this->assertTrue($matcher->validate($context));
+        $this->assertFalse($matcher->validate($context));
     }
 
 }

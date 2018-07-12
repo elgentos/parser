@@ -17,9 +17,9 @@ class IsFalseTest extends MatcherAbstract
     public function testValidate()
     {
         $context = $this->context;
-        $true = new IsFalse();
+        $matcher = new IsFalse();
 
-        $this->assertFalse($true->validate($context));
+        $this->assertFalse($matcher->validate($context));
     }
 
 }
