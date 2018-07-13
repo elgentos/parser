@@ -18,12 +18,15 @@ class Context
     private $root;
     /** @var string */
     private $index;
+    /** @var bool */
+    private $changed;
 
     public function __construct(array &$root = [])
     {
         $this->root = &$root;
         reset($this->root);
         $this->setIndex((string)key($this->root));
+        $this->changed = false;
     }
 
     public function &getRoot(): array
@@ -67,6 +70,16 @@ class Context
         }
 
         return new Context($root);
+    }
+
+    public function isChanged(): bool
+    {
+        return $this->changed;
+    }
+
+    public function changed()//: void
+    {
+        $this->changed = true;
     }
 
 }

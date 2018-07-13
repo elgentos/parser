@@ -103,4 +103,14 @@ class ContextTest extends TestCase
         $result->search('key2/0');
     }
 
+    public function testChanged()
+    {
+        $root = [];
+        $context = new Context($root);
+
+        $this->assertFalse($context->isChanged());
+        $context->changed();
+        $this->assertTrue($context->isChanged());
+    }
+
 }
