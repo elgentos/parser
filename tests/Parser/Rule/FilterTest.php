@@ -126,6 +126,19 @@ class FilterTest extends TestCase
 
         $this->assertFalse($rule->parse($context));
         $this->assertSame($test, $context->getRoot());
+
+        // Test filter 5 inverse filter
+        $root['__filter'] = [
+                'path' => 'test/2/values',
+                'index' => 'key',
+                'value' => 'test2',
+                'inverse' => true
+        ];
+
+        unset($test['test'][2]['values'][0]);
+
+        $this->assertFalse($rule->parse($context));
+        $this->assertSame($test, $context->getRoot());
     }
 
     public function testDefaultMatcher()

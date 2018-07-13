@@ -9,6 +9,7 @@
 namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
+use Dutchlabelshop\Parser\Exceptions\GeneralException;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\CurrentIsArray;
 use Dutchlabelshop\Parser\Matcher\IsExact;
@@ -18,10 +19,14 @@ use Dutchlabelshop\Parser\RuleAbstract;
 class Filter extends RuleAbstract
 {
 
+    /** @var string */
+    private $pathSeparator;
+    /** @var MatcherInterface */
     private $matcher;
 
-    public function __construct(MatcherInterface $matcher = null)
+    public function __construct(string $pathSeparator = '/', MatcherInterface $matcher = null)
     {
+        $this->pathSeparator = $pathSeparator;
         $this->matcher = new MatchAll(
                 $matcher ?? new IsExact('__filter'),
                     new CurrentIsArray()
@@ -43,37 +48,29 @@ class Filter extends RuleAbstract
         $root = &$context->getRoot();
         unset($root[$context->getIndex()]);
 
-        if (! $this->filter(
-                $context,
-                (string)($filter['path'] ?? '0'),
-                (string)($filter['index'] ?? ''),
-                ... (array)($filter['value'] ?? '')
-        )) {
+        $path = (string)($filter['path'] ?? '0');
+
+        try {
+            $context = $context->search($path, $this->pathSeparator);
+        } catch (GeneralException $e) {
             return false;
         }
+
+        $this->filter(
+                $context,
+                (string)($filter['index'] ?? ''),
+                (bool)($filter['inverse'] ?? false),
+                ... (array)($filter['value'] ?? '')
+        );
 
         return $this->executeRule($context);
     }
 
-    private function filter(Context $context, string $path, string $index, string ...$values): bool
+    private function filter(Context $context, string $index, bool $inverse = false, string ...$values): bool
     {
         $root = &$context->getRoot();
 
-        $path = explode('/', $path);
-
-        foreach ($path as $p) {
-            if (! isset($root[$p])) {
-                return false;
-            }
-
-            $root = &$root[$p];
-        }
-
-        if (! is_array($root)) {
-            return false;
-        }
-
-        $root = array_filter($root, function(&$row) use ($index, $values) {
+        $root = array_filter($root, function(&$row) use ($index, $values, $inverse) {
             if (! is_array($row)) {
                 return true;
             }
@@ -82,7 +79,7 @@ class Filter extends RuleAbstract
                 return true;
             }
 
-            return array_search($row[$index], $values) !== false;
+            return (array_search($row[$index], $values) !== false) !== $inverse;
         });
 
         return true;
