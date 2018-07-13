@@ -37,7 +37,7 @@ class IterateTest extends TestCase
     public function testMatcherFalse()
     {
         $context = $this->context;
-        $rule = new Iterate(false, new IsFalse());
+        $rule = new Iterate(false, null, new IsFalse());
 
         $this->assertFalse($rule->match($context));
         $this->assertFalse($rule->parse($context));
@@ -90,9 +90,6 @@ class IterateTest extends TestCase
     {
         $context = $this->context;
 
-        /** @var Iterate $rule */
-        $rule = new Iterate(true);
-
         $subRule = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
@@ -100,7 +97,8 @@ class IterateTest extends TestCase
                 ->method('parse')
                 ->willReturn(true);
 
-        $rule->addRule($subRule);
+        /** @var Iterate $rule */
+        $rule = new Iterate(true, $subRule);
 
         $root = &$context->getRoot();
         $repeat = array_fill(0, 10, 'deep');

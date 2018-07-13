@@ -10,6 +10,7 @@ namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
+use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use Dutchlabelshop\Parser\RuleAbstract;
 
@@ -19,10 +20,13 @@ class Iterate extends RuleAbstract
     private $recursive;
     /** @var MatcherInterface */
     private $matcher;
+    /** @var RuleInterface */
+    private $nextRule;
 
-    public function __construct(bool $recursive = false, MatcherInterface $matcher = null)
+    public function __construct(bool $recursive = false, RuleInterface $nextRule = null, MatcherInterface $matcher = null)
     {
         $this->recursive = $recursive;
+        $this->nextRule = $nextRule;
         $this->matcher = $matcher ?? new IsTrue;
     }
 
@@ -49,9 +53,19 @@ class Iterate extends RuleAbstract
         return true;
     }
 
+
     public function getMatcher(): MatcherInterface
     {
         return $this->matcher;
+    }
+
+    private function executeRule(Context $context): bool
+    {
+        if (null === $this->nextRule) {
+            return false;
+        }
+
+        return $this->nextRule->parse($context);
     }
 
 }
