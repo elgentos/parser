@@ -14,7 +14,7 @@ use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use Dutchlabelshop\Parser\RuleAbstract;
 
-class Loop extends RuleAbstract
+class LoopAll extends RuleAbstract
 {
 
     /** @var IsTrue */

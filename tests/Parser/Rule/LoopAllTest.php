@@ -13,13 +13,13 @@ use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
-class LoopTest extends TestCase
+class LoopAllTest extends TestCase
 {
 
     public function testConstructorInvalidArgument()
     {
         $this->expectException(\InvalidArgumentException::class);
-        new Loop();
+        new LoopAll();
     }
 
     public function testConstructorOneRule()
@@ -28,7 +28,7 @@ class LoopTest extends TestCase
                 ->getMock();
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->assertInstanceOf(Loop::class, new Loop($ruleMock));
+        $this->assertInstanceOf(LoopAll::class, new LoopAll($ruleMock));
     }
 
     public function testConstructorRules()
@@ -36,7 +36,7 @@ class LoopTest extends TestCase
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $this->assertInstanceOf(Loop::class, new Loop($ruleMock, $ruleMock, $ruleMock, $ruleMock));
+        $this->assertInstanceOf(LoopAll::class, new LoopAll($ruleMock, $ruleMock, $ruleMock, $ruleMock));
     }
 
     public function testExecuteOnce()
@@ -57,7 +57,7 @@ class LoopTest extends TestCase
                 ->method('parse')
                 ->willReturn(false);
 
-        $loop = new Loop($ruleMock, $ruleMock2);
+        $loop = new LoopAll($ruleMock, $ruleMock2);
         $this->assertFalse($loop->parse($context));
     }
 
@@ -79,7 +79,7 @@ class LoopTest extends TestCase
                 ->method('parse')
                 ->willReturn(true);
 
-        $loop = new Loop($ruleMock, $ruleMock2);
+        $loop = new LoopAll($ruleMock, $ruleMock2);
         $this->assertFalse($loop->parse($context));
         $this->assertFalse($context->isChanged());
     }
@@ -88,7 +88,7 @@ class LoopTest extends TestCase
     {
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
-        $loop = new Loop($ruleMock, $ruleMock);
+        $loop = new LoopAll($ruleMock, $ruleMock);
 
         $this->assertInstanceOf(IsTrue::class, $loop->getMatcher());
     }
