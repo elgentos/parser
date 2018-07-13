@@ -94,7 +94,7 @@ class FilterTest extends TestCase
 
         $rule = new Filter();
 
-        $this->assertFalse($rule->parse($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getRoot());
 
         // Test filter 2 values which is no array
@@ -114,7 +114,7 @@ class FilterTest extends TestCase
                 'value' => ['test2', 'blah2']
         ];
 
-        $this->assertFalse($rule->parse($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getRoot());
 
         // Test filter 4 no array
@@ -124,7 +124,7 @@ class FilterTest extends TestCase
                 'value' => ['test2', 'blah2']
         ];
 
-        $this->assertFalse($rule->parse($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getRoot());
 
         // Test filter 5 inverse filter
@@ -137,7 +137,7 @@ class FilterTest extends TestCase
 
         unset($test['test'][2]['values'][0]);
 
-        $this->assertFalse($rule->parse($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getRoot());
     }
 

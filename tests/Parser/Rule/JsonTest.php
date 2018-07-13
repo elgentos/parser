@@ -59,7 +59,7 @@ class JsonTest extends TestCase
 
         $rule = new Json(false);
 
-        $this->assertFalse($rule->parse($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($this->jsonContent, $context->getRoot());
 
         $context->setIndex('__notimport');

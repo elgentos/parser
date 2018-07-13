@@ -14,23 +14,6 @@ use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 abstract class RuleAbstract implements RuleInterface
 {
 
-    /** @var RuleInterface */
-    private $rule;
-
-    final public function executeRule(Context $context): bool
-    {
-        if (null === $this->rule) {
-            return false;
-        }
-
-        return $this->rule->parse($context);
-    }
-
-    final public function addRule(RuleInterface $rule)
-    {
-        $this->rule = $rule;
-    }
-
     final public function match(Context $context): bool
     {
         return $this->getMatcher()

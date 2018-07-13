@@ -19,6 +19,8 @@ class Loop extends RuleAbstract
 
     /** @var IsTrue */
     private $matcher;
+    /** @var RuleInterface[] */
+    private $rules;
 
     public function __construct(RuleInterface ...$rules)
     {
@@ -26,26 +28,20 @@ class Loop extends RuleAbstract
             throw new \InvalidArgumentException("Should at least have two rules");
         }
 
-        $firstRule = $lastRule = array_shift($rules);
-
-        // I'll call first rule
-        $this->addRule($firstRule);
-
-        // All next rules will be linked
-        while ($nextRule = array_shift($rules)) {
-            $lastRule->addRule($nextRule);
-            $lastRule = $nextRule;
-        }
-
-        // Last rule will call first rule, rules should implement a break system
-        $lastRule->addRule($firstRule);
-
         $this->matcher = new IsTrue;
+        $this->rules = $rules;
     }
 
     public function parse(Context $context): bool
     {
-        return $this->executeRule($context);
+        foreach ($this->rules as $rule) {
+            if (! $rule->parse($context)) {
+                // Stop if a rule returns false
+                return false;
+            }
+        }
+
+        return $this->parse($context);
     }
 
     public function getMatcher(): MatcherInterface

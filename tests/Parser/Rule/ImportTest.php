@@ -61,7 +61,7 @@ class ImportTest extends TestCase
 
         $rule = new Import(self::DATAPATH,'content');
 
-        $this->assertFalse($rule->parse($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($this->content, $context->getCurrent());
 
         $context->setIndex('__notimport');

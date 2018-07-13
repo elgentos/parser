@@ -39,8 +39,10 @@ class Json extends RuleAbstract
         $content = json_decode($jsonData, true);
         $root = $this->niceMerge($content, $root);
 
-        $context = new Context($root);
-        return $this->executeRule($context);
+        reset($root);
+        $context->setIndex(key($root));
+
+        return true;
     }
 
     /**

@@ -27,36 +27,19 @@ class LoopTest extends TestCase
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $ruleMock->expects($this->exactly(0))
-                ->method('addRule');
-
         $this->expectException(\InvalidArgumentException::class);
-        new Loop($ruleMock);
+        $this->assertInstanceOf(Loop::class, new Loop($ruleMock));
     }
 
-    public function testConstructorTwoRules()
+    public function testConstructorRules()
     {
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $ruleMock->expects($this->exactly(2))
-                ->method('addRule');
-
-        new Loop($ruleMock, $ruleMock);
+        $this->assertInstanceOf(Loop::class, new Loop($ruleMock, $ruleMock, $ruleMock, $ruleMock));
     }
 
-    public function testConstructorTenRules()
-    {
-        $ruleMock = $this->getMockBuilder(RuleInterface::class)
-                ->getMock();
-
-        $ruleMock->expects($this->exactly(10))
-                ->method('addRule');
-
-        new Loop($ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock);
-    }
-
-    public function testExecuteFirstRule()
+    public function testExecuteOnce()
     {
         $root = [];
         $context = new Context($root);
@@ -70,12 +53,34 @@ class LoopTest extends TestCase
                 ->method('parse')
                 ->willReturn(true);
 
-        $ruleMock2->expects($this->exactly(0))
-                ->method('parse');
+        $ruleMock2->expects($this->once())
+                ->method('parse')
+                ->willReturn(false);
 
         $loop = new Loop($ruleMock, $ruleMock2);
+        $this->assertFalse($loop->parse($context));
+    }
 
-        $this->assertTrue($loop->parse($context));
+    public function testExecuteLoop()
+    {
+        $root = [];
+        $context = new Context($root);
+
+        $ruleMock = $this->getMockBuilder(RuleInterface::class)
+                ->getMock();
+
+        $ruleMock2 = new $ruleMock;
+
+        $ruleMock->expects($this->exactly(2))
+                ->method('parse')
+                ->willReturn(true, false);
+
+        $ruleMock2->expects($this->once())
+                ->method('parse')
+                ->willReturn(true);
+
+        $loop = new Loop($ruleMock, $ruleMock2);
+        $this->assertFalse($loop->parse($context));
     }
 
     public function testMatcher()

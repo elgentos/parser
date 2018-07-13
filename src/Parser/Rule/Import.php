@@ -49,7 +49,7 @@ class Import extends RuleAbstract
         $current = &$context->getCurrent();
         $current = $this->getContent($filename);
 
-        return $this->executeRule($context);
+        return true;
     }
 
     /**

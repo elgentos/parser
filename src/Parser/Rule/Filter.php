@@ -63,7 +63,7 @@ class Filter extends RuleAbstract
                 ... (array)($filter['value'] ?? '')
         );
 
-        return $this->executeRule($context);
+        return true;
     }
 
     private function filter(Context $context, string $index, bool $inverse = false, string ...$values): bool

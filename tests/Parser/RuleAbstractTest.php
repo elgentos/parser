@@ -9,7 +9,6 @@
 namespace Dutchlabelshop\Parser;
 
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use PHPUnit\Framework\TestCase;
 
 class RuleAbstractTest extends TestCase
@@ -25,38 +24,6 @@ class RuleAbstractTest extends TestCase
         $root = [];
         $this->context = new Context($root);
         $this->ruleAbstract = $this->getMockForAbstractClass(RuleAbstract::class);
-    }
-
-    public function testExecuteRule()
-    {
-        $rule = $this->ruleAbstract;
-        $context = $this->context;
-
-        $ruleMock = $this->getMockBuilder(RuleInterface::class)
-                ->getMock();
-
-        $this->assertFalse($rule->executeRule($context));
-
-        $ruleMock->expects($this->once())
-                ->method('parse')
-                ->willReturn(true);
-
-        $rule->addRule($ruleMock);
-        $this->assertTrue($rule->executeRule($context));
-    }
-
-    public function testAddRule()
-    {
-        $rule = $this->ruleAbstract;
-
-        $ruleMock = $this->getMockBuilder(RuleInterface::class)
-                ->getMock();
-
-        $ruleMock->expects($this->exactly(0))
-                ->method('parse')
-                ->willReturn(true);
-
-        $rule->addRule($ruleMock);
     }
 
     public function testMatch()
