@@ -66,19 +66,6 @@ class JsonTest extends TestCase
         $this->assertFalse($rule->parse($context));
     }
 
-//    public function testSafepath()
-//    {
-//        $context = $this->context;
-//
-//        $current = &$context->getCurrent();
-//        $current = '../../../' . $current;
-//
-//        $rule = new JsonImport(self::DATAPATH . '//../...//.',false);
-//
-//        $rule->parse($context);
-//        $this->assertSame($this->jsonContent, $context->getRoot());
-//    }
-
     public function testRegularMerge()
     {
         $context = $this->context;
