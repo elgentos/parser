@@ -40,7 +40,8 @@ class Json extends RuleAbstract
         $root = $this->niceMerge($content, $root);
 
         reset($root);
-        $context->setIndex(key($root));
+        $index = key($root);
+        $index && $context->setIndex($index);
         $context->changed();
 
         return true;
