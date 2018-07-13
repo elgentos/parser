@@ -98,6 +98,7 @@ class JsonTest extends TestCase
 
         $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
+        $this->assertTrue($context->isChanged());
     }
 
     public function testRecursiveMergeShouldNotToArray()

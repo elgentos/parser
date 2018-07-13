@@ -41,6 +41,7 @@ class Json extends RuleAbstract
 
         reset($root);
         $context->setIndex(key($root));
+        $context->changed();
 
         return true;
     }

@@ -95,6 +95,7 @@ class FilterTest extends TestCase
         $rule = new Filter();
 
         $this->assertTrue($rule->parse($context));
+        $this->assertTrue($context->isChanged());
         $this->assertSame($test, $context->getRoot());
 
         // Test filter 2 values which is no array

@@ -105,6 +105,7 @@ class IterateTest extends TestCase
         $root = array_fill(0, 10, $repeat);
 
         $this->assertTrue($rule->parse($context));
+        $this->assertFalse($context->isChanged());
     }
 
 }

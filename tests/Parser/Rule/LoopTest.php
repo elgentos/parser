@@ -81,6 +81,7 @@ class LoopTest extends TestCase
 
         $loop = new Loop($ruleMock, $ruleMock2);
         $this->assertFalse($loop->parse($context));
+        $this->assertFalse($context->isChanged());
     }
 
     public function testMatcher()

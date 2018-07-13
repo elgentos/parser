@@ -49,6 +49,8 @@ class Import extends RuleAbstract
         $current = &$context->getCurrent();
         $current = $this->getContent($filename);
 
+        $context->changed();
+
         return true;
     }
 

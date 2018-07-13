@@ -51,17 +51,18 @@ class Filter extends RuleAbstract
         $path = (string)($filter['path'] ?? '0');
 
         try {
-            $context = $context->search($path, $this->pathSeparator);
+            $subContext = $context->search($path, $this->pathSeparator);
         } catch (GeneralException $e) {
             return false;
         }
 
         $this->filter(
-                $context,
+                $subContext,
                 (string)($filter['index'] ?? ''),
                 (bool)($filter['inverse'] ?? false),
                 ... (array)($filter['value'] ?? '')
         );
+        $context->changed();
 
         return true;
     }
