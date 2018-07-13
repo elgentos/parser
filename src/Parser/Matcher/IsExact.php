@@ -15,12 +15,12 @@ use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 class IsExact implements MatcherInterface
 {
 
-    /** @var string */
+    /** @var mixed */
     private $matcher;
     /** @var string */
     private $method;
 
-    public function __construct(string $matcher, string $method = 'getIndex')
+    public function __construct($matcher, string $method = 'getIndex')
     {
         $this->matcher = $matcher;
         $this->method = $method;
