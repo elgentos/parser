@@ -13,20 +13,17 @@ use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\RuleAbstract;
 
-class JsonImport extends RuleAbstract
+class Json extends RuleAbstract
 {
-    /** @var string */
-    private $rootDir;
     /** @var bool */
     private $mergeRecursive;
     /** @var MatcherInterface */
     private $matcher;
 
-    public function __construct(string $rootDir, bool $mergeRecursive = false, MatcherInterface $matcher = null)
+    public function __construct(bool $mergeRecursive = false, MatcherInterface $matcher = null)
     {
-        $this->rootDir = $this->safePath($rootDir);
         $this->mergeRecursive = $mergeRecursive;
-        $this->matcher = $matcher ?? new IsExact('__import');
+        $this->matcher = $matcher ?? new IsExact('__json');
     }
 
     public function parse(Context $context): bool
@@ -36,10 +33,10 @@ class JsonImport extends RuleAbstract
         }
 
         $root = &$context->getRoot();
-        $filename = $context->getCurrent();
+        $jsonData = $context->getCurrent();
         unset($root[$context->getIndex()]);
 
-        $content = $this->getContent($filename);
+        $content = json_decode($jsonData, true);
         $root = $this->niceMerge($content, $root);
 
         $context = new Context($root);
@@ -71,45 +68,9 @@ class JsonImport extends RuleAbstract
         return $result;
     }
 
-    /**
-     * Get file contents
-     *
-     * @param string $filename
-     * @return array
-     */
-    protected function getContent(string $filename): array
-    {
-        return json_decode(file_get_contents($this->getFilepath($filename)), true);
-    }
-
-    /**
-     * Filter nasty strings from path
-     *
-     * @param string $path
-     * @return string
-     */
-    private function safePath(string $path): string
-    {
-        while (($newPath = str_replace(['..', '//'], ['', '/'], $path)) !== $path) {
-            $path = $newPath;
-        }
-
-        return str_replace(['..', '//'], ['', '/'], $path);
-    }
-
-    /**
-     * Get file path
-     *
-     * @param string $filename
-     * @return string
-     */
-    private function getFilepath(string $filename): string
-    {
-        return $this->rootDir . '/' . $this->safePath($filename);
-    }
-
     public function getMatcher(): MatcherInterface
     {
         return $this->matcher;
     }
+
 }

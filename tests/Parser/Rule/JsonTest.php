@@ -13,10 +13,11 @@ use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
-class JsonImportTest extends TestCase
+class JsonTest extends TestCase
 {
 
     const DATAPATH = __DIR__ . '/data';
+    const JSON_INDEX = '__json';
 
     /** @var Context */
     private $context;
@@ -27,19 +28,18 @@ class JsonImportTest extends TestCase
     public function setUp()
     {
         $root = [
-                '__import' => 'jsonImportData.json'
+                self::JSON_INDEX => file_get_contents(SELF::DATAPATH . '/jsonImportData.json')
         ];
         $this->context = new Context($root);
-
-        $this->jsonContent = json_decode(file_get_contents(__DIR__ . '/data/jsonImportData.json'), true);
+        $this->jsonContent = json_decode($root[self::JSON_INDEX], true);
     }
 
     public function testMatcher()
     {
-        $rule = new JsonImport(self::DATAPATH);
+        $rule = new Json();
         $this->assertInstanceOf(IsExact::class, $rule->getMatcher());
 
-        $rule = new JsonImport(self::DATAPATH ,false, new IsTrue);
+        $rule = new Json(false, new IsTrue);
         $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
     }
 
@@ -47,7 +47,7 @@ class JsonImportTest extends TestCase
     {
         $context = $this->context;
 
-        $rule = new JsonImport(self::DATAPATH ,false);
+        $rule = new Json(false);
         $this->assertTrue($rule->match($context));
         $context->setIndex('test');
         $this->assertFalse($rule->match($context));
@@ -57,7 +57,7 @@ class JsonImportTest extends TestCase
     {
         $context = $this->context;
 
-        $rule = new JsonImport(self::DATAPATH ,false);
+        $rule = new Json(false);
 
         $this->assertFalse($rule->parse($context));
         $this->assertSame($this->jsonContent, $context->getRoot());
@@ -66,18 +66,18 @@ class JsonImportTest extends TestCase
         $this->assertFalse($rule->parse($context));
     }
 
-    public function testSafepath()
-    {
-        $context = $this->context;
-
-        $current = &$context->getCurrent();
-        $current = '../../../' . $current;
-
-        $rule = new JsonImport(self::DATAPATH . '//../...//.',false);
-
-        $rule->parse($context);
-        $this->assertSame($this->jsonContent, $context->getRoot());
-    }
+//    public function testSafepath()
+//    {
+//        $context = $this->context;
+//
+//        $current = &$context->getCurrent();
+//        $current = '../../../' . $current;
+//
+//        $rule = new JsonImport(self::DATAPATH . '//../...//.',false);
+//
+//        $rule->parse($context);
+//        $this->assertSame($this->jsonContent, $context->getRoot());
+//    }
 
     public function testRegularMerge()
     {
@@ -88,9 +88,9 @@ class JsonImportTest extends TestCase
         $root['recursive'] = ['test' => 'gone'];
 
         $test = array_merge($this->jsonContent, $root);
-        unset($test['__import']);
+        unset($test[self::JSON_INDEX]);
 
-        $rule = new JsonImport(self::DATAPATH . '//../...//.',false);
+        $rule = new Json(false);
 
         $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
@@ -105,9 +105,9 @@ class JsonImportTest extends TestCase
         $root['recursive'] = ['test' => 'gone'];
 
         $test = array_merge_recursive($this->jsonContent, $root);
-        unset($test['__import']);
+        unset($test[SELF::JSON_INDEX]);
 
-        $rule = new JsonImport(self::DATAPATH . '//../...//.',true);
+        $rule = new Json(true);
 
         $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
@@ -123,15 +123,14 @@ class JsonImportTest extends TestCase
         $root['recursive'] = ['test' => 'gone'];
 
         $test = array_merge_recursive($this->jsonContent, $root);
-        unset($test['__import']);
+        unset($test[SELF::JSON_INDEX]);
 
         $test['test'] = 'merge';
 
-        $rule = new JsonImport(self::DATAPATH . '//../...//.',true);
+        $rule = new Json(true);
 
         $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
     }
-
 
 }
