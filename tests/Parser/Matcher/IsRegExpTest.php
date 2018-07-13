@@ -26,4 +26,19 @@ class IsRegExpTest extends MatcherAbstract
         $this->assertTrue($true->validate($context));
     }
 
+    public function testValidateCurrent()
+    {
+        $context = $this->context;
+        $true = new IsRegExp("#^\d+$#", 'getCurrent');
+
+        $root = &$context->getRoot();
+
+        $root['test'] = 'nomatch';
+        $context->setIndex('test');
+
+        $this->assertFalse($true->validate($context));
+        $root['test'] = '123';
+        $this->assertTrue($true->validate($context));
+    }
+
 }

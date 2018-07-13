@@ -11,7 +11,7 @@ namespace Dutchlabelshop\Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Exceptions\GeneralException;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Matcher\CurrentIsArray;
+use Dutchlabelshop\Parser\Matcher\IsArray;
 use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\Matcher\MatchAll;
 use Dutchlabelshop\Parser\RuleAbstract;
@@ -29,7 +29,7 @@ class Filter extends RuleAbstract
         $this->pathSeparator = $pathSeparator;
         $this->matcher = new MatchAll(
                 $matcher ?? new IsExact('__filter'),
-                    new CurrentIsArray()
+                    new IsArray()
         );
     }
 

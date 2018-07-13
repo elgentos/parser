@@ -11,12 +11,20 @@ namespace Dutchlabelshop\Parser\Matcher;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 
-class CurrentIsArray implements MatcherInterface
+class IsArray implements MatcherInterface
 {
+
+    /** @var string */
+    private $method;
+
+    public function __construct(string $method = 'getCurrent')
+    {
+        $this->method = $method;
+    }
 
     public function validate(Context $context): bool
     {
-        return is_array($context->getCurrent());
+        return is_array($context->{$this->method}());
     }
 
 }

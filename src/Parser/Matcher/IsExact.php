@@ -17,15 +17,18 @@ class IsExact implements MatcherInterface
 
     /** @var string */
     private $matcher;
+    /** @var string */
+    private $method;
 
-    public function __construct(string $matcher)
+    public function __construct(string $matcher, string $method = 'getIndex')
     {
         $this->matcher = $matcher;
+        $this->method = $method;
     }
 
     public function validate(Context $context): bool
     {
-        return $this->matcher === $context->getIndex();
+        return $this->matcher === $context->{$this->method}();
     }
 
 }

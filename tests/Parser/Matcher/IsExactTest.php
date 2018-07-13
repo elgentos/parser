@@ -24,4 +24,16 @@ class IsExactTest extends MatcherAbstract
         $context->setIndex('testje');
         $this->assertFalse($matcher->validate($context));
     }
+
+    public function testValidateCurrent()
+    {
+        $context = $this->context;
+
+        $root = &$context->getRoot();
+        $root['test'] = 'value';
+        $context->setIndex('test');
+
+        $matcher = new IsExact('value', 'getCurrent');
+        $this->assertTrue($matcher->validate($context));
+    }
 }

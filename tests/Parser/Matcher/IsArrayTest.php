@@ -10,7 +10,7 @@ namespace Dutchlabelshop\Parser\Matcher;
 
 require_once __DIR__ . '/MatcherAbstract.php';
 
-class CurrentIsArrayTest extends MatcherAbstract
+class IsArrayTest extends MatcherAbstract
 {
 
     public function testValidate()
@@ -18,7 +18,7 @@ class CurrentIsArrayTest extends MatcherAbstract
         $context = $this->context;
         $current = &$context->getCurrent();
 
-        $matcher = new CurrentIsArray();
+        $matcher = new IsArray();
 
         $this->assertFalse($matcher->validate($context));
 

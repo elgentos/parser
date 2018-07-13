@@ -17,15 +17,18 @@ class IsRegExp implements MatcherInterface
 
     /** @var string */
     private $pattern;
+    /** @var string */
+    private $method;
 
-    public function __construct(string $pattern)
+    public function __construct(string $pattern, string $method = 'getIndex')
     {
         $this->pattern = $pattern;
+        $this->method = $method;
     }
 
     public function validate(Context $context): bool
     {
-        return preg_match($this->pattern, $context->getIndex()) > 0;
+        return preg_match($this->pattern, $context->{$this->method}()) > 0;
     }
 
 }
