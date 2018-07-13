@@ -45,7 +45,9 @@ class Import extends RuleAbstract
         $root = &$context->getRoot();
         unset($root[$context->getIndex()]);
 
-        $root[$this->newKey] = $this->getContent($filename);
+        $context->setIndex($this->newKey);
+        $current = &$context->getCurrent();
+        $current = $this->getContent($filename);
 
         return $this->executeRule($context);
     }

@@ -62,8 +62,6 @@ class ImportTest extends TestCase
         $rule = new Import(self::DATAPATH,'content');
 
         $this->assertFalse($rule->parse($context));
-
-        $context->setIndex('content');
         $this->assertSame($this->content, $context->getCurrent());
 
         $context->setIndex('__notimport');
@@ -80,8 +78,6 @@ class ImportTest extends TestCase
         $rule = new Import(self::DATAPATH . '//../...//.','content');
 
         $rule->parse($context);
-
-        $context->setIndex('content');
         $this->assertSame($this->content, $context->getCurrent());
     }
 
