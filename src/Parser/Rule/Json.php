@@ -11,7 +11,7 @@ namespace Dutchlabelshop\Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\RuleAbstract;
+use Dutchlabelshop\Parser\Rule\RuleAbstract;
 
 class Json extends RuleAbstract
 {
@@ -26,12 +26,8 @@ class Json extends RuleAbstract
         $this->matcher = $matcher ?? new IsExact('__json');
     }
 
-    public function parse(Context $context): bool
+    public function execute(Context $context): bool
     {
-        if (! $this->match($context)) {
-            return false;
-        }
-
         $root = &$context->getRoot();
         $jsonData = $context->getCurrent();
         unset($root[$context->getIndex()]);

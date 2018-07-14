@@ -9,16 +9,11 @@
 namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
-use Dutchlabelshop\Parser\Matcher\IsTrue;
-use Dutchlabelshop\Parser\RuleAbstract;
 
-class LoopAll extends RuleAbstract
+class LoopAll implements RuleInterface
 {
 
-    /** @var IsTrue */
-    private $matcher;
     /** @var RuleInterface[] */
     private $rules;
 
@@ -28,7 +23,6 @@ class LoopAll extends RuleAbstract
             throw new \InvalidArgumentException("Should at least have two rules");
         }
 
-        $this->matcher = new IsTrue;
         $this->rules = $rules;
     }
 
@@ -44,9 +38,9 @@ class LoopAll extends RuleAbstract
         return $this->parse($context);
     }
 
-    public function getMatcher(): MatcherInterface
+    public function match(Context $context): bool
     {
-        return $this->matcher;
+        return true;
     }
 
 }

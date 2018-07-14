@@ -12,27 +12,18 @@ use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\RuleAbstract;
 
-class Changed extends RuleAbstract
+class Changed implements RuleInterface
 {
 
     /** @var RuleInterface */
     private $rule;
-    /** @var MatcherInterface */
-    private $matcher;
     /** @var int */
     private $counter = 0;
 
-    public function __construct(RuleInterface $rule, MatcherInterface $matcher = null)
+    public function __construct(RuleInterface $rule)
     {
         $this->rule = $rule;
-        $this->matcher = $matcher ?? new IsExact(true, 'isChanged');
-    }
-
-    public function getMatcher(): MatcherInterface
-    {
-        return $this->matcher;
     }
 
     public function parse(Context $context): bool
@@ -40,7 +31,6 @@ class Changed extends RuleAbstract
         $this->counter++;
 
         $this->rule->parse($context);
-
         if (! $this->match($context)) {
             return false;
         }
@@ -53,6 +43,11 @@ class Changed extends RuleAbstract
     public function getCounter(): int
     {
         return $this->counter;
+    }
+
+    public function match(Context $context): bool
+    {
+        return $context->isChanged();
     }
 
 }

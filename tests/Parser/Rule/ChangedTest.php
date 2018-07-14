@@ -10,8 +10,6 @@ namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
-use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class ChangedTest extends TestCase
@@ -40,22 +38,6 @@ class ChangedTest extends TestCase
         $rule = new Changed($subRule);
         $rule->parse($context);
         $this->assertSame(1, $rule->getCounter());
-    }
-
-    public function testGetMatcher()
-    {
-        $subRule = $this->getMockBuilder(RuleInterface::class)
-                ->getMock();
-
-        $subRule->expects($this->exactly(0))
-                ->method('parse')
-                ->willReturn(true);
-
-        $rule = new Changed($subRule);
-        $this->assertInstanceOf(IsExact::class, $rule->getMatcher());
-
-        $rule = new Changed($subRule, new IsTrue);
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
     }
 
     public function testParseChanged()

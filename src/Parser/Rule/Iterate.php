@@ -12,7 +12,7 @@ use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
-use Dutchlabelshop\Parser\RuleAbstract;
+use Dutchlabelshop\Parser\Rule\RuleAbstract;
 
 class Iterate extends RuleAbstract
 {
@@ -30,12 +30,8 @@ class Iterate extends RuleAbstract
         $this->matcher = $matcher ?? new IsTrue;
     }
 
-    public function parse(Context $context): bool
+    public function execute(Context $context): bool
     {
-        if (! $this->match($context)) {
-            return false;
-        }
-
         $root = &$context->getRoot();
         foreach ($root as $key => &$value) {
             $context->setIndex((string)$key);

@@ -14,7 +14,7 @@ use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsArray;
 use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\Matcher\MatchAll;
-use Dutchlabelshop\Parser\RuleAbstract;
+use Dutchlabelshop\Parser\Rule\RuleAbstract;
 
 class Filter extends RuleAbstract
 {
@@ -38,12 +38,8 @@ class Filter extends RuleAbstract
         return $this->matcher;
     }
 
-    public function parse(Context $context): bool
+    public function execute(Context $context): bool
     {
-        if (! $this->match($context)) {
-            return false;
-        }
-
         $filter = $context->getCurrent();
         $root = &$context->getRoot();
         unset($root[$context->getIndex()]);

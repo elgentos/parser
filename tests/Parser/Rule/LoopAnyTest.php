@@ -58,6 +58,7 @@ class LoopAnyTest extends TestCase
                 ->willReturn(false);
 
         $loop = new LoopAny($ruleMock, $ruleMock2);
+        $this->assertTrue($loop->match($context));
         $this->assertFalse($loop->parse($context));
     }
 
@@ -82,15 +83,6 @@ class LoopAnyTest extends TestCase
         $loop = new LoopAny($ruleMock, $ruleMock2);
         $this->assertFalse($loop->parse($context));
         $this->assertFalse($context->isChanged());
-    }
-
-    public function testMatcher()
-    {
-        $ruleMock = $this->getMockBuilder(RuleInterface::class)
-                ->getMock();
-        $loop = new LoopAny($ruleMock, $ruleMock);
-
-        $this->assertInstanceOf(IsTrue::class, $loop->getMatcher());
     }
 
 }

@@ -12,7 +12,7 @@ namespace Dutchlabelshop\Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\RuleAbstract;
+use Dutchlabelshop\Parser\Rule\RuleAbstract;
 
 class Explode extends RuleAbstract
 {
@@ -33,12 +33,8 @@ class Explode extends RuleAbstract
         return $this->matcher;
     }
 
-    public function parse(Context $context): bool
+    public function execute(Context $context): bool
     {
-        if (! $this->match($context)) {
-            return false;
-        }
-
         $current = &$context->getCurrent();
         $current = explode($this->delimiter, $current);
 

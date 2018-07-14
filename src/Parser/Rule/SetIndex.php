@@ -11,7 +11,7 @@ namespace Dutchlabelshop\Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
-use Dutchlabelshop\Parser\RuleAbstract;
+use Dutchlabelshop\Parser\Rule\RuleAbstract;
 
 class SetIndex extends RuleAbstract
 {
@@ -32,12 +32,8 @@ class SetIndex extends RuleAbstract
         return $this->matcher;
     }
 
-    public function parse(Context $context): bool
+    public function execute(Context $context): bool
     {
-        if (! $this->match($context)) {
-            return false;
-        }
-
         $context->setIndex($this->index);
         return true;
     }
