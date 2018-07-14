@@ -13,13 +13,13 @@ use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
-class LoopAllTest extends TestCase
+class LoopAnyTest extends TestCase
 {
 
     public function testConstructorInvalidArgument()
     {
         $this->expectException(\InvalidArgumentException::class);
-        new LoopAll();
+        new LoopAny();
     }
 
     public function testConstructorOneRule()
@@ -28,7 +28,7 @@ class LoopAllTest extends TestCase
                 ->getMock();
 
         $this->expectException(\InvalidArgumentException::class);
-        new LoopAll($ruleMock);
+        new LoopAny($ruleMock);
     }
 
     public function testConstructorRules()
@@ -36,32 +36,10 @@ class LoopAllTest extends TestCase
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $this->assertInstanceOf(LoopAll::class, new LoopAll($ruleMock, $ruleMock, $ruleMock, $ruleMock));
+        $this->assertInstanceOf(LoopAny::class, new LoopAny($ruleMock, $ruleMock, $ruleMock, $ruleMock));
     }
 
     public function testExecuteOnce()
-    {
-        $root = [];
-        $context = new Context($root);
-
-        $ruleMock = $this->getMockBuilder(RuleInterface::class)
-                ->getMock();
-
-        $ruleMock2 = new $ruleMock;
-
-        $ruleMock->expects($this->once())
-                ->method('parse')
-                ->willReturn(true);
-
-        $ruleMock2->expects($this->once())
-                ->method('parse')
-                ->willReturn(false);
-
-        $loop = new LoopAll($ruleMock, $ruleMock2);
-        $this->assertFalse($loop->parse($context));
-    }
-
-    public function testExecuteLoop()
     {
         $root = [];
         $context = new Context($root);
@@ -77,9 +55,31 @@ class LoopAllTest extends TestCase
 
         $ruleMock2->expects($this->once())
                 ->method('parse')
-                ->willReturn(true);
+                ->willReturn(false);
 
-        $loop = new LoopAll($ruleMock, $ruleMock2);
+        $loop = new LoopAny($ruleMock, $ruleMock2);
+        $this->assertFalse($loop->parse($context));
+    }
+
+    public function testExecuteLoop()
+    {
+        $root = [];
+        $context = new Context($root);
+
+        $ruleMock = $this->getMockBuilder(RuleInterface::class)
+                ->getMock();
+
+        $ruleMock2 = new $ruleMock;
+
+        $ruleMock->expects($this->exactly(2))
+                ->method('parse')
+                ->willReturn(false, false);
+
+        $ruleMock2->expects($this->exactly(2))
+                ->method('parse')
+                ->willReturn(true, false);
+
+        $loop = new LoopAny($ruleMock, $ruleMock2);
         $this->assertFalse($loop->parse($context));
         $this->assertFalse($context->isChanged());
     }
@@ -88,7 +88,7 @@ class LoopAllTest extends TestCase
     {
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
-        $loop = new LoopAll($ruleMock, $ruleMock);
+        $loop = new LoopAny($ruleMock, $ruleMock);
 
         $this->assertInstanceOf(IsTrue::class, $loop->getMatcher());
     }
