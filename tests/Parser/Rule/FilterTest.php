@@ -142,6 +142,37 @@ class FilterTest extends TestCase
         $this->assertSame($test, $context->getRoot());
     }
 
+    public function testDotPathSeperator()
+    {
+        $root = $test = [
+                'path' => [
+                        'to' => [
+                                'values' => [
+                                        [
+                                                'key' => 'test'
+                                        ],
+                                        [
+                                                'key' => 'remove'
+                                        ],
+                                ]
+                        ]
+                ],
+                '__filter' => [
+                        'path' => 'path.to.values',
+                        'index' => 'key',
+                        'value' => 'test'
+                ]
+        ];
+        $context = new Context($root);
+
+        $rule = new Filter('.');
+
+        $context->setIndex('__filter');
+        $this->assertTrue($rule->parse($context));
+        $this->assertNotSame($test, $root);
+        $this->assertTrue($context->isChanged());
+    }
+
     public function testDefaultMatcher()
     {
         $rule = new Filter();
