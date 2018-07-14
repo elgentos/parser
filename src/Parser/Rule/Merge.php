@@ -42,6 +42,9 @@ class Merge extends RuleAbstract
         $root = $this->niceMerge($content, $root);
         $context->changed();
 
+        reset($root);
+        $context->setIndex((string)key($root));
+
         return true;
     }
 

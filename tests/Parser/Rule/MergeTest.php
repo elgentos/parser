@@ -97,4 +97,14 @@ class MergeTest extends TestCase
         $this->assertSame($test, $context->getRoot());
     }
 
+    public function testResetIndex()
+    {
+        $context = $this->context;
+
+        $rule = new Merge;
+
+        $rule->execute($context);
+        $this->assertSame('test', $context->getIndex());
+    }
+
 }
