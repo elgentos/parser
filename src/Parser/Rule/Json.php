@@ -15,28 +15,26 @@ use Dutchlabelshop\Parser\Rule\RuleAbstract;
 
 class Json extends RuleAbstract
 {
-    /** @var bool */
-    private $mergeRecursive;
     /** @var MatcherInterface */
     private $matcher;
 
-    public function __construct(bool $mergeRecursive = false, MatcherInterface $matcher = null)
+    public function __construct(MatcherInterface $matcher = null)
     {
-        $this->mergeRecursive = $mergeRecursive;
         $this->matcher = $matcher ?? new IsExact('__json');
     }
 
     public function execute(Context $context): bool
     {
-        $root = &$context->getRoot();
+//        $root = &$context->getRoot();
         $jsonData = $context->getCurrent();
-        unset($root[$context->getIndex()]);
+//        unset($root[$context->getIndex()]);
 
-        $content = json_decode($jsonData, true);
-        $root = $this->niceMerge($content, $root);
-
-        reset($root);
-        $context->setIndex((string)key($root));
+        $current = &$context->getCurrent();
+        $current = json_decode($jsonData, true);
+//        $root = $this->niceMerge($content, $root);
+//
+//        reset($root);
+//        $context->setIndex((string)key($root));
         $context->changed();
 
         return true;
