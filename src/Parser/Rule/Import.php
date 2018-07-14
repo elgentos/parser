@@ -39,8 +39,6 @@ class Import extends RuleAbstract
         }
 
         $filename = $context->getCurrent();
-        $root = &$context->getRoot();
-        unset($root[$context->getIndex()]);
 
         $current = &$context->getCurrent();
         $current = $this->getContent($filename);
