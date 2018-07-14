@@ -13,7 +13,7 @@ use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use Dutchlabelshop\Parser\RuleAbstract;
 
-class UpdateIndex extends RuleAbstract
+class SetIndex extends RuleAbstract
 {
 
     /** @var string */

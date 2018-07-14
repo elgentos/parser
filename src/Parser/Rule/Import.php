@@ -18,15 +18,12 @@ class Import extends RuleAbstract
 
     /** @var string */
     private $rootDir;
-    /** @var string */
-    private $newKey;
     /** @var MatcherInterface */
     private $matcher;
 
-    public function __construct(string $rootDir, string $newKey, MatcherInterface $matcher = null)
+    public function __construct(string $rootDir, MatcherInterface $matcher = null)
     {
         $this->rootDir = $this->safePath($rootDir);
-        $this->newKey = $newKey;
         $this->matcher = $matcher ?? new IsExact('__import');
     }
 
@@ -45,7 +42,6 @@ class Import extends RuleAbstract
         $root = &$context->getRoot();
         unset($root[$context->getIndex()]);
 
-        $context->setIndex($this->newKey);
         $current = &$context->getCurrent();
         $current = $this->getContent($filename);
 

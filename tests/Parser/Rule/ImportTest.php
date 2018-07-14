@@ -37,11 +37,11 @@ class ImportTest extends TestCase
 
     public function testGetMatcher()
     {
-        $rule = new Import(self::DATAPATH, 'content');
+        $rule = new Import(self::DATAPATH);
 
         $this->assertInstanceOf(IsExact::class, $rule->getMatcher());
 
-        $rule = new Import(self::DATAPATH, 'content', new IsTrue);
+        $rule = new Import(self::DATAPATH, new IsTrue);
         $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
     }
 
@@ -49,7 +49,7 @@ class ImportTest extends TestCase
     {
         $context = $this->context;
 
-        $rule = new Import(self::DATAPATH, 'content');
+        $rule = new Import(self::DATAPATH);
         $this->assertTrue($rule->match($context));
         $context->setIndex('test');
         $this->assertFalse($rule->match($context));
@@ -59,7 +59,7 @@ class ImportTest extends TestCase
     {
         $context = $this->context;
 
-        $rule = new Import(self::DATAPATH,'content');
+        $rule = new Import(self::DATAPATH);
 
         $this->assertTrue($rule->parse($context));
         $this->assertTrue($context->isChanged());
@@ -76,7 +76,7 @@ class ImportTest extends TestCase
         $current = &$context->getCurrent();
         $current = '../../../' . $current;
 
-        $rule = new Import(self::DATAPATH . '//../...//.','content');
+        $rule = new Import(self::DATAPATH . '//../...//.');
 
         $rule->parse($context);
         $this->assertSame($this->content, $context->getCurrent());

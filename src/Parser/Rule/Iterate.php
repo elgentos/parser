@@ -21,12 +21,12 @@ class Iterate extends RuleAbstract
     /** @var MatcherInterface */
     private $matcher;
     /** @var RuleInterface */
-    private $nextRule;
+    private $rule;
 
-    public function __construct(bool $recursive = false, RuleInterface $nextRule = null, MatcherInterface $matcher = null)
+    public function __construct(bool $recursive = false, RuleInterface $rule = null, MatcherInterface $matcher = null)
     {
         $this->recursive = $recursive;
-        $this->nextRule = $nextRule;
+        $this->rule = $rule;
         $this->matcher = $matcher ?? new IsTrue;
     }
 
@@ -64,11 +64,11 @@ class Iterate extends RuleAbstract
 
     private function executeRule(Context $context): bool
     {
-        if (null === $this->nextRule) {
+        if (null === $this->rule) {
             return false;
         }
 
-        return $this->nextRule->parse($context);
+        return $this->rule->parse($context);
     }
 
 }

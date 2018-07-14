@@ -11,10 +11,10 @@ namespace Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Matcher\IsFalse;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
-use Dutchlabelshop\Parser\Rule\UpdateIndex;
+use Dutchlabelshop\Parser\Rule\SetIndex;
 use PHPUnit\Framework\TestCase;
 
-class UpdateIndexTest extends TestCase
+class SetIndexTest extends TestCase
 {
 
     /** @var Context */
@@ -29,10 +29,10 @@ class UpdateIndexTest extends TestCase
     public function testGetMatcher()
     {
 
-        $rule = new UpdateIndex('test');
+        $rule = new SetIndex('test');
         $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
 
-        $rule = new UpdateIndex('test', new IsFalse);
+        $rule = new SetIndex('test', new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
         $this->assertFalse($rule->parse($this->context));
     }
@@ -41,8 +41,8 @@ class UpdateIndexTest extends TestCase
     {
         $context = $this->context;
 
-        $rule1 = new UpdateIndex('test1');
-        $rule2 = new UpdateIndex('test2');
+        $rule1 = new SetIndex('test1');
+        $rule2 = new SetIndex('test2');
 
         $this->assertTrue($rule1->parse($context));
         $this->assertSame('test1', $context->getIndex());
