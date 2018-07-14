@@ -13,7 +13,6 @@ use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\RuleAbstract;
-use PHPUnit\Framework\MockObject\Builder\Match;
 
 class Changed extends RuleAbstract
 {
@@ -22,6 +21,8 @@ class Changed extends RuleAbstract
     private $rule;
     /** @var MatcherInterface */
     private $matcher;
+    /** @var int */
+    private $counter = 0;
 
     public function __construct(RuleInterface $rule, MatcherInterface $matcher = null)
     {
@@ -36,6 +37,8 @@ class Changed extends RuleAbstract
 
     public function parse(Context $context): bool
     {
+        $this->counter++;
+
         $this->rule->parse($context);
 
         if (! $this->match($context)) {
@@ -45,6 +48,11 @@ class Changed extends RuleAbstract
         // Again
         $context = new Context($context->getRoot());
         return $this->parse($context);
+    }
+
+    public function getCounter(): int
+    {
+        return $this->counter;
     }
 
 }

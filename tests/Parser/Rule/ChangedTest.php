@@ -39,6 +39,7 @@ class ChangedTest extends TestCase
 
         $rule = new Changed($subRule);
         $rule->parse($context);
+        $this->assertSame(1, $rule->getCounter());
     }
 
     public function testGetMatcher()
@@ -71,6 +72,8 @@ class ChangedTest extends TestCase
         $rule = new Changed($subRule);
         $context->changed();
         $rule->parse($context);
+
+        $this->assertSame(2, $rule->getCounter());
     }
 
 }
