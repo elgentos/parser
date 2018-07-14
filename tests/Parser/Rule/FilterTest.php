@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class FilterTest extends TestCase
 {
 
-    public function testParse()
+    public function testMatch()
     {
         $root = [
                 '__filter' => [
@@ -29,13 +29,13 @@ class FilterTest extends TestCase
         $rule = new Filter();
 
         $context->setIndex('test');
-        $this->assertFalse($rule->parse($context));
+        $this->assertFalse($rule->match($context));
 
         $context->setIndex('__filter');
-        $this->assertFalse($rule->parse($context));
+        $this->assertTrue($rule->match($context));
 
         $current = '';
-        $this->assertFalse($rule->parse($context));
+        $this->assertFalse($rule->match($context));
     }
 
     public function testParseShouldRemoveSelf()
@@ -43,11 +43,10 @@ class FilterTest extends TestCase
         $root = [
                 '__filter' => []
         ];
-
         $context = new Context($root);
-        $rule = new Filter();
+        $rule = new Filter;
 
-        $rule->parse($context);
+        $rule->execute($context);
         $this->assertSame([], $context->getRoot());
     }
 
@@ -92,9 +91,9 @@ class FilterTest extends TestCase
         $context = new Context($root);
         $context->setIndex('__filter');
 
-        $rule = new Filter();
+        $rule = new Filter;
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertTrue($context->isChanged());
         $this->assertSame($test, $context->getRoot());
 
@@ -105,7 +104,7 @@ class FilterTest extends TestCase
                 'value' => ['test2', 'blah2']
         ];
 
-        $this->assertFalse($rule->parse($context));
+        $this->assertFalse($rule->execute($context));
         $this->assertSame($test, $context->getRoot());
 
         // Test filter 3 filter values with same result
@@ -115,7 +114,7 @@ class FilterTest extends TestCase
                 'value' => ['test2', 'blah2']
         ];
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertSame($test, $context->getRoot());
 
         // Test filter 4 no array
@@ -125,7 +124,7 @@ class FilterTest extends TestCase
                 'value' => ['test2', 'blah2']
         ];
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertSame($test, $context->getRoot());
 
         // Test filter 5 inverse filter
@@ -138,7 +137,7 @@ class FilterTest extends TestCase
 
         unset($test['test'][2]['values'][0]);
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertSame($test, $context->getRoot());
     }
 
@@ -168,7 +167,7 @@ class FilterTest extends TestCase
         $rule = new Filter('.');
 
         $context->setIndex('__filter');
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertNotSame($test, $root);
         $this->assertTrue($context->isChanged());
     }

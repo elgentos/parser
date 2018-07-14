@@ -9,9 +9,7 @@
 namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
-use Dutchlabelshop\Parser\Matcher\IsExact;
 
 class Changed implements RuleInterface
 {

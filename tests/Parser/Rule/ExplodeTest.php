@@ -6,12 +6,11 @@
  * Time: 23:19
  */
 
-namespace Parser\Rule;
+namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\Matcher\IsFalse;
-use Dutchlabelshop\Parser\Rule\Explode;
 use PHPUnit\Framework\TestCase;
 
 class ExplodeTest extends TestCase
@@ -37,16 +36,15 @@ class ExplodeTest extends TestCase
 
         $rule = new Explode(new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-        $this->assertFalse($rule->parse($this->context));
     }
 
-    public function testParse()
+    public function testExecute()
     {
         $context = $this->context;
         $test = explode("\n", $context->getCurrent());
 
         $rule = new Explode;
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertSame($test, $context->getCurrent());
     }
 
@@ -56,7 +54,7 @@ class ExplodeTest extends TestCase
         $test = explode(',', $context->getCurrent());
 
         $rule = new Explode(null, ',');
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertSame($test, $context->getCurrent());
     }
 

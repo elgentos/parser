@@ -40,10 +40,9 @@ class IterateTest extends TestCase
         $rule = new Iterate(false, null, new IsFalse());
 
         $this->assertFalse($rule->match($context));
-        $this->assertFalse($rule->parse($context));
     }
 
-    public function testParse()
+    public function testExecute()
     {
         $context = $this->context;
 
@@ -61,10 +60,10 @@ class IterateTest extends TestCase
                 ->willReturn(false);
 
         /** @var Iterate $rule */
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
     }
 
-    public function testParseRecursive()
+    public function testRecursive()
     {
         $context = $this->context;
 
@@ -83,10 +82,10 @@ class IterateTest extends TestCase
                 ->method('executeRule')
                 ->willReturn(false);
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
     }
 
-    public function testParseWithRule()
+    public function testWithRule()
     {
         $context = $this->context;
 
@@ -104,7 +103,7 @@ class IterateTest extends TestCase
         $repeat = array_fill(0, 10, 'deep');
         $root = array_fill(0, 10, $repeat);
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertFalse($context->isChanged());
     }
 
@@ -133,7 +132,7 @@ class IterateTest extends TestCase
             'two' => 'test'
         ];
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertTrue($context->isChanged());
     }
 

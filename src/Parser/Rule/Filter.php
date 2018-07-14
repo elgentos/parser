@@ -14,7 +14,6 @@ use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsArray;
 use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\Matcher\MatchAll;
-use Dutchlabelshop\Parser\Rule\RuleAbstract;
 
 class Filter extends RuleAbstract
 {

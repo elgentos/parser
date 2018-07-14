@@ -11,7 +11,6 @@ namespace Dutchlabelshop\Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\Rule\RuleAbstract;
 
 class Import extends RuleAbstract
 {

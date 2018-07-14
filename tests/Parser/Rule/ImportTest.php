@@ -8,7 +8,6 @@
 
 namespace Dutchlabelshop\Parser\Rule;
 
-
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
@@ -61,12 +60,9 @@ class ImportTest extends TestCase
 
         $rule = new Import(self::DATAPATH);
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertTrue($context->isChanged());
         $this->assertSame($this->content, $context->getCurrent());
-
-        $context->setIndex('__notimport');
-        $this->assertFalse($rule->parse($context));
     }
 
     public function testSafepath()
@@ -78,7 +74,7 @@ class ImportTest extends TestCase
 
         $rule = new Import(self::DATAPATH . '//../...//.');
 
-        $rule->parse($context);
+        $rule->execute($context);
         $this->assertSame($this->content, $context->getCurrent());
     }
 

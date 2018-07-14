@@ -59,66 +59,8 @@ class JsonTest extends TestCase
 
         $rule = new Json;
 
-        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($rule->execute($context));
         $this->assertSame($this->jsonContent, $context->getCurrent());
-
-        $context->setIndex('__notimport');
-        $this->assertFalse($rule->parse($context));
     }
-
-//    public function testRegularMerge()
-//    {
-//        $context = $this->context;
-//
-//        $root = &$context->getRoot();
-//
-//        $root['recursive'] = ['test' => 'gone'];
-//
-//        $test = array_merge($this->jsonContent, $root);
-//        unset($test[self::JSON_INDEX]);
-//
-//        $rule = new Json(false);
-//
-//        $rule->parse($context);
-//        $this->assertSame($test, $context->getRoot());
-//    }
-//
-//    public function testRecursiveMerge()
-//    {
-//        $context = $this->context;
-//
-//        $root = &$context->getRoot();
-//
-//        $root['recursive'] = ['test' => 'gone'];
-//
-//        $test = array_merge_recursive($this->jsonContent, $root);
-//        unset($test[self::JSON_INDEX]);
-//
-//        $rule = new Json(true);
-//
-//        $rule->parse($context);
-//        $this->assertSame($test, $context->getRoot());
-//        $this->assertTrue($context->isChanged());
-//    }
-//
-//    public function testRecursiveMergeShouldNotToArray()
-//    {
-//        $context = $this->context;
-//
-//        $root = &$context->getRoot();
-//
-//        $root['test'] = 'merge';
-//        $root['recursive'] = ['test' => 'gone'];
-//
-//        $test = array_merge_recursive($this->jsonContent, $root);
-//        unset($test[self::JSON_INDEX]);
-//
-//        $test['test'] = 'merge';
-//
-//        $rule = new Json(true);
-//
-//        $rule->parse($context);
-//        $this->assertSame($test, $context->getRoot());
-//    }
 
 }

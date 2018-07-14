@@ -34,14 +34,11 @@ class CsvTest extends TestCase
 
     public function testMatcher()
     {
-        $context = $this->context;
-
         $rule = new Csv;
         $this->assertInstanceOf(MatchAll::class, $rule->getMatcher());
 
         $rule = new Csv(new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-        $this->assertSame(false, $rule->parse($context));
     }
 
     public function testEmptyContext()
@@ -52,7 +49,7 @@ class CsvTest extends TestCase
         $context = new Context($root);
 
         $rule = new Csv;
-        $this->assertFalse($rule->parse($context));
+        $this->assertFalse($rule->execute($context));
         $this->assertFalse($context->isChanged());
     }
 
@@ -66,7 +63,7 @@ class CsvTest extends TestCase
         $context = new Context($root);
 
         $rule = new Csv(null, true);
-        $this->assertFalse($rule->parse($context));
+        $this->assertFalse($rule->execute($context));
         $this->assertFalse($context->isChanged());
     }
 
@@ -100,7 +97,7 @@ class CsvTest extends TestCase
 
         $rule = new Csv;
 
-        $rule->parse($context);
+        $rule->execute($context);
         $this->assertSame($result, $context->getCurrent());
         $this->assertTrue($context->isChanged());
     }
@@ -134,7 +131,7 @@ class CsvTest extends TestCase
 
         $rule = new Csv(null, true);
 
-        $rule->parse($context);
+        $rule->execute($context);
         $this->assertSame($result, $context->getCurrent());
         $this->assertTrue($context->isChanged());
     }
