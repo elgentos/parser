@@ -12,6 +12,7 @@ namespace Dutchlabelshop\Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsFalse;
+use function foo\func;
 use PHPUnit\Framework\TestCase;
 
 class IterateTest extends TestCase
@@ -106,6 +107,35 @@ class IterateTest extends TestCase
 
         $this->assertTrue($rule->parse($context));
         $this->assertFalse($context->isChanged());
+    }
+
+    public function testParseRecursiveShouldSetChanged()
+    {
+        $context = $this->context;
+
+        $subRule = $this->getMockBuilder(RuleInterface::class)
+                ->getMock();
+
+        $subRule->expects($this->exactly(2))
+                ->method('parse')
+                ->willReturnCallback(function(Context $context) {
+                    if ('two' === $context->getIndex()) {
+                        $context->changed();
+                    }
+
+                    return false;
+                });
+
+        /** @var Iterate $rule */
+        $rule = new Iterate(true, $subRule);
+
+        $root = &$context->getRoot();
+        $root['one'] = [
+            'two' => 'test'
+        ];
+
+        $this->assertTrue($rule->parse($context));
+        $this->assertTrue($context->isChanged());
     }
 
 }
