@@ -12,7 +12,6 @@ namespace Dutchlabelshop\Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
 use Dutchlabelshop\Parser\Matcher\IsFalse;
-use function foo\func;
 use PHPUnit\Framework\TestCase;
 
 class IterateTest extends TestCase

@@ -28,7 +28,7 @@ class JsonTest extends TestCase
     public function setUp()
     {
         $root = [
-                self::JSON_INDEX => file_get_contents(SELF::DATAPATH . '/jsonImportData.json')
+                self::JSON_INDEX => file_get_contents(self::DATAPATH . '/jsonImportData.json')
         ];
         $this->context = new Context($root);
         $this->jsonContent = json_decode($root[self::JSON_INDEX], true);
@@ -92,7 +92,7 @@ class JsonTest extends TestCase
         $root['recursive'] = ['test' => 'gone'];
 
         $test = array_merge_recursive($this->jsonContent, $root);
-        unset($test[SELF::JSON_INDEX]);
+        unset($test[self::JSON_INDEX]);
 
         $rule = new Json(true);
 
@@ -111,7 +111,7 @@ class JsonTest extends TestCase
         $root['recursive'] = ['test' => 'gone'];
 
         $test = array_merge_recursive($this->jsonContent, $root);
-        unset($test[SELF::JSON_INDEX]);
+        unset($test[self::JSON_INDEX]);
 
         $test['test'] = 'merge';
 

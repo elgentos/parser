@@ -6,12 +6,12 @@
  * Time: 9:10
  */
 
-namespace Parser\Rule;
+namespace Dutchlabelshop\Parser\Rule;
+
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Matcher\IsExact;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
-use Dutchlabelshop\Parser\Rule\Import;
 use PHPUnit\Framework\TestCase;
 
 class ImportTest extends TestCase
