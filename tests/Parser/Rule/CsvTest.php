@@ -39,7 +39,7 @@ class CsvTest extends TestCase
         $rule = new Csv;
         $this->assertInstanceOf(MatchAll::class, $rule->getMatcher());
 
-        $rule = new Csv(false, new IsFalse);
+        $rule = new Csv(new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
         $this->assertSame(false, $rule->parse($context));
     }
@@ -65,7 +65,7 @@ class CsvTest extends TestCase
         ];
         $context = new Context($root);
 
-        $rule = new Csv(true);
+        $rule = new Csv(null, true);
         $this->assertFalse($rule->parse($context));
         $this->assertFalse($context->isChanged());
     }
@@ -132,7 +132,7 @@ class CsvTest extends TestCase
                 ]
         ];
 
-        $rule = new Csv(true);
+        $rule = new Csv(null, true);
 
         $rule->parse($context);
         $this->assertSame($result, $context->getCurrent());

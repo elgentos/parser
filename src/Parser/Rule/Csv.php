@@ -18,10 +18,10 @@ use Dutchlabelshop\Parser\RuleAbstract;
 
 class Csv extends RuleAbstract
 {
-    /** @var bool */
-    private $firstHasKeys;
     /** @var MatcherInterface */
     private $matcher;
+    /** @var bool */
+    private $firstHasKeys;
     /** @var string */
     private $delimiter;
     /** @var string */
@@ -30,17 +30,17 @@ class Csv extends RuleAbstract
     private $escape;
 
     public function __construct(
-            bool $firstHasKeys = false,
             MatcherInterface $matcher = null,
+            bool $firstHasKeys = false,
             string $delimiter = ',',
             string $enclosure = '"',
             string $escape = "\\"
     ) {
-        $this->firstHasKeys = $firstHasKeys;
         $this->matcher = $matcher ?? new MatchAll(
                 new IsExact('__csv'),
                 new IsArray
         );
+        $this->firstHasKeys = $firstHasKeys;
         $this->delimiter = $delimiter;
         $this->enclosure = $enclosure;
         $this->escape = $escape;
