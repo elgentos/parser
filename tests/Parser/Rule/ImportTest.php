@@ -9,7 +9,7 @@
 namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Matcher\IsExact;
+use Dutchlabelshop\Parser\Matcher\IsFalse;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +17,6 @@ class ImportTest extends TestCase
 {
 
     const DATAPATH = __DIR__ . '/data';
-    const INDEX = '__import';
 
     /** @var Context */
     private $context;
@@ -28,30 +27,20 @@ class ImportTest extends TestCase
     public function setUp()
     {
         $root = [
-                self::INDEX => '/jsonImportData.json'
+                'import' => '/jsonImportData.json'
         ];
         $this->context = new Context($root);
-        $this->content = file_get_contents(self::DATAPATH . $root[self::INDEX]);
+        $this->content = file_get_contents(self::DATAPATH . $root['import']);
     }
 
     public function testGetMatcher()
     {
         $rule = new Import(self::DATAPATH);
 
-        $this->assertInstanceOf(IsExact::class, $rule->getMatcher());
-
-        $rule = new Import(self::DATAPATH, new IsTrue);
         $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-    }
 
-    public function testMatch()
-    {
-        $context = $this->context;
-
-        $rule = new Import(self::DATAPATH);
-        $this->assertTrue($rule->match($context));
-        $context->setIndex('test');
-        $this->assertFalse($rule->match($context));
+        $rule = new Import(self::DATAPATH, new IsFalse);
+        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
     }
 
     public function testParse()

@@ -12,8 +12,6 @@ use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Exceptions\GeneralException;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsArray;
-use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\Matcher\MatchAll;
 
 class Filter extends RuleAbstract
 {
@@ -23,13 +21,10 @@ class Filter extends RuleAbstract
     /** @var MatcherInterface */
     private $matcher;
 
-    public function __construct(string $pathSeparator = '/', MatcherInterface $matcher = null)
+    public function __construct(MatcherInterface $matcher = null, string $pathSeparator = '/')
     {
         $this->pathSeparator = $pathSeparator;
-        $this->matcher = new MatchAll(
-                $matcher ?? new IsExact('__filter'),
-                    new IsArray()
-        );
+        $this->matcher = $matcher ?? new IsArray();
     }
 
     public function getMatcher(): MatcherInterface

@@ -10,7 +10,7 @@ namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Matcher\IsExact;
+use Dutchlabelshop\Parser\Matcher\IsTrue;
 
 class Json extends RuleAbstract
 {
@@ -19,7 +19,7 @@ class Json extends RuleAbstract
 
     public function __construct(MatcherInterface $matcher = null)
     {
-        $this->matcher = $matcher ?? new IsExact('__json');
+        $this->matcher = $matcher ?? new IsTrue;
     }
 
     public function execute(Context $context): bool

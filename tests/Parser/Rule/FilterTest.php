@@ -9,7 +9,7 @@
 namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Matcher\MatchAll;
+use Dutchlabelshop\Parser\Matcher\IsArray;
 use PHPUnit\Framework\TestCase;
 
 class FilterTest extends TestCase
@@ -164,7 +164,7 @@ class FilterTest extends TestCase
         ];
         $context = new Context($root);
 
-        $rule = new Filter('.');
+        $rule = new Filter(new IsArray, '.');
 
         $context->setIndex('__filter');
         $this->assertTrue($rule->execute($context));
@@ -177,7 +177,7 @@ class FilterTest extends TestCase
         $rule = new Filter();
         $matcher = $rule->getMatcher();
 
-        $this->assertInstanceOf(MatchAll::class, $matcher);
+        $this->assertInstanceOf(IsArray::class, $matcher);
     }
 
 }

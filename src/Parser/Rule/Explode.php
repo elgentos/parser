@@ -11,7 +11,7 @@ namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Matcher\IsExact;
+use Dutchlabelshop\Parser\Matcher\IsTrue;
 
 class Explode extends RuleAbstract
 {
@@ -23,7 +23,7 @@ class Explode extends RuleAbstract
 
     public function __construct(MatcherInterface $matcher = null, string $delimiter = "\n")
     {
-        $this->matcher = $matcher ?? new IsExact('__explode');
+        $this->matcher = $matcher ?? new IsTrue;
         $this->delimiter = $delimiter;
     }
 

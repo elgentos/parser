@@ -10,7 +10,7 @@ namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Matcher\IsExact;
+use Dutchlabelshop\Parser\Matcher\IsTrue;
 
 class Import extends RuleAbstract
 {
@@ -23,7 +23,7 @@ class Import extends RuleAbstract
     public function __construct(string $rootDir, MatcherInterface $matcher = null)
     {
         $this->rootDir = $this->safePath($rootDir);
-        $this->matcher = $matcher ?? new IsExact('__import');
+        $this->matcher = $matcher ?? new IsTrue;
     }
 
     public function getMatcher(): MatcherInterface

@@ -9,8 +9,8 @@
 namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
+use Dutchlabelshop\Parser\Matcher\IsArray;
 use Dutchlabelshop\Parser\Matcher\IsFalse;
-use Dutchlabelshop\Parser\Matcher\MatchAll;
 use PHPUnit\Framework\TestCase;
 
 class CsvTest extends TestCase
@@ -35,7 +35,7 @@ class CsvTest extends TestCase
     public function testMatcher()
     {
         $rule = new Csv;
-        $this->assertInstanceOf(MatchAll::class, $rule->getMatcher());
+        $this->assertInstanceOf(IsArray::class, $rule->getMatcher());
 
         $rule = new Csv(new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());

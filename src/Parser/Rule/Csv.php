@@ -34,10 +34,7 @@ class Csv extends RuleAbstract
             string $enclosure = '"',
             string $escape = "\\"
     ) {
-        $this->matcher = $matcher ?? new MatchAll(
-                new IsExact('__csv'),
-                new IsArray
-        );
+        $this->matcher = $matcher ?? new IsArray;
         $this->firstHasKeys = $firstHasKeys;
         $this->delimiter = $delimiter;
         $this->enclosure = $enclosure;
