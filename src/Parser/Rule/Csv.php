@@ -56,17 +56,17 @@ class Csv extends RuleAbstract
         if (! $this->match($context)) {
             return false;
         }
-        $context->changed();
 
         $current = &$context->getCurrent();
 
         if (empty($current)) {
-            return true;
+            return false;
         }
 
         if ($this->firstHasKeys && count($current) < 2) {
-            return true;
+            return false;
         }
+        $context->changed();
 
         $length = [];
         $current = array_map(function(string $line) use (&$length) {

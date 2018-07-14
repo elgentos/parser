@@ -44,6 +44,32 @@ class CsvTest extends TestCase
         $this->assertSame(false, $rule->parse($context));
     }
 
+    public function testEmptyContext()
+    {
+        $root = [
+                '__csv' => []
+        ];
+        $context = new Context($root);
+
+        $rule = new Csv;
+        $this->assertFalse($rule->parse($context));
+        $this->assertFalse($context->isChanged());
+    }
+
+    public function testSmallContextForFirstKeys()
+    {
+        $root = [
+                '__csv' => [
+                        ['key1', 'key2']
+                ]
+        ];
+        $context = new Context($root);
+
+        $rule = new Csv(true);
+        $this->assertFalse($rule->parse($context));
+        $this->assertFalse($context->isChanged());
+    }
+
     public function testParse()
     {
         $context = $this->context;
@@ -76,6 +102,7 @@ class CsvTest extends TestCase
 
         $rule->parse($context);
         $this->assertSame($result, $context->getCurrent());
+        $this->assertTrue($context->isChanged());
     }
 
     public function testFirstHasKeys()
@@ -109,6 +136,7 @@ class CsvTest extends TestCase
 
         $rule->parse($context);
         $this->assertSame($result, $context->getCurrent());
+        $this->assertTrue($context->isChanged());
     }
 
 }
