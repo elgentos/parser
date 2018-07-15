@@ -11,7 +11,6 @@ namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\RuleInterface;
-use Dutchlabelshop\Parser\Matcher\IsFalse;
 use PHPUnit\Framework\TestCase;
 
 class IterateTest extends TestCase
@@ -29,34 +28,25 @@ class IterateTest extends TestCase
     public function testMatch()
     {
         $context = $this->context;
-        $rule = new Iterate();
+        $rule = new Iterate(new NoLogic(false));
 
         $this->assertTrue($rule->match($context));
-    }
-
-    public function testMatcherFalse()
-    {
-        $context = $this->context;
-        $rule = new Iterate(false, null, new IsFalse());
-
-        $this->assertFalse($rule->match($context));
     }
 
     public function testExecute()
     {
         $context = $this->context;
 
-        $ruleMock = $this->getMockBuilder(Iterate::class)
-                ->setMethods(['executeRule'])
+        $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $rule = new $ruleMock(false);
+        $rule = new Iterate($ruleMock);
 
         $root = &$context->getRoot();
         $root = array_fill(0, 10, 'value');
 
-        $rule->expects($this->exactly(10))
-                ->method('executeRule')
+        $ruleMock->expects($this->exactly(10))
+                ->method('parse')
                 ->willReturn(false);
 
         /** @var Iterate $rule */
@@ -67,19 +57,18 @@ class IterateTest extends TestCase
     {
         $context = $this->context;
 
-        $ruleMock = $this->getMockBuilder(Iterate::class)
-                ->setMethods(['executeRule'])
+        $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
         /** @var Iterate $rule */
-        $rule = new $ruleMock(true);
+        $rule = new Iterate($ruleMock, true);
 
         $root = &$context->getRoot();
         $repeat = array_fill(0, 10, 'deep');
         $root = array_fill(0, 10, $repeat);
 
-        $rule->expects($this->exactly(100))
-                ->method('executeRule')
+        $ruleMock->expects($this->exactly(110))
+                ->method('parse')
                 ->willReturn(false);
 
         $this->assertTrue($rule->execute($context));
@@ -97,7 +86,7 @@ class IterateTest extends TestCase
                 ->willReturn(true);
 
         /** @var Iterate $rule */
-        $rule = new Iterate(true, $subRule);
+        $rule = new Iterate($subRule, true);
 
         $root = &$context->getRoot();
         $repeat = array_fill(0, 10, 'deep');
@@ -107,7 +96,7 @@ class IterateTest extends TestCase
         $this->assertFalse($context->isChanged());
     }
 
-    public function testParseRecursiveShouldSetChanged()
+    public function testRecursiveShouldSetChanged()
     {
         $context = $this->context;
 
@@ -125,7 +114,7 @@ class IterateTest extends TestCase
                 });
 
         /** @var Iterate $rule */
-        $rule = new Iterate(true, $subRule);
+        $rule = new Iterate($subRule, true);
 
         $root = &$context->getRoot();
         $root['one'] = [

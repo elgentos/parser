@@ -15,17 +15,17 @@ use Dutchlabelshop\Parser\Matcher\IsTrue;
 
 class Iterate extends RuleAbstract
 {
+    /** @var RuleInterface */
+    private $rule;
     /** @var bool */
     private $recursive;
     /** @var MatcherInterface */
     private $matcher;
-    /** @var RuleInterface */
-    private $rule;
 
-    public function __construct(bool $recursive = false, RuleInterface $rule = null, MatcherInterface $matcher = null)
+    public function __construct(RuleInterface $rule, bool $recursive = false, MatcherInterface $matcher = null)
     {
-        $this->recursive = $recursive;
         $this->rule = $rule;
+        $this->recursive = $recursive;
         $this->matcher = $matcher ?? new IsTrue;
     }
 
@@ -35,7 +35,7 @@ class Iterate extends RuleAbstract
         foreach ($root as $key => &$value) {
             $context->setIndex((string)$key);
 
-            if ($this->executeRule($context)) {
+            if ($this->rule->parse($context)) {
                 continue;
             }
 
@@ -51,19 +51,9 @@ class Iterate extends RuleAbstract
         return true;
     }
 
-
     public function getMatcher(): MatcherInterface
     {
         return $this->matcher;
-    }
-
-    private function executeRule(Context $context): bool
-    {
-        if (null === $this->rule) {
-            return false;
-        }
-
-        return $this->rule->parse($context);
     }
 
 }
