@@ -2,28 +2,28 @@
 /**
  * Created by PhpStorm.
  * User: jeroen
- * Date: 14-7-18
- * Time: 22:16
+ * Date: 15-7-18
+ * Time: 21:23
  */
 
 namespace Dutchlabelshop\Parser\Rule;
 
+
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Matcher\IsTrue;
 
-class SetIndex extends RuleAbstract
+class Rename extends RuleAbstract
 {
 
-    /** @var string */
-    private $index;
     /** @var MatcherInterface */
     private $matcher;
+    /** @var string */
+    private $newIndex;
 
-    public function __construct(string $index, MatcherInterface $matcher = null)
+    public function __construct(MatcherInterface $matcher, string $newIndex)
     {
-        $this->index = $index;
-        $this->matcher = $matcher ?? new IsTrue;
+        $this->matcher = $matcher;
+        $this->newIndex = $newIndex;
     }
 
     public function getMatcher(): MatcherInterface
@@ -33,7 +33,14 @@ class SetIndex extends RuleAbstract
 
     public function execute(Context $context): bool
     {
-        $context->setIndex($this->index);
+        $root = &$context->getRoot();
+
+        $current = $context->getCurrent();
+        unset($root[$context->getIndex()]);
+        $root[$this->newIndex] = $current;
+
+        $context->changed();
+
         return true;
     }
 
