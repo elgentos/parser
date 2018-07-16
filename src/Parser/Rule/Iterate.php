@@ -32,10 +32,12 @@ class Iterate extends RuleAbstract
     public function execute(Context $context): bool
     {
         $root = &$context->getRoot();
-        foreach ($root as $key => &$value) {
-            $context->setIndex((string)$key);
 
-            if ($this->rule->parse($context)) {
+        $iterateContext = new Context($root);
+        foreach ($root as $key => &$value) {
+            $iterateContext->setIndex((string)$key);
+
+            if ($this->rule->parse($iterateContext)) {
                 continue;
             }
 
@@ -44,10 +46,11 @@ class Iterate extends RuleAbstract
                 $this->parse($resursiveContext);
 
                 // Pass changed up
-                $resursiveContext->isChanged() && $context->changed();
+                $resursiveContext->isChanged() && $iterateContext->changed();
             }
         }
 
+        $iterateContext->isChanged() && $context->changed();
         return true;
     }
 
