@@ -16,7 +16,7 @@ class IsArrayTest extends MatcherAbstract
         $context = $this->context;
         $current = &$context->getCurrent();
 
-        $matcher = new IsArray();
+        $matcher = new IsArray;
 
         $this->assertFalse($matcher->validate($context));
 

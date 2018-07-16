@@ -34,7 +34,7 @@ class Callback extends RuleAbstract
     public function execute(Context $context): bool
     {
         $callback = $this->callback;
-        return $callback($context);
+        return !! $callback($context);
     }
 
 }

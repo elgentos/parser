@@ -10,7 +10,6 @@ namespace Parser\Matcher;
 
 use Elgentos\Parser\Matcher\IsNull;
 use Elgentos\Parser\Matcher\MatcherAbstract;
-use PHPUnit\Framework\TestCase;
 
 class IsNullTest extends MatcherAbstract
 {

@@ -14,17 +14,9 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 class IsNull implements MatcherInterface
 {
 
-    /** @var string */
-    private $method;
-
-    public function __construct(string $method = 'getCurrent')
-    {
-        $this->method = $method;
-    }
-
     public function validate(Context $context): bool
     {
-        return null === $context->{$this->method}();
+        return null === $context->getCurrent();
     }
 
 }

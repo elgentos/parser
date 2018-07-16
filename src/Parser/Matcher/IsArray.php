@@ -14,17 +14,9 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 class IsArray implements MatcherInterface
 {
 
-    /** @var string */
-    private $method;
-
-    public function __construct(string $method = 'getCurrent')
-    {
-        $this->method = $method;
-    }
-
     public function validate(Context $context): bool
     {
-        return is_array($context->{$this->method}());
+        return is_array($context->getCurrent());
     }
 
 }
