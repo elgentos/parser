@@ -9,10 +9,6 @@
 
 namespace Elgentos\Parser\Matcher;
 
-use Elgentos\Parser\Context;
-
-require_once __DIR__ . '/MatcherAbstract.php';
-
 class IsRegExpTest extends MatcherAbstract
 {
 

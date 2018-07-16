@@ -8,8 +8,6 @@
 
 namespace Elgentos\Parser\Matcher;
 
-require_once __DIR__ . '/MatcherAbstract.php';
-
 class IsArrayTest extends MatcherAbstract
 {
 

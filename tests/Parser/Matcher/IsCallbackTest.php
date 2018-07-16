@@ -11,8 +11,6 @@ namespace Elgentos\Parser\Matcher;
 
 use Elgentos\Parser\Context;
 
-require_once __DIR__ . '/MatcherAbstract.php';
-
 class IsCallbackTest extends MatcherAbstract
 {
     public function testValidateTrue()

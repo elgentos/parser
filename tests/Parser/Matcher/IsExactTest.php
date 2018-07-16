@@ -8,8 +8,6 @@
 
 namespace Elgentos\Parser\Matcher;
 
-require_once __DIR__ . '/MatcherAbstract.php';
-
 class IsExactTest extends MatcherAbstract
 {
 

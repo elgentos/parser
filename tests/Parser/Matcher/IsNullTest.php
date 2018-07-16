@@ -8,8 +8,6 @@
 
 namespace Parser\Matcher;
 
-require_once __DIR__ . '/MatcherAbstract.php';
-
 use Elgentos\Parser\Matcher\IsNull;
 use Elgentos\Parser\Matcher\MatcherAbstract;
 use PHPUnit\Framework\TestCase;

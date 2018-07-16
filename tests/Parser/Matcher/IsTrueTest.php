@@ -9,8 +9,6 @@
 
 namespace Elgentos\Parser\Matcher;
 
-require_once __DIR__ . '/MatcherAbstract.php';
-
 class IsTrueTest extends MatcherAbstract
 {
     public function testValidate()
