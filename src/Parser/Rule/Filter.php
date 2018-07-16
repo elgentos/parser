@@ -21,7 +21,7 @@ class Filter extends RuleAbstract
     /** @var MatcherInterface */
     private $matcher;
 
-    public function __construct(MatcherInterface $matcher = null, string $pathSeparator = '/')
+    public function __construct(string $pathSeparator, MatcherInterface $matcher = null)
     {
         $this->pathSeparator = $pathSeparator;
         $this->matcher = $matcher ?? new IsArray();

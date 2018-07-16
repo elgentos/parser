@@ -28,7 +28,7 @@ class IterateTest extends TestCase
     public function testMatch()
     {
         $context = $this->context;
-        $rule = new Iterate(new NoLogic(false));
+        $rule = new Iterate(new NoLogic(false), false);
 
         $this->assertTrue($rule->match($context));
     }
@@ -40,7 +40,7 @@ class IterateTest extends TestCase
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $rule = new Iterate($ruleMock);
+        $rule = new Iterate($ruleMock, false);
 
         $root = &$context->getRoot();
         $root = array_fill(0, 10, 'value');

@@ -26,7 +26,7 @@ class FilterTest extends TestCase
 
         $current = &$context->getCurrent();
 
-        $rule = new Filter();
+        $rule = new Filter('/');
 
         $context->setIndex('test');
         $this->assertFalse($rule->match($context));
@@ -44,7 +44,7 @@ class FilterTest extends TestCase
                 '__filter' => []
         ];
         $context = new Context($root);
-        $rule = new Filter;
+        $rule = new Filter('/');
 
         $rule->execute($context);
         $this->assertSame([], $context->getRoot());
@@ -91,7 +91,7 @@ class FilterTest extends TestCase
         $context = new Context($root);
         $context->setIndex('__filter');
 
-        $rule = new Filter;
+        $rule = new Filter('/');
 
         $this->assertTrue($rule->execute($context));
         $this->assertTrue($context->isChanged());
@@ -164,7 +164,7 @@ class FilterTest extends TestCase
         ];
         $context = new Context($root);
 
-        $rule = new Filter(new IsArray, '.');
+        $rule = new Filter('.');
 
         $context->setIndex('__filter');
         $this->assertTrue($rule->execute($context));
@@ -174,7 +174,7 @@ class FilterTest extends TestCase
 
     public function testDefaultMatcher()
     {
-        $rule = new Filter();
+        $rule = new Filter('/');
         $matcher = $rule->getMatcher();
 
         $this->assertInstanceOf(IsArray::class, $matcher);

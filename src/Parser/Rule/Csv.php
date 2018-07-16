@@ -11,11 +11,14 @@ namespace Dutchlabelshop\Parser\Rule;
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsArray;
-use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\Matcher\MatchAll;
 
 class Csv extends RuleAbstract
 {
+
+    const DEFAULT_DELIMITER = ',';
+    const DEFAULT_ENCLOSURE = '"';
+    const DEFAULT_ESCAPE = "\\";
+
     /** @var MatcherInterface */
     private $matcher;
     /** @var bool */
@@ -28,11 +31,11 @@ class Csv extends RuleAbstract
     private $escape;
 
     public function __construct(
-            MatcherInterface $matcher = null,
             bool $firstHasKeys = false,
-            string $delimiter = ',',
-            string $enclosure = '"',
-            string $escape = "\\"
+            string $delimiter = self::DEFAULT_DELIMITER,
+            string $enclosure = self::DEFAULT_ENCLOSURE,
+            string $escape = self::DEFAULT_ESCAPE,
+            MatcherInterface $matcher = null
     ) {
         $this->matcher = $matcher ?? new IsArray;
         $this->firstHasKeys = $firstHasKeys;

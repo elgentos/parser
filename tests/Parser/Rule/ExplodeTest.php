@@ -35,7 +35,7 @@ class ExplodeTest extends TestCase
         $rule = new Explode;
         $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
 
-        $rule = new Explode(new IsFalse);
+        $rule = new Explode('', new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
     }
 
@@ -54,7 +54,7 @@ class ExplodeTest extends TestCase
         $context = $this->context;
         $test = explode(',', $context->getCurrent());
 
-        $rule = new Explode(null, ',');
+        $rule = new Explode(',');
         $this->assertTrue($rule->execute($context));
         $this->assertSame($test, $context->getCurrent());
     }

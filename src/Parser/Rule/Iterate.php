@@ -22,7 +22,7 @@ class Iterate extends RuleAbstract
     /** @var MatcherInterface */
     private $matcher;
 
-    public function __construct(RuleInterface $rule, bool $recursive = false, MatcherInterface $matcher = null)
+    public function __construct(RuleInterface $rule, bool $recursive, MatcherInterface $matcher = null)
     {
         $this->rule = $rule;
         $this->recursive = $recursive;

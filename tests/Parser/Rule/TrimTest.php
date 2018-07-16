@@ -48,7 +48,7 @@ class TrimTest extends TestCase
         $context = $this->context;
         $context->setIndex('1');
 
-        $rule = new Trim(new IsTrue, 'd');
+        $rule = new Trim('d');
         $test = trim($context->getCurrent(), 'd');
 
         $rule->execute($context);
@@ -60,7 +60,7 @@ class TrimTest extends TestCase
         $rule = new Trim;
         $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
 
-        $rule = new Trim(new IsFalse);
+        $rule = new Trim(Trim::DEFAULT_CHARLIST, new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
     }
 }

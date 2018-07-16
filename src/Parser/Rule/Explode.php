@@ -21,7 +21,7 @@ class Explode extends RuleAbstract
     /** @var string */
     private $delimiter;
 
-    public function __construct(MatcherInterface $matcher = null, string $delimiter = "\n")
+    public function __construct(string $delimiter = "\n", MatcherInterface $matcher = null)
     {
         $this->matcher = $matcher ?? new IsTrue;
         $this->delimiter = $delimiter;

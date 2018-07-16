@@ -20,7 +20,7 @@ class MergeDown extends RuleAbstract
     /** @var MatcherInterface */
     private $matcher;
 
-    public function __construct(bool $mergeRecursive = false, MatcherInterface $matcher = null)
+    public function __construct(bool $mergeRecursive, MatcherInterface $matcher = null)
     {
         $this->mergeRecursive = $mergeRecursive;
         $this->matcher = $matcher ?? new IsArray;

@@ -11,19 +11,20 @@ namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
+use Dutchlabelshop\Parser\Matcher\IsTrue;
 
 class Rename extends RuleAbstract
 {
 
-    /** @var MatcherInterface */
-    private $matcher;
     /** @var string */
     private $newIndex;
+    /** @var MatcherInterface */
+    private $matcher;
 
-    public function __construct(MatcherInterface $matcher, string $newIndex)
+    public function __construct(string $newIndex, MatcherInterface $matcher = null)
     {
-        $this->matcher = $matcher;
         $this->newIndex = $newIndex;
+        $this->matcher = $matcher ?? new IsTrue;
     }
 
     public function getMatcher(): MatcherInterface

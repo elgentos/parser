@@ -15,15 +15,17 @@ use Dutchlabelshop\Parser\Matcher\IsTrue;
 class Trim extends RuleAbstract
 {
 
-    /** @var MatcherInterface */
-    private $matcher;
+    const DEFAULT_CHARLIST = " \t\n\r\0\x0B";
+
     /** @var string */
     private $charlist;
+    /** @var MatcherInterface */
+    private $matcher;
 
-    public function __construct(MatcherInterface $matcher = null, $charlist = " \t\n\r\0\x0B")
+    public function __construct(string $charlist = self::DEFAULT_CHARLIST, MatcherInterface $matcher = null)
     {
-        $this->matcher = $matcher ?? new IsTrue;
         $this->charlist = $charlist;
+        $this->matcher = $matcher ?? new IsTrue;
     }
 
     public function getMatcher(): MatcherInterface

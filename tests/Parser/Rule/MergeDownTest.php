@@ -44,7 +44,7 @@ class MergeDownTest extends TestCase
 
     public function testGetMatcher()
     {
-        $rule = new MergeDown;
+        $rule = new MergeDown(false);
         $this->assertInstanceOf(IsArray::class, $rule->getMatcher());
 
         $rule = new MergeDown(false, new IsFalse);
@@ -101,7 +101,7 @@ class MergeDownTest extends TestCase
     {
         $context = $this->context;
 
-        $rule = new MergeDown;
+        $rule = new MergeDown(false);
 
         $rule->execute($context);
         $this->assertSame('test', $context->getIndex());

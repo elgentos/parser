@@ -10,7 +10,7 @@ namespace Dutchlabelshop\Parser\Rule;
 
 use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\Rule\Rename;
+use Dutchlabelshop\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class RenameTest extends TestCase
@@ -18,8 +18,10 @@ class RenameTest extends TestCase
 
     public function testMatcher()
     {
-        $rule = new Rename(new IsExact('test'), 'test2');
+        $rule = new Rename('test2');
+        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
 
+        $rule = new Rename('test2', new IsExact('test'));
         $this->assertInstanceOf(IsExact::class, $rule->getMatcher());
     }
 
@@ -28,7 +30,7 @@ class RenameTest extends TestCase
         $root = ['test' => 'text'];
         $context = new Context($root);
 
-        $rule = new Rename(new IsExact('test'), 'test2');
+        $rule = new Rename('test2');
 
         $this->assertTrue($rule->execute($context));
         $this->assertSame(['test2' => 'text'], $context->getRoot());
