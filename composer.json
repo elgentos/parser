@@ -1,0 +1,35 @@
+{
+  "name": "elgentos/parser",
+  "type": "library",
+  "description": "Elgentos Parser for json/yaml files to readable array",
+  "homepage": "https://elgentos.nl/",
+
+  "minimum-stability": "stable",
+
+  "license": "MIT License",
+  "authors": [
+    {
+      "name": "Jeroen Boersma",
+      "email": "jeroen@elgentos.nl",
+      "homepage": "https://github.com/JeroenBoersma"
+    }
+  ],
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "^6.0",
+    "symfony/yaml": "^3.4"
+  },
+  "suggest": {
+    "symfony/yaml": "Install symfony/yaml to support yaml parsing"
+  },
+  "autoload": {
+    "psr-4": {
+      "Elgentos\\Parser\\": ["src/Parser"]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Elgentos\\Parser\\": ["tests/Parser"]
+    }
+  }
+}
