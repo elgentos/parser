@@ -8,6 +8,8 @@
 
 namespace Elgentos\Parser;
 
+use Elgentos\Parser\Interfaces\RuleInterface;
+
 class StoryBook
 {
 
@@ -16,12 +18,31 @@ class StoryBook
     /** @var int */
     private $storyCount = 0;
 
-    public function addStories(Story ... $stories)//: void
+    /**
+     * Add story to book
+     *
+     * @param Story ...$stories
+     */
+    public function addStories(Story ...$stories)//: void
     {
         array_walk($stories, function ($story) {
             $this->stories[] = $story;
             $this->storyCount++;
         });
+    }
+
+    /**
+     * Create a story from rules and add to book
+     *
+     * @param RuleInterface ...$rules
+     * @return Story
+     */
+    public function createStory(RuleInterface ...$rules): Story
+    {
+        $story = new Story(...$rules);
+        $this->addStories($story);
+
+        return $story;
     }
 
     /**
