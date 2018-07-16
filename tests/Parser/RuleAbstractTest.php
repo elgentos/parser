@@ -6,10 +6,10 @@
  * Time: 9:53
  */
 
-namespace Dutchlabelshop\Parser;
+namespace Elgentos\Parser;
 
-use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Rule\RuleAbstract;
+use Elgentos\Parser\Interfaces\MatcherInterface;
+use Elgentos\Parser\Rule\RuleAbstract;
 use PHPUnit\Framework\TestCase;
 
 class RuleAbstractTest extends TestCase

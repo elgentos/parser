@@ -6,11 +6,11 @@
  * Time: 6:09
  */
 
-namespace Dutchlabelshop\Parser\Rule;
+namespace Elgentos\Parser\Rule;
 
-use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Interfaces\RuleInterface;
+use Elgentos\Parser\Context;
+use Elgentos\Parser\Interfaces\MatcherInterface;
+use Elgentos\Parser\Interfaces\RuleInterface;
 
 abstract class RuleAbstract implements RuleInterface
 {

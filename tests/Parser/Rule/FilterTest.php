@@ -6,10 +6,10 @@
  * Time: 14:50
  */
 
-namespace Dutchlabelshop\Parser\Rule;
+namespace Elgentos\Parser\Rule;
 
-use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Matcher\IsArray;
+use Elgentos\Parser\Context;
+use Elgentos\Parser\Matcher\IsArray;
 use PHPUnit\Framework\TestCase;
 
 class FilterTest extends TestCase

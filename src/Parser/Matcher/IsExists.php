@@ -6,10 +6,10 @@
  * Time: 13:00
  */
 
-namespace Dutchlabelshop\Parser\Matcher;
+namespace Elgentos\Parser\Matcher;
 
-use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
+use Elgentos\Parser\Context;
+use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class IsExists implements MatcherInterface
 {

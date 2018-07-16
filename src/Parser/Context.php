@@ -6,10 +6,10 @@
  * Time: 14:54
  */
 
-namespace Dutchlabelshop\Parser;
+namespace Elgentos\Parser;
 
-use Dutchlabelshop\Parser\Exceptions\ContextPathNoArrayException;
-use Dutchlabelshop\Parser\Exceptions\ContextPathNotFoundException;
+use Elgentos\Parser\Exceptions\ContextPathNoArrayException;
+use Elgentos\Parser\Exceptions\ContextPathNotFoundException;
 
 class Context
 {

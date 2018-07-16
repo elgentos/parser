@@ -6,12 +6,12 @@
  * Time: 14:20
  */
 
-namespace Dutchlabelshop\Parser\Rule;
+namespace Elgentos\Parser\Rule;
 
-use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Exceptions\GeneralException;
-use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Matcher\IsArray;
+use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\GeneralException;
+use Elgentos\Parser\Interfaces\MatcherInterface;
+use Elgentos\Parser\Matcher\IsArray;
 
 class Filter extends RuleAbstract
 {

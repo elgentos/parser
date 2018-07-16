@@ -6,9 +6,9 @@
  * Time: 14:29
  */
 
-namespace Dutchlabelshop\Parser\Interfaces;
+namespace Elgentos\Parser\Interfaces;
 
-use Dutchlabelshop\Parser\Context;
+use Elgentos\Parser\Context;
 
 interface RuleInterface
 {

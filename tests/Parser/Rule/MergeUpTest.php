@@ -6,9 +6,9 @@
  * Time: 10:15
  */
 
-namespace Dutchlabelshop\Parser\Rule;
+namespace Elgentos\Parser\Rule;
 
-use Dutchlabelshop\Parser\Context;
+use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
 
 class MergeUpTest extends TestCase

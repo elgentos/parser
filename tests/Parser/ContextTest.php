@@ -6,9 +6,9 @@
  * Time: 9:37
  */
 
-namespace Dutchlabelshop\Parser;
+namespace Elgentos\Parser;
 
-use Dutchlabelshop\Parser\Exceptions\ContextPathNoArrayException;
+use Elgentos\Parser\Exceptions\ContextPathNoArrayException;
 use PHPUnit\Framework\TestCase;
 
 class ContextTest extends TestCase

@@ -6,9 +6,9 @@
  * Time: 13:02
  */
 
-namespace Dutchlabelshop\Parser\Matcher;
+namespace Elgentos\Parser\Matcher;
 
-use Dutchlabelshop\Parser\Context;
+use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
 
 class IsExistsTest extends TestCase

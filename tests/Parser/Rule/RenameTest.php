@@ -6,11 +6,11 @@
  * Time: 21:27
  */
 
-namespace Dutchlabelshop\Parser\Rule;
+namespace Elgentos\Parser\Rule;
 
-use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Matcher\IsExact;
-use Dutchlabelshop\Parser\Matcher\IsTrue;
+use Elgentos\Parser\Context;
+use Elgentos\Parser\Matcher\IsExact;
+use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class RenameTest extends TestCase

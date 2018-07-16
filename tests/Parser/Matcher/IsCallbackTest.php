@@ -7,9 +7,9 @@
  * Time: 12:28
  */
 
-namespace Dutchlabelshop\Parser\Matcher;
+namespace Elgentos\Parser\Matcher;
 
-use Dutchlabelshop\Parser\Context;
+use Elgentos\Parser\Context;
 
 require_once __DIR__ . '/MatcherAbstract.php';
 

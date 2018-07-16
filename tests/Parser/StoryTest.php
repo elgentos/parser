@@ -6,9 +6,9 @@
  * Time: 13:09
  */
 
-namespace Dutchlabelshop\Parser;
+namespace Elgentos\Parser;
 
-use Dutchlabelshop\Parser\Interfaces\RuleInterface;
+use Elgentos\Parser\Interfaces\RuleInterface;
 use PHPUnit\Framework\TestCase;
 
 class StoryTest extends TestCase

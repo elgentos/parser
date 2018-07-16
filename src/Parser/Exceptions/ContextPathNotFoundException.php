@@ -6,7 +6,7 @@
  * Time: 18:06
  */
 
-namespace Dutchlabelshop\Parser\Exceptions;
+namespace Elgentos\Parser\Exceptions;
 
 
 class ContextPathNotFoundException extends GeneralException

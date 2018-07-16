@@ -10,8 +10,8 @@ namespace Parser\Matcher;
 
 require_once __DIR__ . '/MatcherAbstract.php';
 
-use Dutchlabelshop\Parser\Matcher\IsNull;
-use Dutchlabelshop\Parser\Matcher\MatcherAbstract;
+use Elgentos\Parser\Matcher\IsNull;
+use Elgentos\Parser\Matcher\MatcherAbstract;
 use PHPUnit\Framework\TestCase;
 
 class IsNullTest extends MatcherAbstract

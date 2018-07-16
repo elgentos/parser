@@ -6,10 +6,10 @@
  * Time: 12:34
  */
 
-namespace Dutchlabelshop\Parser\Matcher;
+namespace Elgentos\Parser\Matcher;
 
 
-use Dutchlabelshop\Parser\Context;
+use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
 
 class MatcherAbstract extends TestCase

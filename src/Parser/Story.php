@@ -6,9 +6,9 @@
  * Time: 11:48
  */
 
-namespace Dutchlabelshop\Parser;
+namespace Elgentos\Parser;
 
-use Dutchlabelshop\Parser\Interfaces\RuleInterface;
+use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Story implements RuleInterface
 {

@@ -6,12 +6,12 @@
  * Time: 21:23
  */
 
-namespace Dutchlabelshop\Parser\Rule;
+namespace Elgentos\Parser\Rule;
 
 
-use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
-use Dutchlabelshop\Parser\Matcher\IsTrue;
+use Elgentos\Parser\Context;
+use Elgentos\Parser\Interfaces\MatcherInterface;
+use Elgentos\Parser\Matcher\IsTrue;
 
 class Rename extends RuleAbstract
 {

@@ -6,7 +6,7 @@
  * Time: 0:13
  */
 
-namespace Dutchlabelshop\Parser\Rule;
+namespace Elgentos\Parser\Rule;
 
 class MergeUp extends MergeDown
 {

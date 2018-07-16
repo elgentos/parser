@@ -6,10 +6,10 @@
  * Time: 13:13
  */
 
-namespace Dutchlabelshop\Parser\Rule;
+namespace Elgentos\Parser\Rule;
 
-use Dutchlabelshop\Parser\Context;
-use Dutchlabelshop\Parser\Interfaces\RuleInterface;
+use Elgentos\Parser\Context;
+use Elgentos\Parser\Interfaces\RuleInterface;
 use PHPUnit\Framework\TestCase;
 
 class LoopAllTest extends TestCase
