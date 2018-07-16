@@ -38,6 +38,7 @@ class Story implements RuleInterface
     public function parse(Context $context): bool
     {
         $successful = array_reduce($this->rules, function($succesful, $rule) use ($context) {
+            $this->read++;
             if (! $this->execute($rule, $context)) {
                 return $succesful;
             }
@@ -45,7 +46,6 @@ class Story implements RuleInterface
         }, 0);
 
         // Update statistics
-        $this->read++;
         $this->successful += $successful;
 
         return $successful > 0;
