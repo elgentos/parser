@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: jeroen
- * Date: 12-7-18
- * Time: 13:37
+ * Date: 16-7-18
+ * Time: 13:20
  */
 
 namespace Dutchlabelshop\Parser\Rule;
@@ -13,43 +13,42 @@ use Dutchlabelshop\Parser\Matcher\IsFalse;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
-class JsonTest extends TestCase
+class YamlTest extends TestCase
 {
-
-    const DATAPATH = __DIR__ . '/data';
 
     /** @var Context */
     private $context;
-
     /** @var array */
-    private $jsonContent;
+    private $yamlContent;
 
     public function setUp()
     {
         $root = [
-                'json' => file_get_contents(self::DATAPATH . '/jsonImportData.json')
+                "test" => file_get_contents(__DIR__ . '/data/jsonImportData.yaml')
         ];
         $this->context = new Context($root);
-        $this->jsonContent = json_decode($root['json'], true);
+
+        $yamlParser = new \Symfony\Component\Yaml\Parser();
+        $this->yamlContent = $yamlParser->parse($root['test']);
+
     }
 
-    public function testMatcher()
+    public function testGetMatcher()
     {
-        $rule = new Json;
+        $rule = new Yaml;
         $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
 
-        $rule = new Json(new IsFalse);
+        $rule = new Yaml(new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
     }
 
-    public function testParse()
+    public function testExecute()
     {
         $context = $this->context;
 
-        $rule = new Json;
-
+        $rule = new Yaml;
         $this->assertTrue($rule->execute($context));
-        $this->assertSame($this->jsonContent, $context->getCurrent());
+        $this->assertSame($this->yamlContent, $context->getCurrent());
     }
 
 }
