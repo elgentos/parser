@@ -28,14 +28,16 @@ class LoopAll implements RuleInterface
 
     public function parse(Context $context): bool
     {
-        foreach ($this->rules as $rule) {
-            if (! $rule->parse($context)) {
-                // Stop if a rule returns false
-                return false;
+        while (true) {
+            foreach ($this->rules as $rule) {
+                if (! $rule->parse($context)) {
+                    // Stop if a rule fails
+                    break 2;
+                }
             }
         }
 
-        return $this->parse($context);
+        return false;
     }
 
     public function match(Context $context): bool

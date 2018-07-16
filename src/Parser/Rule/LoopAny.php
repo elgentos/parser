@@ -28,11 +28,15 @@ class LoopAny implements RuleInterface
 
     public function parse(Context $context): bool
     {
-        foreach ($this->rules as $rule) {
-            if ($rule->parse($context)) {
-                return $this->parse($context);
+        do {
+            $success = false;
+            foreach ($this->rules as $rule) {
+                if ($rule->parse($context)) {
+                    $success = true;
+                    break;
+                }
             }
-        }
+        } while ($success);
 
         // Stop if all rules fail
         return false;

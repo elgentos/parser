@@ -41,7 +41,6 @@ class Story implements RuleInterface
     public function parse(Context $context): bool
     {
         $successful = array_reduce($this->rules, function($succesful, $rule) use ($context) {
-            $this->read++;
             if (! $this->execute($rule, $context)) {
                 return $succesful;
             }
@@ -56,6 +55,7 @@ class Story implements RuleInterface
 
     protected function execute(RuleInterface $rule, Context $context): bool
     {
+        $this->read++;
         return $rule->parse($context);
     }
 
