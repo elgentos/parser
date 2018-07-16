@@ -12,7 +12,7 @@ use Dutchlabelshop\Parser\Context;
 use Dutchlabelshop\Parser\Interfaces\MatcherInterface;
 use Dutchlabelshop\Parser\Matcher\IsArray;
 
-class Merge extends RuleAbstract
+class MergeDown extends RuleAbstract
 {
 
     /** @var bool */
@@ -39,7 +39,7 @@ class Merge extends RuleAbstract
         $content = $context->getCurrent();
         unset($root[$index]);
 
-        $root = $this->niceMerge($content, $root);
+        $root = $this->merge($content, $root);
         $context->changed();
 
         reset($root);
@@ -49,28 +49,40 @@ class Merge extends RuleAbstract
     }
 
     /**
-     * Recursive nice merge
+     * First call
      *
-     * @param array $result
-     * @param array $new
+     * @param array $source
+     * @param array $destination
      * @return array
      */
-    protected function niceMerge(array $result, array $new): array
+    protected function merge(array &$source, array &$destination): array
     {
-        foreach ($new as $key => &$value) {
+        return $this->niceMerge($source, $destination);
+    }
+
+    /**
+     * Recursive nice merge
+     *
+     * @param array $source
+     * @param array $destination
+     * @return array
+     */
+    private function niceMerge(array &$source, array &$destination): array
+    {
+        foreach ($destination as $key => &$value) {
             if (
-                    ! isset($result[$key]) ||
+                    ! isset($source[$key]) ||
                     !is_array($value) ||
                     ! $this->mergeRecursive
             ) {
-                $result[$key] = $value;
+                $source[$key] = &$value;
                 continue;
             }
 
-            $result[$key] = $this->niceMerge($result[$key], $value);
+            $source[$key] = $this->niceMerge($source[$key], $value);
         }
 
-        return $result;
+        return $source;
     }
 
 }

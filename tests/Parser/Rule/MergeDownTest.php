@@ -15,7 +15,7 @@ use Dutchlabelshop\Parser\Matcher\IsFalse;
 use Dutchlabelshop\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
-class MergeTest extends TestCase
+class MergeDownTest extends TestCase
 {
 
     /** @var Context */
@@ -44,10 +44,10 @@ class MergeTest extends TestCase
 
     public function testGetMatcher()
     {
-        $rule = new Merge;
+        $rule = new MergeDown;
         $this->assertInstanceOf(IsArray::class, $rule->getMatcher());
 
-        $rule = new Merge(false, new IsFalse);
+        $rule = new MergeDown(false, new IsFalse);
         $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
     }
 
@@ -58,7 +58,7 @@ class MergeTest extends TestCase
         $test = array_merge($context->getCurrent(), $context->getRoot());
         unset($test['merge']);
 
-        $rule = new Merge(false);
+        $rule = new MergeDown(false);
 
         $rule->execute($context);
         $this->assertSame($test, $context->getRoot());
@@ -72,7 +72,7 @@ class MergeTest extends TestCase
         $test = array_merge_recursive($context->getCurrent(), $context->getRoot());
         unset($test['merge']);
 
-        $rule = new Merge(true);
+        $rule = new MergeDown(true);
 
         $rule->execute($context);
         $this->assertSame($test, $context->getRoot());
@@ -91,7 +91,7 @@ class MergeTest extends TestCase
 
         $test['test'] = 'merge';
 
-        $rule = new Merge(true);
+        $rule = new MergeDown(true);
 
         $rule->execute($context);
         $this->assertSame($test, $context->getRoot());
@@ -101,7 +101,7 @@ class MergeTest extends TestCase
     {
         $context = $this->context;
 
-        $rule = new Merge;
+        $rule = new MergeDown;
 
         $rule->execute($context);
         $this->assertSame('test', $context->getIndex());
