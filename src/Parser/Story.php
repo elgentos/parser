@@ -15,14 +15,19 @@ class Story implements RuleInterface
 
     /** @var RuleInterface[] */
     private $rules;
+    /** @var int */
+    private $pages;
 
-    private $total = 0;
+    /** @var int */
+    private $read = 0;
     /** @var int */
     private $successful = 0;
 
     public function __construct(RuleInterface ... $rules)
     {
         $this->rules = $rules;
+
+        $this->pages = count($rules);
     }
 
     public function match(Context $context): bool
@@ -32,15 +37,18 @@ class Story implements RuleInterface
 
     public function parse(Context $context): bool
     {
-        $result = array_filter($this->rules, function($rule) use ($context) {
-            return $this->execute($rule, $context);
-        });
+        $successful = array_reduce($this->rules, function($succesful, $rule) use ($context) {
+            if (! $this->execute($rule, $context)) {
+                return $succesful;
+            }
+            return $succesful + 1;
+        }, 0);
 
-        // Register how many rules where executed and successful
-        $this->total += count($this->rules);
-        $this->successful += count($result);
+        // Update statistics
+        $this->read++;
+        $this->successful += $successful;
 
-        return ! empty($result);
+        return $successful > 0;
     }
 
     protected function execute(RuleInterface $rule, Context $context): bool
@@ -49,7 +57,19 @@ class Story implements RuleInterface
     }
 
     /**
-     * Tell how many rules where successful
+     * Tell how many pages(rules) where read
+     * * count every $rule for every $story->parse()
+     *
+     * @return int
+     */
+    public function getPages(): int
+    {
+        return $this->pages;
+    }
+
+    /**
+     * Tell how many pages(rules) where successful
+     * * count $rule->parse() === true for $story->parse()
      *
      * @return int
      */
@@ -59,13 +79,14 @@ class Story implements RuleInterface
     }
 
     /**
-     * Tell how many rules where executed
+     * How often is this story told
+     * * count every $story->parse()
      *
      * @return int
      */
-    public function getTotal(): int
+    public function getRead(): int
     {
-        return $this->total;
+        return $this->read;
     }
 
 }

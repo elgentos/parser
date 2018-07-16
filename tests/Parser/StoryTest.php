@@ -74,11 +74,13 @@ class StoryTest extends TestCase
 
         $this->assertTrue($story->parse($context));
         $this->assertSame(3, $story->getSuccessful());
-        $this->assertSame(5, $story->getTotal());
+        $this->assertSame(5, $story->getPages());
+        $this->assertSame(1, $story->getRead());
 
         $this->assertTrue($story->parse($context));
         $this->assertSame(6, $story->getSuccessful());
-        $this->assertSame(10, $story->getTotal());
+        $this->assertSame(5, $story->getPages());
+        $this->assertSame(2, $story->getRead());
     }
 
 }
