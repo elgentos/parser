@@ -10,7 +10,7 @@ namespace Elgentos\Parser;
 
 use Elgentos\Parser\Interfaces\RuleInterface;
 
-class StoryBook
+class StoryMetrics
 {
 
     /** @var []Story */

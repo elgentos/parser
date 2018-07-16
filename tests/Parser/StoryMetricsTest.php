@@ -11,7 +11,7 @@ namespace Elgentos\Parser;
 use Elgentos\Parser\Interfaces\RuleInterface;
 use PHPUnit\Framework\TestCase;
 
-class StoryBookTest extends TestCase
+class StoryMetricsTest extends TestCase
 {
 
     public function testAddGetStories()
@@ -19,7 +19,7 @@ class StoryBookTest extends TestCase
         $story = $this->getMockBuilder(Story::class)
                 ->getMock();
 
-        $storyBook = new StoryBook;
+        $storyBook = new StoryMetrics;
 
         $this->assertSame(0, $storyBook->getStories());
         $storyBook->addStories($story);
@@ -45,7 +45,7 @@ class StoryBookTest extends TestCase
                 ->method('getSuccessful')
                 ->willReturn(2);
 
-        $storyBook = new StoryBook;
+        $storyBook = new StoryMetrics;
 
         $this->assertSame(0, $storyBook->getPages());
         $this->assertSame(0, $storyBook->getRead());
@@ -65,7 +65,7 @@ class StoryBookTest extends TestCase
     public function testCreateStory()
     {
 
-        $storyBook = new StoryBook;
+        $storyBook = new StoryMetrics;
 
         $rule = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
