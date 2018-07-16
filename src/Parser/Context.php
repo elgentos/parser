@@ -44,6 +44,11 @@ class Context
         return $this->index;
     }
 
+    public function exists(): bool
+    {
+        return isset($this->root[$this->index]);
+    }
+
     /**
      *
      * @return mixed

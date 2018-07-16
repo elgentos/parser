@@ -113,4 +113,31 @@ class ContextTest extends TestCase
         $this->assertTrue($context->isChanged());
     }
 
+    public function testExistsEmpty()
+    {
+        $root = [];
+        $context = new Context($root);
+
+        $this->assertFalse($context->exists());
+    }
+
+    public function testExists()
+    {
+        $root = [
+                'test' => 'test',
+                'test2' => 'test'
+        ];
+        $context = new Context($root);
+
+        $this->assertTrue($context->exists());
+
+        $context->setIndex('nope');
+        $this->assertFalse($context->exists());
+
+        $context->setIndex('test');
+        $this->assertTrue($context->exists());
+        $context->setIndex('test2');
+        $this->assertTrue($context->exists());
+    }
+
 }
