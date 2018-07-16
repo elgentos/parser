@@ -23,6 +23,14 @@ class StoryTest extends TestCase
         $this->context = new Context($root);
     }
 
+    public function testTitle()
+    {
+        $test = 'Every story needs a name';
+        $story = new Story($test);
+
+        $this->assertSame($test, $story->getName());
+    }
+
     public function testOneStory()
     {
         $context = $this->context;
@@ -34,7 +42,8 @@ class StoryTest extends TestCase
                 ->method('parse')
                 ->willReturn(true);
 
-        $story = new Story($ruleMock);
+        /** @var RuleInterface $ruleMock */
+        $story = new Story('Test One Story', $ruleMock);
 
         $this->assertTrue($story->match($context));
         $this->assertTrue($story->parse($context));
@@ -51,7 +60,7 @@ class StoryTest extends TestCase
                 ->method('parse')
                 ->willReturn(true);
 
-        $story = new Story($ruleMock, $ruleMock);
+        $story = new Story('Test Two stories', $ruleMock, $ruleMock);
 
         $this->assertTrue($story->parse($context));
     }
@@ -70,7 +79,7 @@ class StoryTest extends TestCase
                         true, false, true, false, true
                 );
 
-        $story = new Story($ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock);
+        $story = new Story('Test Counters', $ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock);
 
         $this->assertTrue($story->parse($context));
         $this->assertSame(3, $story->getSuccessful());

@@ -13,18 +13,21 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 class Story implements RuleInterface
 {
 
+    /** @var string */
+    private $name;
     /** @var RuleInterface[] */
     private $rules;
+
     /** @var int */
     private $pages;
-
     /** @var int */
     private $read = 0;
     /** @var int */
     private $successful = 0;
 
-    public function __construct(RuleInterface ... $rules)
+    public function __construct(string $name, RuleInterface ... $rules)
     {
+        $this->name = $name;
         $this->rules = $rules;
 
         $this->pages = count($rules);
@@ -87,6 +90,11 @@ class Story implements RuleInterface
     public function getRead(): int
     {
         return $this->read;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
 }

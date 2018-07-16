@@ -34,12 +34,13 @@ class StoryMetrics
     /**
      * Create a story from rules and add to book
      *
+     * @param string $name
      * @param RuleInterface ...$rules
      * @return Story
      */
-    public function createStory(RuleInterface ...$rules): Story
+    public function createStory(string $name, RuleInterface ...$rules): Story
     {
-        $story = new Story(...$rules);
+        $story = new Story($name, ...$rules);
         $this->addStories($story);
 
         return $story;
@@ -90,6 +91,22 @@ class StoryMetrics
     public function getSuccessful(): int
     {
         return $this->getMetric('getSuccessful');
+    }
+
+    public function getStatistics(
+            string $message = '"%s" has %d page(s) and are read %d of %d time(s) successfully'
+    ): array {
+        $storyStatistics = array_map(function(Story $story) use (&$message) {
+            return sprintf(
+                    $message,
+                    $story->getName(),
+                    $story->getPages(),
+                    $story->getSuccessful(),
+                    $story->getRead()
+            );
+        }, $this->stories);
+
+        return $storyStatistics;
     }
 
 }
