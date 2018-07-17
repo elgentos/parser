@@ -85,11 +85,14 @@ class StoryTest extends TestCase
         $this->assertSame(3, $story->getSuccessful());
         $this->assertSame(5, $story->getPages());
         $this->assertSame(5, $story->getRead());
+        $cost = $story->getCost();
+        $this->assertGreaterThan(0, $cost);
 
         $this->assertTrue($story->parse($context));
         $this->assertSame(6, $story->getSuccessful());
         $this->assertSame(5, $story->getPages());
         $this->assertSame(10, $story->getRead());
+        $this->assertGreaterThan($cost, $story->getCost());
     }
 
 }

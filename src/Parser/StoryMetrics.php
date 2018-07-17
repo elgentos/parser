@@ -21,7 +21,7 @@ class StoryMetrics
     /**
      * Add story to book
      *
-     * @param Story ...$stories
+     * @param []Story ...$stories
      */
     public function addStories(Story ...$stories)//: void
     {
@@ -56,7 +56,7 @@ class StoryMetrics
         return $this->storyCount;
     }
 
-    protected function getMetric(string $metric): int
+    protected function getMetric(string $metric): float
     {
         return array_reduce($this->stories, function($cnt, Story $story) use ($metric) {
             return $cnt + $story->{$metric}();
@@ -70,7 +70,7 @@ class StoryMetrics
      */
     public function getPages(): int
     {
-        return $this->getMetric('getPages');
+        return (int)$this->getMetric('getPages');
     }
 
     /**
@@ -80,7 +80,7 @@ class StoryMetrics
      */
     public function getRead(): int
     {
-        return $this->getMetric('getRead');
+        return (int)$this->getMetric('getRead');
     }
 
     /**
@@ -90,11 +90,21 @@ class StoryMetrics
      */
     public function getSuccessful(): int
     {
-        return $this->getMetric('getSuccessful');
+        return (int)$this->getMetric('getSuccessful');
+    }
+
+    /**
+     * Tell how much time in all stories in ms
+     *
+     * @return float
+     */
+    public function getCost(): float
+    {
+        return $this->getMetric('getCost');
     }
 
     public function getStatistics(
-            string $message = '"%s" has %d page(s) and are read %d of %d time(s) successfully'
+            string $message = '"%s" has %d page(s) and are read %d of %d time(s) successfully (%01.3fms)'
     ): array {
         $storyStatistics = array_map(function(Story $story) use (&$message) {
             return sprintf(
@@ -102,7 +112,8 @@ class StoryMetrics
                     $story->getName(),
                     $story->getPages(),
                     $story->getSuccessful(),
-                    $story->getRead()
+                    $story->getRead(),
+                    $story->getCost()
             );
         }, $this->stories);
 

@@ -24,6 +24,8 @@ class Story implements RuleInterface
     private $read = 0;
     /** @var int */
     private $successful = 0;
+    /** @var float */
+    private $cost = 0.0;
 
     public function __construct(string $name, RuleInterface ... $rules)
     {
@@ -40,6 +42,9 @@ class Story implements RuleInterface
 
     public function parse(Context $context): bool
     {
+        // Measure cost of story
+        $start = microtime(true);
+
         $successful = array_reduce($this->rules, function($succesful, $rule) use ($context) {
             if (! $this->execute($rule, $context)) {
                 return $succesful;
@@ -47,8 +52,11 @@ class Story implements RuleInterface
             return $succesful + 1;
         }, 0);
 
+        $end = microtime(true);
+
         // Update statistics
         $this->successful += $successful;
+        $this->cost += ($end - $start) * 1000;
 
         return $successful > 0;
     }
@@ -90,6 +98,16 @@ class Story implements RuleInterface
     public function getRead(): int
     {
         return $this->read;
+    }
+
+    /**
+     * How much time is spend parsing in ms
+     *
+     * @return float
+     */
+    public function getCost(): float
+    {
+        return $this->cost;
     }
 
     public function getName(): string
