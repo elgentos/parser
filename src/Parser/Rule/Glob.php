@@ -47,11 +47,11 @@ class Glob extends FileAbstract
 
     protected function getFiles($path): array
     {
-        $path = $this->getSafepath($this->rootDir . DIRECTORY_SEPARATOR . $path);
+        $safepath = $this->getSafepath($this->rootDir . DIRECTORY_SEPARATOR . $path);
 
         $fileIterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator(
-                        $path,
+                        $safepath,
                         \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS
                 )
         );
@@ -60,7 +60,7 @@ class Glob extends FileAbstract
 
         $fileIterator->rewind();
         while ($fileIterator->valid()) {
-            $files[] = $fileIterator->getSubPathName();
+            $files[] = $path . DIRECTORY_SEPARATOR . $fileIterator->getSubPathName();
             $fileIterator->next();
         }
 

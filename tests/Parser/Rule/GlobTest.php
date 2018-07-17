@@ -31,7 +31,9 @@ class GlobTest extends TestCase
         $this->context = new Context($root);
 
         $this->files = array_map(
-                'basename',
+                function($file) {
+                    return './' . basename($file);
+                },
                 glob(self::DATAPATH . DIRECTORY_SEPARATOR . '*')
         );
         sort($this->files, SORT_STRING | SORT_NATURAL);
