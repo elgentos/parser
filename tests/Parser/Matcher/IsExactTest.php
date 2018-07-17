@@ -15,7 +15,7 @@ class IsExactTest extends MatcherAbstract
     {
         $context = $this->context;
 
-        $matcher = new IsExact('test');
+        $matcher = new IsExact('test', 'getIndex');
         $context->setIndex('test');
 
         $this->assertTrue($matcher->validate($context));
@@ -31,7 +31,7 @@ class IsExactTest extends MatcherAbstract
         $root['test'] = true;
         $context->setIndex('test');
 
-        $matcher = new IsExact(true, 'getCurrent');
+        $matcher = new IsExact(true);
         $this->assertTrue($matcher->validate($context));
     }
 
@@ -43,7 +43,7 @@ class IsExactTest extends MatcherAbstract
         $root['test'] = 123;
         $context->setIndex('test');
 
-        $matcher = new IsExact(123, 'getCurrent');
+        $matcher = new IsExact(123);
         $this->assertTrue($matcher->validate($context));
         $root['test'] = 123.12;
         $this->assertFalse($matcher->validate($context));
@@ -57,7 +57,7 @@ class IsExactTest extends MatcherAbstract
         $root['test'] = 'value';
         $context->setIndex('test');
 
-        $matcher = new IsExact('value', 'getCurrent');
+        $matcher = new IsExact('value');
         $this->assertTrue($matcher->validate($context));
     }
 }

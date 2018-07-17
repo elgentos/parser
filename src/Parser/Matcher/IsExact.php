@@ -20,7 +20,7 @@ class IsExact implements MatcherInterface
     /** @var string */
     private $method;
 
-    public function __construct($matcher, string $method = 'getIndex')
+    public function __construct($matcher, string $method = 'getCurrent')
     {
         $this->matcher = $matcher;
         $this->method = $method;

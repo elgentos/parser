@@ -20,7 +20,7 @@ class IsRegExp implements MatcherInterface
     /** @var string */
     private $method;
 
-    public function __construct(string $pattern, string $method = 'getIndex')
+    public function __construct(string $pattern, string $method = 'getCurrent')
     {
         $this->pattern = $pattern;
         $this->method = $method;
