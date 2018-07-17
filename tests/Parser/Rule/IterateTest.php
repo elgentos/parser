@@ -65,7 +65,7 @@ class IterateTest extends TestCase
         $current = &$context->getCurrent();
         $current = array_fill(0, 10, 'value');
 
-        $ruleMock->expects($this->exactly(11))
+        $ruleMock->expects($this->exactly(10))
                 ->method('parse')
                 ->willReturn(false);
 
@@ -84,7 +84,7 @@ class IterateTest extends TestCase
         $current = &$context->getCurrent();
         $current = array_fill(0, 10, 'value');
 
-        $ruleMock->expects($this->exactly(1))
+        $ruleMock->expects($this->exactly(10))
                 ->method('parse')
                 ->willReturn(true);
 
@@ -104,7 +104,7 @@ class IterateTest extends TestCase
         $repeat = array_fill(0, 10, 'deep');
         $current = array_fill(0, 10, $repeat);
 
-        $ruleMock->expects($this->exactly(111))
+        $ruleMock->expects($this->exactly(110))
                 ->method('parse')
                 ->willReturn(false);
 
@@ -119,7 +119,7 @@ class IterateTest extends TestCase
         $subRule = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $subRule->expects($this->exactly(3))
+        $subRule->expects($this->exactly(2))
                 ->method('parse')
                 ->willReturnCallback(function(Context $context) {
                     if ('two' === $context->getIndex()) {

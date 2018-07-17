@@ -37,23 +37,23 @@ class Iterate extends RuleAbstract
 
     private function recursive(Context $context, $level = 0): bool
     {
-        if ($this->rule->parse($context)) {
-            return true;
-        }
-
         if (! $this->recursive && $level > 0) {
             return false;
         }
 
         $current = &$context->getCurrent();
-        if (! is_array($current)) {
-            return false;
-        }
-
         $iterateContext = new Context($current);
 
         foreach (array_keys($current) as $key) {
             $iterateContext->setIndex((string)$key);
+
+            if ($this->rule->parse($iterateContext)) {
+                continue;
+            }
+            if (! is_array($iterateContext->getCurrent())) {
+                continue;
+            }
+
             $this->recursive($iterateContext, $level + 1);
         }
 
