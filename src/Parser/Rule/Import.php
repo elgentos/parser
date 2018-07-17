@@ -12,7 +12,7 @@ use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 use Elgentos\Parser\Matcher\IsTrue;
 
-class Import extends RuleAbstract
+class Import extends FileAbstract
 {
 
     /** @var string */
@@ -22,7 +22,7 @@ class Import extends RuleAbstract
 
     public function __construct(string $rootDir, MatcherInterface $matcher = null)
     {
-        $this->rootDir = $this->safePath($rootDir);
+        $this->rootDir = $rootDir;
         $this->matcher = $matcher ?? new IsTrue;
     }
 
@@ -51,33 +51,7 @@ class Import extends RuleAbstract
      */
     protected function getContent(string $filename): string
     {
-        return file_get_contents($this->getFilepath($filename));
-    }
-
-    /**
-     * Filter nasty strings from path
-     *
-     * @param string $path
-     * @return string
-     */
-    private function safePath(string $path): string
-    {
-        while (($newPath = str_replace(['..', '//'], ['', '/'], $path)) !== $path) {
-            $path = $newPath;
-        }
-
-        return str_replace(['..', '//'], ['', '/'], $path);
-    }
-
-    /**
-     * Get file path
-     *
-     * @param string $filename
-     * @return string
-     */
-    private function getFilepath(string $filename): string
-    {
-        return $this->rootDir . '/' . $this->safePath($filename);
+        return file_get_contents($this->getSafepath($this->rootDir . DIRECTORY_SEPARATOR . $filename));
     }
 
 }
