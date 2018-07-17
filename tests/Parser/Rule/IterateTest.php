@@ -10,7 +10,9 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Interfaces\MatcherInterface;
 use Elgentos\Parser\Interfaces\RuleInterface;
+use Elgentos\Parser\Matcher\IsArray;
 use PHPUnit\Framework\TestCase;
 
 class IterateTest extends TestCase
@@ -21,14 +23,31 @@ class IterateTest extends TestCase
 
     public function setUp()
     {
-        $root = [];
+        $root = [
+                'root' => []
+        ];
         $this->context = new Context($root);
     }
 
     public function testMatch()
     {
         $context = $this->context;
-        $rule = new Iterate(new NoLogic(false), false);
+
+        $ruleMock = $this->getMockBuilder(RuleInterface::class)
+                ->getMock();
+
+        $matcherMock = $this->getMockBuilder(MatcherInterface::class)
+                ->getMock();
+
+        $rule = new Iterate(
+                $ruleMock,
+                false,
+                $matcherMock
+        );
+
+        $matcherMock->expects($this->once())
+                ->method('validate')
+                ->willReturn(true);
 
         $this->assertTrue($rule->match($context));
     }
@@ -42,15 +61,14 @@ class IterateTest extends TestCase
 
         $rule = new Iterate($ruleMock, false);
 
-        $root = &$context->getRoot();
-        $root = array_fill(0, 10, 'value');
+        $current = &$context->getCurrent();
+        $current = array_fill(0, 10, 'value');
 
-        $ruleMock->expects($this->exactly(10))
+        $ruleMock->expects($this->exactly(11))
                 ->method('parse')
                 ->willReturn(false);
 
-        /** @var Iterate $rule */
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
     }
 
     public function testRecursive()
@@ -60,39 +78,17 @@ class IterateTest extends TestCase
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        /** @var Iterate $rule */
         $rule = new Iterate($ruleMock, true);
 
-        $root = &$context->getRoot();
+        $current = &$context->getCurrent();
         $repeat = array_fill(0, 10, 'deep');
-        $root = array_fill(0, 10, $repeat);
+        $current = array_fill(0, 10, $repeat);
 
-        $ruleMock->expects($this->exactly(110))
+        $ruleMock->expects($this->exactly(111))
                 ->method('parse')
                 ->willReturn(false);
 
-        $this->assertTrue($rule->execute($context));
-    }
-
-    public function testWithRule()
-    {
-        $context = $this->context;
-
-        $subRule = $this->getMockBuilder(RuleInterface::class)
-                ->getMock();
-
-        $subRule->expects($this->exactly(10))
-                ->method('parse')
-                ->willReturn(true);
-
-        /** @var Iterate $rule */
-        $rule = new Iterate($subRule, true);
-
-        $root = &$context->getRoot();
-        $repeat = array_fill(0, 10, 'deep');
-        $root = array_fill(0, 10, $repeat);
-
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertFalse($context->isChanged());
     }
 
@@ -103,7 +99,7 @@ class IterateTest extends TestCase
         $subRule = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $subRule->expects($this->exactly(2))
+        $subRule->expects($this->exactly(3))
                 ->method('parse')
                 ->willReturnCallback(function(Context $context) {
                     if ('two' === $context->getIndex()) {
@@ -116,12 +112,12 @@ class IterateTest extends TestCase
         /** @var Iterate $rule */
         $rule = new Iterate($subRule, true);
 
-        $root = &$context->getRoot();
-        $root['one'] = [
+        $current = &$context->getCurrent();
+        $current['one'] = [
             'two' => 'test'
         ];
 
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertTrue($context->isChanged());
     }
 

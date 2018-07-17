@@ -11,9 +11,10 @@ namespace Elgentos\Parser\Rule;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 use Elgentos\Parser\Interfaces\RuleInterface;
+use Elgentos\Parser\Matcher\IsArray;
 use Elgentos\Parser\Matcher\IsTrue;
 
-class Iterate extends RuleAbstract
+class Iterate implements RuleInterface
 {
     /** @var RuleInterface */
     private $rule;
@@ -26,42 +27,44 @@ class Iterate extends RuleAbstract
     {
         $this->rule = $rule;
         $this->recursive = $recursive;
-        $this->matcher = $matcher ?? new IsTrue;
+        $this->matcher = $matcher ?? new IsArray;
     }
 
-    public function execute(Context $context): bool
+    public function parse(Context $context): bool
     {
-        $root = &$context->getRoot();
+        return $this->recursive($context);
+    }
 
-        $iterateContext = new Context($root);
-        foreach ($root as $key => &$value) {
+    public function match(Context $context): bool
+    {
+        return $this->matcher
+                ->validate($context);
+    }
+
+    private function recursive(Context $context, $level = 0): bool
+    {
+        if ($this->rule->parse($context)) {
+            return true;
+        }
+
+        if (! $this->match($context)) {
+            return false;
+        }
+
+        if (! $this->recursive && $level > 0) {
+            return false;
+        }
+
+        $current = &$context->getCurrent();
+        $iterateContext = new Context($current);
+
+        foreach (array_keys($current) as $key) {
             $iterateContext->setIndex((string)$key);
-
-            if ($this->rule->parse($iterateContext)) {
-                continue;
-            }
-
-            if (! $this->recursive) {
-                continue;
-            }
-            if (! is_array($value)) {
-                continue;
-            }
-
-            $resursiveContext = new Context($value);
-            $this->parse($resursiveContext);
-
-            // Pass changed up
-            $resursiveContext->isChanged() && $iterateContext->changed();
+            $this->recursive($iterateContext, $level + 1);
         }
 
         $iterateContext->isChanged() && $context->changed();
         return true;
-    }
-
-    public function getMatcher(): MatcherInterface
-    {
-        return $this->matcher;
     }
 
 }
