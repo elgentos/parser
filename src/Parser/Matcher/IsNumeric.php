@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: jeroen
- * Date: 12-7-18
- * Time: 14:44
+ * Date: 17-7-18
+ * Time: 14:28
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -11,12 +11,12 @@ namespace Elgentos\Parser\Matcher;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
-class IsArray implements MatcherInterface
+class IsNumeric implements MatcherInterface
 {
 
     public function validate(Context $context): bool
     {
-        return IsType::factory(IsType::IS_ARRAY)
+        return IsType::factory(IsType::IS_NUMERIC)
                 ->validate($context);
     }
 

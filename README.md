@@ -223,10 +223,6 @@ The matcher will call closure with `Context` to implement your own.
 Check if `getIndex/getCurrent` matches the given match.
 - `IsRegExp(string $regExp, *string $method)`
 Check if `getIndex/getCurrent` preg_matches the given regular expresion.
-- `IsArray`
-Check if `getCurrent` in the `Context` is a array. 
-- `IsNull`
-Check if `getCurrent` in the `Context` is null.
 - `IsExists`
 Check if the current index in `Context` is still valid.
 - `IsFalse`
@@ -237,6 +233,21 @@ Just true.
 All given matchers MUST return true(logical AND)
 - `MatchAny(MatcherInterface ...$matchers)`
 Any given matcher MAY return true(logical OR)
+
+### IsType matcher
+
+Check if current value is a type.
+
+Base is `IsType(string $type, *string $method)`
+
+- `IsString`
+- `IsBool`
+- `IsArray`
+- `IsInt`
+- `IsNumeric`
+- `IsObject`
+- `IsNull`
+- `IsFloat`
 
 ## Stories
 

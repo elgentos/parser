@@ -16,7 +16,8 @@ class IsNull implements MatcherInterface
 
     public function validate(Context $context): bool
     {
-        return null === $context->getCurrent();
+        return IsType::factory(IsType::IS_NULL)
+                ->validate($context);
     }
 
 }
