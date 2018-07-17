@@ -41,13 +41,18 @@ class Iterate extends RuleAbstract
                 continue;
             }
 
-            if ($this->recursive && is_array($value)) {
-                $resursiveContext = new Context($value);
-                $this->parse($resursiveContext);
-
-                // Pass changed up
-                $resursiveContext->isChanged() && $iterateContext->changed();
+            if (! $this->recursive) {
+                continue;
             }
+            if (! is_array($value)) {
+                continue;
+            }
+
+            $resursiveContext = new Context($value);
+            $this->parse($resursiveContext);
+
+            // Pass changed up
+            $resursiveContext->isChanged() && $iterateContext->changed();
         }
 
         $iterateContext->isChanged() && $context->changed();
