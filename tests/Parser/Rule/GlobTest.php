@@ -46,8 +46,7 @@ class GlobTest extends TestCase
 
         $rule = new Glob(self::DATAPATH);
 
-        $rule->execute($context);
-
+        $this->assertTrue($rule->execute($context));
         $this->assertSame($this->files, $context->getCurrent());
         $this->assertTrue($context->isChanged());
     }
