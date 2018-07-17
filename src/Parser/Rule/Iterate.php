@@ -14,7 +14,7 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 use Elgentos\Parser\Matcher\IsArray;
 use Elgentos\Parser\Matcher\IsTrue;
 
-class Iterate implements RuleInterface
+class Iterate extends RuleAbstract
 {
     /** @var RuleInterface */
     private $rule;
@@ -30,15 +30,9 @@ class Iterate implements RuleInterface
         $this->matcher = $matcher ?? new IsArray;
     }
 
-    public function parse(Context $context): bool
+    public function execute(Context $context): bool
     {
         return $this->recursive($context);
-    }
-
-    public function match(Context $context): bool
-    {
-        return $this->matcher
-                ->validate($context);
     }
 
     private function recursive(Context $context, $level = 0): bool
@@ -47,15 +41,15 @@ class Iterate implements RuleInterface
             return true;
         }
 
-        if (! $this->match($context)) {
-            return false;
-        }
-
         if (! $this->recursive && $level > 0) {
             return false;
         }
 
         $current = &$context->getCurrent();
+        if (! is_array($current)) {
+            return false;
+        }
+
         $iterateContext = new Context($current);
 
         foreach (array_keys($current) as $key) {
@@ -65,6 +59,11 @@ class Iterate implements RuleInterface
 
         $iterateContext->isChanged() && $context->changed();
         return true;
+    }
+
+    public function getMatcher(): MatcherInterface
+    {
+        return $this->matcher;
     }
 
 }

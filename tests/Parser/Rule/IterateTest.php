@@ -49,6 +49,7 @@ class IterateTest extends TestCase
                 ->method('validate')
                 ->willReturn(true);
 
+        $this->assertInstanceOf(MatcherInterface::class, $rule->getMatcher());
         $this->assertTrue($rule->match($context));
     }
 
@@ -67,6 +68,25 @@ class IterateTest extends TestCase
         $ruleMock->expects($this->exactly(11))
                 ->method('parse')
                 ->willReturn(false);
+
+        $this->assertTrue($rule->parse($context));
+    }
+
+    public function testExecuteRule()
+    {
+        $context = $this->context;
+
+        $ruleMock = $this->getMockBuilder(RuleInterface::class)
+                ->getMock();
+
+        $rule = new Iterate($ruleMock, false);
+
+        $current = &$context->getCurrent();
+        $current = array_fill(0, 10, 'value');
+
+        $ruleMock->expects($this->exactly(1))
+                ->method('parse')
+                ->willReturn(true);
 
         $this->assertTrue($rule->parse($context));
     }
