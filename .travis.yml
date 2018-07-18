@@ -2,5 +2,9 @@ language: php
 php:
   - '7.0'
   - '7.1'
+
+cache:
+  - vendor
+
 before_script: composer install --prefer-dist
 script: vendor/bin/phpunit
