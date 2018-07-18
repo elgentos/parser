@@ -1,4 +1,4 @@
-# Elgentos Content parser
+# Elgentos Content parser [![Build Status](https://travis-ci.org/elgentos/parser.svg?branch=master)](https://travis-ci.org/elgentos/parser)
 
 Parse content from json/yaml/csv to a usable arrays
 
