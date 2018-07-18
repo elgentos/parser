@@ -15,7 +15,14 @@ To use in your project:
 
 `composer require elgentos/parser`
 
-# Example
+## Todo
+
+- turn into objects:
+Define rules to create objects
+- add story templates for common tasks:
+Create stories which will import files so you can start working right away
+
+## Example
 
 Consider you have a basic requirement for a configuration file
 and you want to do some additional stuff:
@@ -311,11 +318,3 @@ How many rules were successful for the stories
 - `getStatistics(*string $message)`
 Creates a human readable array,
 fun fact; you could create csv output which you can then parse.  
-
-## Todo
-
-- turn into objects
-Give some rules and create objects
-- add stories for common tasks
-Create stories which will import files so you can start working right away
- 
