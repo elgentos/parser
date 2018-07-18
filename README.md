@@ -9,6 +9,12 @@ usable arrays/objects.
 
 It's easy to setup your own requirements.
 
+## Instalation
+
+To use in your project:
+
+`composer require elgentos/parser`
+
 # Example
 
 Consider you have a basic requirement for a configuration file
