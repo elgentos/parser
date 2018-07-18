@@ -91,6 +91,27 @@ class IterateTest extends TestCase
         $this->assertTrue($rule->parse($context));
     }
 
+    public function testNoRecursive()
+    {
+        $context = $this->context;
+
+        $ruleMock = $this->getMockBuilder(RuleInterface::class)
+                ->getMock();
+
+        $rule = new Iterate($ruleMock, false);
+
+        $current = &$context->getCurrent();
+        $repeat = array_fill(0, 10, 'deep');
+        $current = array_fill(0, 10, $repeat);
+
+        $ruleMock->expects($this->exactly(10))
+                ->method('parse')
+                ->willReturn(false);
+
+        $this->assertTrue($rule->parse($context));
+        $this->assertFalse($context->isChanged());
+    }
+
     public function testRecursive()
     {
         $context = $this->context;
