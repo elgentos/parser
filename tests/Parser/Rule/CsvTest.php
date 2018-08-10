@@ -67,6 +67,18 @@ class CsvTest extends TestCase
         $this->assertFalse($context->isChanged());
     }
 
+    public function testParseOneRowWithKeys()
+    {
+        $context = $this->context;
+
+        $current = &$context->getCurrent();
+        unset($current[2], $current[3]);
+
+        $rule = new Csv(true);
+        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($context->isChanged());
+    }
+
     public function testParse()
     {
         $context = $this->context;

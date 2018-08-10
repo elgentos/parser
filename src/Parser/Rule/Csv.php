@@ -80,8 +80,8 @@ class Csv extends RuleAbstract
         }
 
         $keys = array_shift($current);
-        $numkeys = array_shift($length);
         $longest = max(...$length);
+        $numkeys = array_shift($length);
 
         if ($numkeys < $longest) {
             $keys = array_merge($keys, range($numkeys, $longest - 1));
