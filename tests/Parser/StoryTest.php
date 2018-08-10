@@ -43,7 +43,7 @@ class StoryTest extends TestCase
                 ->willReturn(true);
 
         /** @var RuleInterface $ruleMock */
-        $story = new Story('Test One Story', $ruleMock);
+        $story = new Story('Test one page', $ruleMock);
 
         $this->assertTrue($story->match($context));
         $this->assertTrue($story->parse($context));
@@ -60,7 +60,7 @@ class StoryTest extends TestCase
                 ->method('parse')
                 ->willReturn(true);
 
-        $story = new Story('Test Two stories', $ruleMock, $ruleMock);
+        $story = new Story('Test two pages', $ruleMock, $ruleMock);
 
         $this->assertTrue($story->parse($context));
     }
@@ -79,7 +79,7 @@ class StoryTest extends TestCase
                         true, false, true, false, true
                 );
 
-        $story = new Story('Test Counters', $ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock);
+        $story = new Story('Test counter', $ruleMock, $ruleMock, $ruleMock, $ruleMock, $ruleMock);
 
         $this->assertTrue($story->parse($context));
         $this->assertSame(3, $story->getSuccessful());
