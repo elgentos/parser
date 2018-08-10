@@ -40,6 +40,7 @@ class Rename extends RuleAbstract
         unset($root[$context->getIndex()]);
         $root[$this->newIndex] = $current;
 
+        $context->setIndex($this->newIndex);
         $context->changed();
 
         return true;

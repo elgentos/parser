@@ -35,6 +35,7 @@ class RenameTest extends TestCase
         $this->assertTrue($rule->execute($context));
         $this->assertSame(['test2' => 'text'], $context->getRoot());
         $this->assertTrue($context->isChanged());
+        $this->assertSame('test2', $context->getIndex());
     }
 
 }
