@@ -115,17 +115,19 @@ class StoryMetricsTest extends TestCase
                         true
                 );
 
+        $story1Name = '2. Story';
         $story1 = $this->getMockBuilder(Story::class)
                 ->setConstructorArgs([
-                        'Story 1',
+                        $story1Name,
                         $rule
                 ])
                 ->setMethods(['getCost'])
                 ->getMock();
 
+        $story2Name = '1. Story';
         $story2 = $this->getMockBuilder(Story::class)
                 ->setConstructorArgs([
-                        'Story 2',
+                        $story2Name,
                         $rule,
                         $rule
                 ])
@@ -157,13 +159,13 @@ class StoryMetricsTest extends TestCase
         $story2->parse($context);
 
         $this->assertSame([
-                '"Story 1" has 1 page(s) and are read 2 of 3 time(s) successfully (1.300ms)',
-                '"Story 2" has 2 page(s) and are read 7 of 10 time(s) successfully (1.600ms)',
+                '"' . $story2Name . '" has 2 page(s) and are read 7 of 10 time(s) successfully (1.600ms)',
+                '"' . $story1Name . '" has 1 page(s) and are read 2 of 3 time(s) successfully (1.300ms)',
         ], $storyBook->getStatistics());
 
         $this->assertSame([
-                'Story 1 1 2 3 1.3000',
-                'Story 2 2 7 10 1.6000',
+                $story2Name . ' 2 7 10 1.6000',
+                $story1Name . ' 1 2 3 1.3000',
         ], $storyBook->getStatistics('%s %d %d %d %01.4f'));
     }
 

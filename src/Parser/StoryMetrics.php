@@ -106,6 +106,8 @@ class StoryMetrics
     public function getStatistics(
             string $message = '"%s" has %d page(s) and are read %d of %d time(s) successfully (%01.3fms)'
     ): array {
+        $sortedStories = $this->getStoriesSortedByName();
+
         $storyStatistics = array_map(function(Story $story) use (&$message) {
             return sprintf(
                     $message,
@@ -115,9 +117,24 @@ class StoryMetrics
                     $story->getRead(),
                     $story->getCost()
             );
-        }, $this->stories);
+        }, $sortedStories);
 
         return $storyStatistics;
+    }
+
+    /**
+     * Sort stories by name
+     *
+     * @return array
+     */
+    private function getStoriesSortedByName(): array
+    {
+        $stories = $this->stories;
+        usort($stories, function(Story $storyA, Story $storyB) {
+            return $storyA->getName() <=> $storyB->getName();
+        });
+
+        return $stories;
     }
 
 }
