@@ -6,9 +6,10 @@
  * Time: 11:45
  */
 
-namespace Elgentos\Parser;
+namespace Elgentos;
 
 use Elgentos\Parser\Interfaces\ParserInterface;
+use Elgentos\Parser\Standard;
 
 class Parser
 {

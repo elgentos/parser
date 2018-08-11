@@ -6,7 +6,7 @@
  * Time: 13:01
  */
 
-namespace Elgentos\Parser;
+namespace Elgentos;
 
 use Elgentos\Parser\Interfaces\ParserInterface;
 use PHPUnit\Framework\TestCase;

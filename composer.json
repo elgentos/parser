@@ -24,12 +24,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Elgentos\\Parser\\": ["src/Parser"]
+      "Elgentos\\": ["src"]
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Elgentos\\Parser\\": ["tests/Parser"]
+      "Elgentos\\": ["tests"]
     }
   }
 }

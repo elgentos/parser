@@ -8,7 +8,7 @@ usable arrays/objects.
 Supports json, yaml, csv, xml and plain text.
 
 ```php
-$data = Elgentos\Parser\Parser::readFile('file.json');
+$data = Elgentos\Parser::readFile('file.json');
 ```
 
 ## Instalation
