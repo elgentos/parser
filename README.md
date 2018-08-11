@@ -1,132 +1,85 @@
 # Elgentos Content parser [![Build Status](https://travis-ci.org/elgentos/parser.svg?branch=master)](https://travis-ci.org/elgentos/parser)
-
-Parse content from json/yaml/csv to a usable arrays
+Parse content from json/yaml/csv/text to a usable array
 
 ## Description
-
 Use this library to turn your day-to-day configurations into
 usable arrays/objects.
 
-It's easy to setup your own requirements.
+Supports json/yaml/csv and plain text.
+
+```php
+$data = Elgentos\Parser\Parser::readFile('file.json');
+```
 
 ## Instalation
-
 To use in your project:
 
 `composer require elgentos/parser`
 
+To support YAML
+
+`composer require symfony/yaml`
+
+## Directives
+You can use directives inside your file.
+
+### @import
+Load content of other files directly in your current file.
+
+*YAML*
+```yaml
+othercontent:
+  "@import": path/to/other/file.yaml
+```
+*JSON*
+```json
+{
+  "othercontent": {"@import": "path/to/otherfile.yaml"  }
+} 
+```
+*CSV*
+```csv
+"@import"
+"path/to/file.json"
+"path/to/otherfile.yaml"
+"path/to/file2.yaml"
+```
+
+### @import-dir
+Read a directory recusively. 
+
+```yaml
+base:
+  "@import-dir": "path/to/directory"
+```
+```json
+{
+  "base": {"@import-dir": "path/to/directory"}
+}
+```
+
 ## Todo
+Things that need some work.
 
-- turn into objects:
-Define rules to create objects
-- add story templates for common tasks:
-Create stories which will import files so you can start working right away
+### XML
+Parse XML files.
 
-## Example
+### Object builder
+Convert a array to objects based on a set of rules.
 
-Consider you have a basic requirement for a configuration file
-and you want to do some additional stuff:
+## Customization
+We rely heavily on service contracts you can easily add your own;
+- Rules `\Elgenttos\Parser\Interfaces\RuleInterface`
+- Matcher `\Elgenttos\Parser\Interfaces\MatcherInterface`
+- Parser `\Elgenttos\Parser\Interfaces\RuleInterface`
+- Stories `\Elgenttos\Parser\Interfaces\StoriesInterface`
+ 
+## Technical description
+For our technical docs [docs/technical.md].
 
-- merging
-- filtering
-- importing multiple files
+## Examples
+We have a seperate section for some useful [docs/examples.md]
 
-`path/to/file.json`
-```json
-{
-  "db": {
-    "user": "me",
-    "password": ""
-  },
-  "data": [
-    {
-      "key": "value"
-    }
-  ]
-}
-```
-
-`parse.php`
-```php
-<?php
-
-namespace Elgentos\Parser;
-
-// Create a target context
-$target = [
-    '@import' => 'path/to/file.json',
-    'db' => [
-        'password' => '$ecr3t'            
-    ],
-    'data' => [
-        [],            
-        [
-            'key2' => 'value2'                
-        ]
-    ]
-];
-$context = new Context($target);
-
-$metrics = new StoryMetrics;
-
-$mainStory = $metrics->createStory(
-    'Main story',
-    // Loop as long as there are changes
-    new Rule\Changed(
-        // Iterate over Context
-        new Rule\Iterate(
-            // Loop until one rule fails
-            new Rule\LoopAll(
-                // Read contents of file on '@import' index
-                new Rule\Import(
-                    __DIR__,
-                    new Matcher\IsExact('@import')
-                ),
-                // Add a new story for the metrics
-                $metrics->createStory(
-                    'Json imported', 
-                    // Decode json
-                    new Rule\Json
-                ),
-                // Merge current root down over imported data
-                new Rule\MergeDown(true),
-                // Circuit braker, stop
-                new Rule\NoLogic(false)
-            ),
-            true
-        )                
-    ) 
-);
-
-$mainStory->parse($context);
-
-var_dump($metrics->getStatistics());
-/**
- *  '"Main story" has 1 page(s) and are read 0 of 1 time(s) successfully'
- *  '"Json imported" has 1 page(s) and are read 1 of 1 time(s) successfully'
- */
-
-echo json_encode($context->getRoot());
-//echo json_encode($target); // Would give the same output
-```
-
-`result`
-```json
-{
-  "db": {
-    "user": "me",
-    "password": "$ecr3t"
-  },
-  "data": [
-    {
-      "key": "value"
-    },
-    {
-      "key2": "value2"
-    }
-  ]
-}
-```
 
 ## Context
 
@@ -261,60 +214,3 @@ Base is `IsType(string $type, *string $method)`
 - `IsObject`
 - `IsNull`
 - `IsFloat`
-
-## Stories
-
-Story is a bunch of pages(`RuleInterface $rules`), it will parse every page(rule) of the story.
-It's a good way to start building a parser.
-
-Stories don't care about the result of the executed pages,
-they'll just execute them all.
-
-Because it also is a `Elgentos\Parser\Interfaces\RuleInterface`
-you can use it recursive.
-
-```php
-<?php
-
-namespace Elgentos\Parser;
-
-$root = [];
-$context = new Context($root);
-
-$story = new Story(
-        'Fancy name',
-        new Rule\NoLogic(false),
-        new Rule\NoLogic(true),
-        new Rule\NoLogic(true),
-        new Rule\NoLogic(false)
-);
-
-// Will call all 4 rules
-$story->parse($context);
-// 4 pages in the story, 4 executed, 2 successful
-
-// Will call all 4 rules again
-$story->parse($context);
-// 4 pages in the story, 8 executed, 4 successful
-
-
-```
-
-## Statistics
-
-If you want some statistics on parsing, `Elgentos\Parser\StoryMetrics`
-is ideal to collect them, it takes `Story` as input and create some totals.
-
-- `addStories(Story ...$stories)`
-Add stories to the metrics to monitor.
-- `createStory(string $name, RuleInterface ...$rules)`
-Create a story right here.
-- `getPages`
-Number of pages(rules)
-- `getRead`
-How often are the pages(rules) executed.
-- `getSuccessful`
-How many rules were successful for the stories
-- `getStatistics(*string $message)`
-Creates a human readable array,
-fun fact; you could create csv output which you can then parse.  
