@@ -1,0 +1,8 @@
+{
+  "json": [
+    {"context": "JSON"},
+    {
+      "@import": "csv.csv"
+    }
+  ]
+}

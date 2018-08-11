@@ -16,12 +16,14 @@ use Elgentos\Parser\Matcher\MatchAll;
 use Elgentos\Parser\Rule\Changed;
 use Elgentos\Parser\Rule\Csv;
 use Elgentos\Parser\Rule\Explode;
+use Elgentos\Parser\Rule\Glob;
 use Elgentos\Parser\Rule\Import;
 use Elgentos\Parser\Rule\Iterate;
 use Elgentos\Parser\Rule\Json;
 use Elgentos\Parser\Rule\LoopAll;
 use Elgentos\Parser\Rule\LoopAny;
 use Elgentos\Parser\Rule\MergeDown;
+use Elgentos\Parser\Rule\MergeUp;
 use Elgentos\Parser\Rule\Rename;
 use Elgentos\Parser\Rule\Trim;
 use Elgentos\Parser\Rule\Yaml;
@@ -73,6 +75,30 @@ class Reader implements StoriesInterface
             )
         );
 
+        $globStory = new Iterate(
+            new LoopAll(
+                new Glob(
+                    $rootDir,
+                    new MatchAll(
+                        new IsString,
+                        new IsExact('@import-glob', 'getIndex')
+                    )
+                ),
+                $this->getMetrics()->createStory(
+                    'glob',
+                    new Iterate(
+                        new LoopAll(
+                            new Rename('@import'),
+                            $importStory
+                        ),
+                        false
+                    ),
+                    new MergeUp(true)
+                )
+            ),
+            true
+        );
+
         return new Story(
             '--',
             new Changed(
@@ -80,9 +106,9 @@ class Reader implements StoriesInterface
                     '--root'
                     , $importStory
                     , $iterateStory
+                    , $globStory
                 )
-            ),
-            new MergeDown(true)
+            )
         );
     }
 

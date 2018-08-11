@@ -8,6 +8,7 @@
 
 namespace Elgentos\Parser\Stories;
 
+use Elgentos\Parser\Context;
 use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
 use PHPUnit\Framework\TestCase;
@@ -39,6 +40,44 @@ class ReaderTest extends TestCase
 
         $readerMock->__construct();
         $readerMock->__construct('./');
+    }
+
+    public function testIntegration()
+    {
+        $reader = new Reader(__DIR__ . '/data');
+
+        $data = [
+            '@import' => 'base.yml'
+        ];
+
+        $result = [
+            'base' => [
+                ['context' => 'YAML'],
+                [
+                    'json' => [
+                        ['context' => 'JSON'],
+                        [
+                            ['@import' => 'CSV'],
+                            ['text' => 'This is a TEXT']
+                        ]
+                    ]
+                ],
+                ['text' => 'TEXT4'],
+                [
+                    'globtext' => [
+                        ['text' => 'TEXT1'],
+                        ['text' => 'TEXT2'],
+                    ]
+                ]
+            ]
+        ];
+
+        $context = new Context($data);
+
+        $reader->getStory()
+                ->parse($context);
+
+        $this->assertSame($result, $data);
     }
 
 }

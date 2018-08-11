@@ -1,0 +1,3 @@
+globtext:
+- "@import": 'texts/text1.txt'
+- "@import": 'texts/text2.txt'
