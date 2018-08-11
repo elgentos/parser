@@ -94,5 +94,23 @@ XML
         $this->assertSame($result, $data);
     }
 
+    public function testParseEmpty()
+    {
+        $data = [
+                <<<XML
+<xml>
+</xml>
+XML
+        ];
+
+        $result = [["\n"]];
+
+        $context = new Context($data);
+
+        $xml = new Xml;
+
+        $this->assertTrue($xml->parse($context));
+        $this->assertSame($result, $data);
+    }
 
 }

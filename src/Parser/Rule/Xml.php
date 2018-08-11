@@ -28,7 +28,13 @@ class Xml implements RuleInterface
     private function fromXml(string $current): array
     {
         $xml = simplexml_load_string($current, \SimpleXMLIterator::class);
-        return $this->walkXml($xml);
+
+        $result = $this->walkXml($xml);
+        if (! is_array($result)) {
+            return [$result];
+        }
+
+        return $result;
     }
 
     private function walkXml(\SimpleXMLIterator $parent)
