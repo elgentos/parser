@@ -62,6 +62,9 @@ class ReaderTest extends TestCase
                         ]
                     ]
                 ],
+                [
+                    'xml' => ['config' => 'test']
+                ],
                 ['text' => 'TEXT4'],
                 [
                     'globtext' => [

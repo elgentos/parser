@@ -27,6 +27,7 @@ use Elgentos\Parser\Rule\MergeDown;
 use Elgentos\Parser\Rule\MergeUp;
 use Elgentos\Parser\Rule\Rename;
 use Elgentos\Parser\Rule\Trim;
+use Elgentos\Parser\Rule\Xml;
 use Elgentos\Parser\Rule\Yaml;
 use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
@@ -65,10 +66,11 @@ class Reader implements StoriesInterface
         $importStory = $this->getMetrics()->createStory(
             'import',
             new LoopAny(
-                $this->toText($rootDir),
-                $this->toJson($rootDir),
-                $this->toYaml($rootDir),
-                $this->toCsv($rootDir)
+                $this->fromText($rootDir),
+                $this->fromJson($rootDir),
+                $this->fromYaml($rootDir),
+                $this->fromXml($rootDir),
+                $this->fromCsv($rootDir)
             )
         );
 
@@ -129,7 +131,7 @@ class Reader implements StoriesInterface
         );
     }
 
-    protected function toJson(string $rootDir)
+    protected function fromJson(string $rootDir)
     {
         return new LoopAll(
             $this->import($rootDir, '#\.json$#'),
@@ -141,7 +143,7 @@ class Reader implements StoriesInterface
         );
     }
 
-    protected function toText(string $rootDir)
+    protected function fromText(string $rootDir)
     {
         return new LoopAll(
             $this->import($rootDir, '#\.txt$#'),
@@ -153,7 +155,7 @@ class Reader implements StoriesInterface
         );
     }
 
-    protected function toYaml(string $rootDir)
+    protected function fromYaml(string $rootDir)
     {
         return new LoopAll(
             $this->import($rootDir,'#\.ya?ml$#'),
@@ -165,7 +167,7 @@ class Reader implements StoriesInterface
         );
     }
 
-    protected function toCsv(string $rootDir)
+    protected function fromCsv(string $rootDir)
     {
         return new LoopAll(
             $this->import($rootDir,'#\.csv$#'),
@@ -174,6 +176,19 @@ class Reader implements StoriesInterface
                 new Trim,
                 new Explode,
                 new Csv(true),
+                new MergeDown(true)
+            )
+        );
+    }
+
+    protected function fromXml(string $rootDir)
+    {
+        return new LoopAll(
+            $this->import($rootDir,'#\.xml$#'),
+            $this->getMetrics()->createStory(
+                'import::csv',
+                new Trim,
+                new Xml,
                 new MergeDown(true)
             )
         );
