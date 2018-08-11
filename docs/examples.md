@@ -106,6 +106,32 @@ echo json_encode($context->getRoot());
 }
 ```
 
+## Context
+The parser works with a context, you've to define this once in your code.
+The context is used to pass around.
+
+The context will create a reference to the original array.
+
+- `$context->getRoot()` will return a pointer to the root object in the context
+- `$context->getIndex()` will return the index for the context
+- `$context->getCurrent()` will return a pointer to the current element in the root
+- `$context->setIndex(string $index)` update the active index
+- `$context->changed()` mark the context as dirty
+- `$context->isChanged()` tell if the context is dirty
+
+```php
+<?php
+
+$root = [];
+$context = new \Elgentos\Parser\Context($root);
+
+$root[] = 'test';
+
+var_dump($context->getRoot()); // ['test']
+var_dump($root); // ['test']
+```
+
+
 ## Stories
 Stories don't care about the result of the executed rules,
 they'll just execute all of them.
