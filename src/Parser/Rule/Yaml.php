@@ -9,26 +9,12 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Interfaces\MatcherInterface;
-use Elgentos\Parser\Matcher\IsTrue;
+use Elgentos\Parser\Interfaces\RuleInterface;
 
-class Yaml extends RuleAbstract
+class Yaml implements RuleInterface
 {
 
-    /** @var MatcherInterface */
-    private $matcher;
-
-    public function __construct(MatcherInterface $matcher = null)
-    {
-        $this->matcher = $matcher ?? new IsTrue;
-    }
-
-    public function getMatcher(): MatcherInterface
-    {
-        return $this->matcher;
-    }
-
-    public function execute(Context $context): bool
+    public function parse(Context $context): bool
     {
         $yaml = new \Symfony\Component\Yaml\Yaml();
 

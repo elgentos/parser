@@ -39,7 +39,7 @@ class MergeUpTest extends TestCase
                 ]
         ];
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
     }
 

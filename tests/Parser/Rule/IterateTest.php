@@ -10,9 +10,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Interfaces\MatcherInterface;
 use Elgentos\Parser\Interfaces\RuleInterface;
-use Elgentos\Parser\Matcher\IsArray;
 use PHPUnit\Framework\TestCase;
 
 class IterateTest extends TestCase
@@ -29,31 +27,7 @@ class IterateTest extends TestCase
         $this->context = new Context($root);
     }
 
-    public function testMatch()
-    {
-        $context = $this->context;
-
-        $ruleMock = $this->getMockBuilder(RuleInterface::class)
-                ->getMock();
-
-        $matcherMock = $this->getMockBuilder(MatcherInterface::class)
-                ->getMock();
-
-        $rule = new Iterate(
-                $ruleMock,
-                false,
-                $matcherMock
-        );
-
-        $matcherMock->expects($this->once())
-                ->method('validate')
-                ->willReturn(true);
-
-        $this->assertInstanceOf(MatcherInterface::class, $rule->getMatcher());
-        $this->assertTrue($rule->match($context));
-    }
-
-    public function testExecute()
+    public function testParse()
     {
         $context = $this->context;
 
@@ -72,7 +46,7 @@ class IterateTest extends TestCase
         $this->assertTrue($rule->parse($context));
     }
 
-    public function testExecuteRule()
+    public function testParseRule()
     {
         $context = $this->context;
 

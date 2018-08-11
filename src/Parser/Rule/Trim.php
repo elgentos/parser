@@ -9,31 +9,22 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Interfaces\MatcherInterface;
-use Elgentos\Parser\Matcher\IsTrue;
+use Elgentos\Parser\Interfaces\RuleInterface;
 
-class Trim extends RuleAbstract
+class Trim implements RuleInterface
 {
 
     const DEFAULT_CHARLIST = " \t\n\r\0\x0B";
 
     /** @var string */
     private $charlist;
-    /** @var MatcherInterface */
-    private $matcher;
 
-    public function __construct(string $charlist = self::DEFAULT_CHARLIST, MatcherInterface $matcher = null)
+    public function __construct(string $charlist = self::DEFAULT_CHARLIST)
     {
         $this->charlist = $charlist;
-        $this->matcher = $matcher ?? new IsTrue;
     }
 
-    public function getMatcher(): MatcherInterface
-    {
-        return $this->matcher;
-    }
-
-    public function execute(Context $context): bool
+    public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
         $current = trim($current, $this->charlist);
@@ -41,4 +32,5 @@ class Trim extends RuleAbstract
 
         return true;
     }
+
 }

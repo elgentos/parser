@@ -9,29 +9,19 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Interfaces\MatcherInterface;
-use Elgentos\Parser\Matcher\IsTrue;
 
 class Import extends FileAbstract
 {
 
     /** @var string */
     private $rootDir;
-    /** @var MatcherInterface */
-    private $matcher;
 
-    public function __construct(string $rootDir, MatcherInterface $matcher = null)
+    public function __construct(string $rootDir)
     {
         $this->rootDir = $rootDir;
-        $this->matcher = $matcher ?? new IsTrue;
     }
 
-    public function getMatcher(): MatcherInterface
-    {
-        return $this->matcher;
-    }
-
-    public function execute(Context $context): bool
+    public function parse(Context $context): bool
     {
         $filename = $context->getCurrent();
 

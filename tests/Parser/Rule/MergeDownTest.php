@@ -9,10 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsArray;
-use Elgentos\Parser\Matcher\IsExact;
-use Elgentos\Parser\Matcher\IsFalse;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class MergeDownTest extends TestCase
@@ -42,15 +38,6 @@ class MergeDownTest extends TestCase
         $this->context = new Context($root);
     }
 
-    public function testGetMatcher()
-    {
-        $rule = new MergeDown(false);
-        $this->assertInstanceOf(IsArray::class, $rule->getMatcher());
-
-        $rule = new MergeDown(false, new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-    }
-
     public function testRegularMerge()
     {
         $context = $this->context;
@@ -60,7 +47,7 @@ class MergeDownTest extends TestCase
 
         $rule = new MergeDown(false);
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
         $this->assertTrue($context->isChanged());
     }
@@ -74,7 +61,7 @@ class MergeDownTest extends TestCase
 
         $rule = new MergeDown(true);
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
         $this->assertTrue($context->isChanged());
     }
@@ -93,7 +80,7 @@ class MergeDownTest extends TestCase
 
         $rule = new MergeDown(true);
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
     }
 
@@ -103,7 +90,7 @@ class MergeDownTest extends TestCase
 
         $rule = new MergeDown(false);
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame('test', $context->getIndex());
     }
 

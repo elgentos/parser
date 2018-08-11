@@ -9,8 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsFalse;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class YamlTest extends TestCase
@@ -33,21 +31,12 @@ class YamlTest extends TestCase
 
     }
 
-    public function testGetMatcher()
-    {
-        $rule = new Yaml;
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-
-        $rule = new Yaml(new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-    }
-
-    public function testExecute()
+    public function testParse()
     {
         $context = $this->context;
 
         $rule = new Yaml;
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($this->yamlContent, $context->getCurrent());
     }
 

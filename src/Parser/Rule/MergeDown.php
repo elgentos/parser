@@ -9,29 +9,20 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Interfaces\MatcherInterface;
-use Elgentos\Parser\Matcher\IsArray;
+use Elgentos\Parser\Interfaces\RuleInterface;
 
-class MergeDown extends RuleAbstract
+class MergeDown implements RuleInterface
 {
 
     /** @var bool */
     private $mergeRecursive;
-    /** @var MatcherInterface */
-    private $matcher;
 
-    public function __construct(bool $mergeRecursive, MatcherInterface $matcher = null)
+    public function __construct(bool $mergeRecursive)
     {
         $this->mergeRecursive = $mergeRecursive;
-        $this->matcher = $matcher ?? new IsArray;
     }
 
-    public function getMatcher(): MatcherInterface
-    {
-        return $this->matcher;
-    }
-
-    public function execute(Context $context): bool
+    public function parse(Context $context): bool
     {
         $root = &$context->getRoot();
 

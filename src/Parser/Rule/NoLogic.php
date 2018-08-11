@@ -22,11 +22,6 @@ class NoLogic implements RuleInterface
         $this->return = $return;
     }
 
-    public function match(Context $context): bool
-    {
-        return $this->return;
-    }
-
     public function parse(Context $context): bool
     {
         return $this->return;

@@ -9,8 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsFalse;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class CallbackTest extends TestCase
@@ -26,22 +24,14 @@ class CallbackTest extends TestCase
     }
 
 
-    public function testExecute()
+    public function testParse()
     {
         $context = $this->context;
         $rule = new Callback(function (Context $context): bool {
             return true;
         });
 
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
     }
 
-    public function testGetMatcher()
-    {
-        $rule = new Callback(function () {});
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-
-        $rule = new Callback(function () {}, new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-    }
 }

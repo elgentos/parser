@@ -57,7 +57,6 @@ class LoopAnyTest extends TestCase
                 ->willReturn(false);
 
         $loop = new LoopAny($ruleMock, $ruleMock2);
-        $this->assertTrue($loop->match($context));
         $this->assertFalse($loop->parse($context));
     }
 

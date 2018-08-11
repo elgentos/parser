@@ -40,9 +40,4 @@ class LoopAll implements RuleInterface
         return false;
     }
 
-    public function match(Context $context): bool
-    {
-        return true;
-    }
-
 }

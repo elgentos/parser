@@ -35,11 +35,6 @@ class Story implements RuleInterface
         $this->pages = count($rules);
     }
 
-    public function match(Context $context): bool
-    {
-        return true;
-    }
-
     public function parse(Context $context): bool
     {
         // Measure cost of story

@@ -9,8 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsFalse;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class ImportTest extends TestCase
@@ -33,23 +31,13 @@ class ImportTest extends TestCase
         $this->content = file_get_contents(self::DATAPATH . $root['import']);
     }
 
-    public function testGetMatcher()
-    {
-        $rule = new Import(self::DATAPATH);
-
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-
-        $rule = new Import(self::DATAPATH, new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-    }
-
     public function testParse()
     {
         $context = $this->context;
 
         $rule = new Import(self::DATAPATH);
 
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertTrue($context->isChanged());
         $this->assertSame($this->content, $context->getCurrent());
     }
@@ -63,7 +51,7 @@ class ImportTest extends TestCase
 
         $rule = new Import(self::DATAPATH . '//../...//.');
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($this->content, $context->getCurrent());
     }
 

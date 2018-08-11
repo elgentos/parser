@@ -9,9 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsExact;
-use Elgentos\Parser\Matcher\IsFalse;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class ExplodeTest extends TestCase
@@ -30,22 +27,13 @@ class ExplodeTest extends TestCase
         $this->context = new Context($root);
     }
 
-    public function testGetMatcher()
-    {
-        $rule = new Explode;
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-
-        $rule = new Explode('', new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-    }
-
     public function testExecute()
     {
         $context = $this->context;
         $test = explode("\n", $context->getCurrent());
 
         $rule = new Explode;
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getCurrent());
     }
 
@@ -55,7 +43,7 @@ class ExplodeTest extends TestCase
         $test = explode(',', $context->getCurrent());
 
         $rule = new Explode(',');
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getCurrent());
     }
 

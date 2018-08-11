@@ -9,8 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsArray;
-use Elgentos\Parser\Matcher\IsFalse;
 use PHPUnit\Framework\TestCase;
 
 class CsvTest extends TestCase
@@ -32,15 +30,6 @@ class CsvTest extends TestCase
         $this->context = new Context($root);
     }
 
-    public function testMatcher()
-    {
-        $rule = new Csv;
-        $this->assertInstanceOf(IsArray::class, $rule->getMatcher());
-
-        $rule = new Csv(false, '', '', '', new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-    }
-
     public function testEmptyContext()
     {
         $root = [
@@ -49,7 +38,7 @@ class CsvTest extends TestCase
         $context = new Context($root);
 
         $rule = new Csv;
-        $this->assertFalse($rule->execute($context));
+        $this->assertFalse($rule->parse($context));
         $this->assertFalse($context->isChanged());
     }
 
@@ -63,7 +52,7 @@ class CsvTest extends TestCase
         $context = new Context($root);
 
         $rule = new Csv(true);
-        $this->assertFalse($rule->execute($context));
+        $this->assertFalse($rule->parse($context));
         $this->assertFalse($context->isChanged());
     }
 
@@ -75,7 +64,7 @@ class CsvTest extends TestCase
         unset($current[2], $current[3]);
 
         $rule = new Csv(true);
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertTrue($context->isChanged());
     }
 
@@ -109,7 +98,7 @@ class CsvTest extends TestCase
 
         $rule = new Csv;
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($result, $context->getCurrent());
         $this->assertTrue($context->isChanged());
     }
@@ -143,7 +132,7 @@ class CsvTest extends TestCase
 
         $rule = new Csv(true);
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($result, $context->getCurrent());
         $this->assertTrue($context->isChanged());
     }

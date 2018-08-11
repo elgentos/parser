@@ -8,7 +8,9 @@
 
 namespace Elgentos\Parser\Rule;
 
-abstract class FileAbstract extends RuleAbstract
+use Elgentos\Parser\Interfaces\RuleInterface;
+
+abstract class FileAbstract implements RuleInterface
 {
 
     /**

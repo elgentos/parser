@@ -9,18 +9,15 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Interfaces\MatcherInterface;
-use Elgentos\Parser\Matcher\IsArray;
+use Elgentos\Parser\Interfaces\RuleInterface;
 
-class Csv extends RuleAbstract
+class Csv implements RuleInterface
 {
 
     const DEFAULT_DELIMITER = ',';
     const DEFAULT_ENCLOSURE = '"';
     const DEFAULT_ESCAPE = "\\";
 
-    /** @var MatcherInterface */
-    private $matcher;
     /** @var bool */
     private $firstHasKeys;
     /** @var string */
@@ -34,26 +31,22 @@ class Csv extends RuleAbstract
             bool $firstHasKeys = false,
             string $delimiter = self::DEFAULT_DELIMITER,
             string $enclosure = self::DEFAULT_ENCLOSURE,
-            string $escape = self::DEFAULT_ESCAPE,
-            MatcherInterface $matcher = null
+            string $escape = self::DEFAULT_ESCAPE
     ) {
-        $this->matcher = $matcher ?? new IsArray;
         $this->firstHasKeys = $firstHasKeys;
         $this->delimiter = $delimiter;
         $this->enclosure = $enclosure;
         $this->escape = $escape;
     }
 
-    public function getMatcher(): MatcherInterface
-    {
-        return $this->matcher;
-    }
-
-    public function execute(Context $context): bool
+    public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
 
         if (empty($current)) {
+            return false;
+        }
+        if (! is_array($current)) {
             return false;
         }
 

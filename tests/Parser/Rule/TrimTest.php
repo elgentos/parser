@@ -9,8 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsFalse;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class TrimTest extends TestCase
@@ -32,14 +30,14 @@ class TrimTest extends TestCase
         $this->context = new Context($root);
     }
 
-    public function testExecute()
+    public function testParse()
     {
         $context = $this->context;
 
         $rule = new Trim;
         $test = trim($context->getCurrent());
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($test, $context->getCurrent());
     }
 
@@ -51,16 +49,8 @@ class TrimTest extends TestCase
         $rule = new Trim('d');
         $test = trim($context->getCurrent(), 'd');
 
-        $rule->execute($context);
+        $rule->parse($context);
         $this->assertSame($test, $context->getCurrent());
     }
 
-    public function testGetMatcher()
-    {
-        $rule = new Trim;
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-
-        $rule = new Trim(Trim::DEFAULT_CHARLIST, new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-    }
 }

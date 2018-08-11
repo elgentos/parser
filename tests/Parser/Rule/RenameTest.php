@@ -9,30 +9,19 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsExact;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class RenameTest extends TestCase
 {
 
-    public function testMatcher()
-    {
-        $rule = new Rename('test2');
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-
-        $rule = new Rename('test2', new IsExact('test'));
-        $this->assertInstanceOf(IsExact::class, $rule->getMatcher());
-    }
-
-    public function testExecute()
+    public function testParse()
     {
         $root = ['test' => 'text'];
         $context = new Context($root);
 
         $rule = new Rename('test2');
 
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame(['test2' => 'text'], $context->getRoot());
         $this->assertTrue($context->isChanged());
         $this->assertSame('test2', $context->getIndex());

@@ -13,7 +13,6 @@ use Elgentos\Parser\Context;
 interface RuleInterface
 {
 
-    public function match(Context $context): bool;
     public function parse(Context $context): bool;
 
 }

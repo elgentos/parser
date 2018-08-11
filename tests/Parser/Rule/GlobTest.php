@@ -9,8 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsFalse;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class GlobTest extends TestCase
@@ -39,7 +37,7 @@ class GlobTest extends TestCase
         sort($this->files, SORT_STRING | SORT_NATURAL);
     }
 
-    public function testExecute()
+    public function testParse()
     {
         $root = [
                 'path' => '.'
@@ -48,18 +46,9 @@ class GlobTest extends TestCase
 
         $rule = new Glob(self::DATAPATH);
 
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($this->files, $context->getCurrent());
         $this->assertTrue($context->isChanged());
-    }
-
-    public function testGetMatcher()
-    {
-        $rule = new Glob(self::DATAPATH);
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-
-        $rule = new Glob(self::DATAPATH, new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
     }
 
 }

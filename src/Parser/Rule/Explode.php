@@ -10,29 +10,20 @@ namespace Elgentos\Parser\Rule;
 
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Interfaces\MatcherInterface;
-use Elgentos\Parser\Matcher\IsTrue;
+use Elgentos\Parser\Interfaces\RuleInterface;
 
-class Explode extends RuleAbstract
+class Explode implements RuleInterface
 {
 
-    /** @var MatcherInterface */
-    private $matcher;
     /** @var string */
     private $delimiter;
 
-    public function __construct(string $delimiter = "\n", MatcherInterface $matcher = null)
+    public function __construct(string $delimiter = "\n")
     {
-        $this->matcher = $matcher ?? new IsTrue;
         $this->delimiter = $delimiter;
     }
 
-    public function getMatcher(): MatcherInterface
-    {
-        return $this->matcher;
-    }
-
-    public function execute(Context $context): bool
+    public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
         $current = explode($this->delimiter, $current);
@@ -41,4 +32,5 @@ class Explode extends RuleAbstract
 
         return true;
     }
+
 }

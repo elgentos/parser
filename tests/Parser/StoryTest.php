@@ -45,7 +45,6 @@ class StoryTest extends TestCase
         /** @var RuleInterface $ruleMock */
         $story = new Story('Test one page', $ruleMock);
 
-        $this->assertTrue($story->match($context));
         $this->assertTrue($story->parse($context));
     }
 

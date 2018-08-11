@@ -9,8 +9,6 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Matcher\IsFalse;
-use Elgentos\Parser\Matcher\IsTrue;
 use PHPUnit\Framework\TestCase;
 
 class JsonTest extends TestCase
@@ -33,22 +31,13 @@ class JsonTest extends TestCase
         $this->jsonContent = json_decode($root['json'], true);
     }
 
-    public function testMatcher()
-    {
-        $rule = new Json;
-        $this->assertInstanceOf(IsTrue::class, $rule->getMatcher());
-
-        $rule = new Json(new IsFalse);
-        $this->assertInstanceOf(IsFalse::class, $rule->getMatcher());
-    }
-
     public function testParse()
     {
         $context = $this->context;
 
         $rule = new Json;
 
-        $this->assertTrue($rule->execute($context));
+        $this->assertTrue($rule->parse($context));
         $this->assertSame($this->jsonContent, $context->getCurrent());
     }
 

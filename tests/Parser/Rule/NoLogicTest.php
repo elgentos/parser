@@ -20,7 +20,6 @@ class NoLogicTest extends TestCase
         $context = new Context($root);
 
         $rule = new NoLogic(false);
-        $this->assertFalse($rule->match($context));
         $this->assertFalse($rule->parse($context));
         $this->assertFalse($context->isChanged());
     }
@@ -31,7 +30,6 @@ class NoLogicTest extends TestCase
         $context = new Context($root);
 
         $rule = new NoLogic(true);
-        $this->assertTrue($rule->match($context));
         $this->assertTrue($rule->parse($context));
         $this->assertFalse($context->isChanged());
     }

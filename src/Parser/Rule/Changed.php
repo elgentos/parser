@@ -26,7 +26,7 @@ class Changed implements RuleInterface
 
     public function parse(Context $context): bool
     {
-        for (;$this->execute($context), $this->match($context);) {
+        for (;$this->execute($context), $context->isChanged();) {
             $context = new Context($context->getRoot());
         }
 
@@ -36,11 +36,6 @@ class Changed implements RuleInterface
     public function getCounter(): int
     {
         return $this->counter;
-    }
-
-    public function match(Context $context): bool
-    {
-        return $context->isChanged();
     }
 
     /**
