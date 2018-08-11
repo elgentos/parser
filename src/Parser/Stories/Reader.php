@@ -38,6 +38,10 @@ class Reader implements StoriesInterface
     /** @var Story */
     private $story;
 
+    const IMPORT = '@import';
+
+    const IMPORT_DIR = '@import-dir';
+
     public function __construct(string $rootDir = '.')
     {
         $this->storyMetrics = new StoryMetrics;
@@ -81,7 +85,7 @@ class Reader implements StoriesInterface
                 new Match(
                     new MatchAll(
                         new IsString,
-                        new IsExact('@import-glob', 'getIndex')
+                        new IsExact(self::IMPORT_DIR, 'getIndex')
                     )
                 ),
                 new Glob($rootDir),
@@ -89,7 +93,7 @@ class Reader implements StoriesInterface
                     'glob',
                     new Iterate(
                         new LoopAll(
-                            new Rename('@import'),
+                            new Rename(self::IMPORT),
                             $importStory
                         ),
                         false
@@ -118,7 +122,7 @@ class Reader implements StoriesInterface
         return new Match(
                 new MatchAll(
                         new IsString,
-                        new IsExact('@import', 'getIndex'),
+                        new IsExact(self::IMPORT, 'getIndex'),
                         new IsRegExp($pattern)
                 ),
                 new Import($rootDir)

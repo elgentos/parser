@@ -1,5 +1,5 @@
 base:
   - "context": "YAML"
   - "@import": 'json.json'
-  - "@import-glob": "texts"
-  - "@import-glob": "glob"
+  - "@import-dir": "texts"
+  - "@import-dir": "glob"
