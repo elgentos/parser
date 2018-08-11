@@ -19,36 +19,62 @@ class MatchTest extends TestCase
 
     /** @var MockObject */
     private $ruleMock;
+    /** @var MockObject */
+    private $matchMock;
 
     public function setUp()
     {
-        $this->ruleMock = $this->getMockBuilder(MatcherInterface::class)
+        $this->matchMock = $this->getMockBuilder(MatcherInterface::class)
+                ->getMock();
+        $this->ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
     }
 
     public function testGetMatcher()
     {
-        $ruleMock = $this->ruleMock;
-        $match = new Match($ruleMock);
+        $matchMock = $this->matchMock;
+        $match = new Match($matchMock);
 
-        $this->assertSame($ruleMock, $match->getMatcher());
+        $this->assertSame($matchMock, $match->getMatcher());
     }
 
     public function testImplementsRuleInterface()
     {
-        $ruleMock = $this->ruleMock;
-        $match = new Match($ruleMock);
+        $matchMock = $this->matchMock;
+        $match = new Match($matchMock);
 
         $this->assertInstanceOf(RuleInterface::class, $match);
     }
 
     public function testParse()
     {
+        $matchMock = $this->matchMock;
+        $match = new Match($matchMock);
+
+        $matchMock->expects($this->exactly(2))
+                ->method('validate')
+                ->willReturn(true, false);
+
+        $data = [];
+        $context = new Context($data);
+
+        $this->assertTrue($match->parse($context));
+        $this->assertFalse($match->parse($context));
+    }
+
+    public function testNextRule()
+    {
+        $matchMock = $this->matchMock;
         $ruleMock = $this->ruleMock;
-        $match = new Match($ruleMock);
+
+        $match = new Match($matchMock, $ruleMock);
+
+        $matchMock->expects($this->exactly(2))
+                ->method('validate')
+                ->willReturn(true);
 
         $ruleMock->expects($this->exactly(2))
-                ->method('validate')
+                ->method('parse')
                 ->willReturn(true, false);
 
         $data = [];

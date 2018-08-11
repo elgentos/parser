@@ -17,23 +17,37 @@ class Match implements RuleInterface
 
     /** @var MatcherInterface */
     private $matcher;
+    /** @var RuleInterface */
+    private $nextRule;
 
-    /**
-     * Match constructor.
-     */
-    public function __construct(MatcherInterface $matcher)
+    public function __construct(MatcherInterface $matcher, RuleInterface $nextRule = null)
     {
         $this->matcher = $matcher;
+        $this->nextRule = $nextRule;
     }
 
-    public function getMatcher()
+    public function getMatcher(): MatcherInterface
     {
         return $this->matcher;
     }
 
     public function parse(Context $context): bool
     {
+        return $this->match($context) && $this->next($context);
+    }
+
+    private function match(Context $context): bool
+    {
         return $this->matcher->validate($context);
+    }
+
+    private function next(Context $context)
+    {
+        if (null === $this->nextRule) {
+            return true;
+        }
+
+        return $this->nextRule->parse($context);
     }
 
 }
