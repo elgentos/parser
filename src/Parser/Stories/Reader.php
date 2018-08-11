@@ -22,6 +22,7 @@ use Elgentos\Parser\Rule\Iterate;
 use Elgentos\Parser\Rule\Json;
 use Elgentos\Parser\Rule\LoopAll;
 use Elgentos\Parser\Rule\LoopAny;
+use Elgentos\Parser\Rule\Match;
 use Elgentos\Parser\Rule\MergeDown;
 use Elgentos\Parser\Rule\MergeUp;
 use Elgentos\Parser\Rule\Rename;
@@ -77,13 +78,13 @@ class Reader implements StoriesInterface
 
         $globStory = new Iterate(
             new LoopAll(
-                new Glob(
-                    $rootDir,
+                new Match(
                     new MatchAll(
                         new IsString,
                         new IsExact('@import-glob', 'getIndex')
                     )
                 ),
+                new Glob($rootDir),
                 $this->getMetrics()->createStory(
                     'glob',
                     new Iterate(
@@ -114,13 +115,13 @@ class Reader implements StoriesInterface
 
     protected function import(string $rootDir, string $pattern)
     {
-        return new Import(
-                $rootDir,
+        return new Match(
                 new MatchAll(
                         new IsString,
                         new IsExact('@import', 'getIndex'),
                         new IsRegExp($pattern)
-                )
+                ),
+                new Import($rootDir)
         );
     }
 
