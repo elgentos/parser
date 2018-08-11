@@ -72,7 +72,7 @@ We rely heavily on service contracts you can easily add your own;
 - Stories `\Elgenttos\Parser\Interfaces\StoriesInterface`
  
 ## Technical description
-For our technical docs [docs/technical.md].
+For our technical docs [docs/technical.md]().
 
 ## Examples
-We have a seperate section for some useful [docs/examples.md]
+We have a seperate section for some useful [docs/examples.md]()
