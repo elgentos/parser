@@ -72,7 +72,8 @@ class ReaderTest extends TestCase
                         ['text' => 'TEXT2'],
                     ]
                 ]
-            ]
+            ],
+            'second' => ['text' => 'TEXT1']
         ];
 
         $context = new Context($data);

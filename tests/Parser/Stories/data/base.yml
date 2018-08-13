@@ -4,3 +4,5 @@ base:
   - "@import": 'xml.xml'
   - "@import-dir": "texts"
   - "@import-dir": "glob"
+second:
+  "@import": "texts/text1.txt"

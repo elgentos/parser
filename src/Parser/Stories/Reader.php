@@ -25,6 +25,7 @@ use Elgentos\Parser\Rule\LoopAny;
 use Elgentos\Parser\Rule\Match;
 use Elgentos\Parser\Rule\MergeDown;
 use Elgentos\Parser\Rule\MergeUp;
+use Elgentos\Parser\Rule\NoLogic;
 use Elgentos\Parser\Rule\Rename;
 use Elgentos\Parser\Rule\Trim;
 use Elgentos\Parser\Rule\Xml;
@@ -63,59 +64,17 @@ class Reader implements StoriesInterface
 
     protected function initStory(string $rootDir): Story
     {
-        $importStory = $this->getMetrics()->createStory(
-            'import',
-            new LoopAny(
-                $this->fromText($rootDir),
-                $this->fromJson($rootDir),
-                $this->fromYaml($rootDir),
-                $this->fromXml($rootDir),
-                $this->fromCsv($rootDir)
-            )
-        );
-
-        $iterateStory = $this->getMetrics()->createStory(
-            'iterate',
-            new Iterate(
-                $importStory,
-                true
-            )
-        );
-
-        $globStory = new Iterate(
-            new LoopAll(
-                new Match(
-                    new MatchAll(
-                        new IsString,
-                        new IsExact(self::IMPORT_DIR, 'getIndex')
-                    )
-                ),
-                new Glob($rootDir),
-                $this->getMetrics()->createStory(
-                    'glob',
-                    new Iterate(
-                        new LoopAll(
-                            new Rename(self::IMPORT),
-                            $importStory
-                        ),
-                        false
-                    ),
-                    new MergeUp(true)
-                )
-            ),
-            true
-        );
-
-        return new Story(
-            '--',
+        return $this->getMetrics()->createStory(
+            '-',
             new Changed(
                 $this->getMetrics()->createStory(
                     '--root'
-                    , $importStory
-                    , $iterateStory
-                    , $globStory
+                    , $this->importStory($rootDir, false)
+                    , $this->iterateStory($rootDir)
+                    , $this->globStory($rootDir)
                 )
             )
+            , new MergeDown(false)
         );
     }
 
@@ -131,7 +90,7 @@ class Reader implements StoriesInterface
         );
     }
 
-    protected function fromJson(string $rootDir)
+    protected function fromJson(string $rootDir, bool $merge)
     {
         return new LoopAll(
             $this->import($rootDir, '#\.json$#'),
@@ -139,7 +98,7 @@ class Reader implements StoriesInterface
                 'import::json',
                 new Json
             ),
-            new MergeDown(true)
+            $merge ? new MergeDown(true) : new NoLogic(true)
         );
     }
 
@@ -155,7 +114,7 @@ class Reader implements StoriesInterface
         );
     }
 
-    protected function fromYaml(string $rootDir)
+    protected function fromYaml(string $rootDir, bool $merge)
     {
         return new LoopAll(
             $this->import($rootDir,'#\.ya?ml$#'),
@@ -163,11 +122,11 @@ class Reader implements StoriesInterface
                     'import::yaml',
                     new Yaml
             ),
-            new MergeDown(true)
+            $merge ? new MergeDown(true) : new NoLogic(true)
         );
     }
 
-    protected function fromCsv(string $rootDir)
+    protected function fromCsv(string $rootDir, bool $merge)
     {
         return new LoopAll(
             $this->import($rootDir,'#\.csv$#'),
@@ -176,12 +135,12 @@ class Reader implements StoriesInterface
                 new Trim,
                 new Explode,
                 new Csv(true),
-                new MergeDown(true)
+                $merge ? new MergeDown(true) : new NoLogic(true)
             )
         );
     }
 
-    protected function fromXml(string $rootDir)
+    protected function fromXml(string $rootDir, bool $merge)
     {
         return new LoopAll(
             $this->import($rootDir,'#\.xml$#'),
@@ -189,8 +148,60 @@ class Reader implements StoriesInterface
                 'import::csv',
                 new Trim,
                 new Xml,
-                new MergeDown(true)
+                $merge ? new MergeDown(true) : new NoLogic(true)
             )
+        );
+    }
+
+    protected function importStory(string $rootDir, bool $merge): Story
+    {
+        return $this->getMetrics()->createStory(
+            'import',
+            new LoopAny(
+                $this->fromText($rootDir),
+                $this->fromJson($rootDir, $merge),
+                $this->fromYaml($rootDir, $merge),
+                $this->fromXml($rootDir, $merge),
+                $this->fromCsv($rootDir, $merge)
+            )
+        );
+    }
+
+    protected function iterateStory(string $rootDir): Story
+    {
+        return $this->getMetrics()->createStory(
+            'iterate',
+            new Iterate(
+                $this->importStory($rootDir, true),
+                true
+            )
+        );
+    }
+
+    protected function globStory(string $rootDir): Iterate
+    {
+        return new Iterate(
+            new LoopAll(
+                new Match(
+                    new MatchAll(
+                        new IsString,
+                        new IsExact(self::IMPORT_DIR, 'getIndex')
+                    )
+                ),
+                new Glob($rootDir),
+                $this->getMetrics()->createStory(
+                    'glob',
+                    new Iterate(
+                        new LoopAll(
+                            new Rename(self::IMPORT),
+                            $this->importStory($rootDir, true)
+                        ),
+                        false
+                    ),
+                    new MergeUp(true)
+                )
+            ),
+            true
         );
     }
 
