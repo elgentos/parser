@@ -12,23 +12,20 @@ namespace Elgentos\Parser\Matcher;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
-class IsExact implements MatcherInterface
+class Not implements MatcherInterface
 {
 
-    /** @var mixed */
+    /** @var MatcherInterface */
     private $matcher;
-    /** @var string */
-    private $method;
 
-    public function __construct($matcher, string $method = 'getCurrent')
+    public function __construct(MatcherInterface $matcher)
     {
         $this->matcher = $matcher;
-        $this->method = $method;
     }
 
     public function validate(Context $context): bool
     {
-        return $this->matcher === $context->{$this->method}();
+        return ! $this->matcher->validate($context);
     }
 
 }

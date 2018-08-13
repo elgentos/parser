@@ -9,47 +9,33 @@
 
 namespace Elgentos\Parser\Matcher;
 
-class MatchAnyTest extends MatcherAbstract
+class AllTest extends MatcherAbstract
 {
 
     public function testConstructorArguments()
     {
         $this->expectException(\InvalidArgumentException::class);
-        new MatchAny();
+        new All();
     }
 
     public function testValidateTrue()
     {
         $context = $this->context;
 
-        $true = new IsTrue;
+        $true = new ResolveTrue;
 
-        $matcher = new MatchAny($true, $true);
+        $matcher = new All($true, $true);
         $this->assertTrue($matcher->validate($context));
     }
-
-    public function testValidateSomeTrue()
-    {
-        $context = $this->context;
-
-        $true = new IsTrue;
-        $false = new IsFalse;
-
-        $matcher = new MatchAny($true, $false);
-        $this->assertTrue($matcher->validate($context));
-
-        $matcher = new MatchAny($false, $true);
-        $this->assertTrue($matcher->validate($context));
-    }
-
 
     public function testValidateFalse()
     {
         $context = $this->context;
 
-        $false = new IsFalse;
+        $true = new ResolveTrue;
+        $false = new ResolveFalse;
 
-        $matcher = new MatchAny($false, $false);
+        $matcher = new All($true, $false);
         $this->assertFalse($matcher->validate($context));
     }
 
@@ -57,15 +43,15 @@ class MatchAnyTest extends MatcherAbstract
     {
         $context = $this->context;
 
-        $true = $this->getMockBuilder(IsTrue::class)
+        $true = $this->getMockBuilder(ResolveTrue::class)
                 ->setMethods(['validate'])
                 ->getMock();
 
-        $true->expects($this->exactly(1))
+        $true->expects($this->exactly(5))
                 ->method('validate')
                 ->willReturn(true);
 
-        $matcher = new MatchAny($true, $true, $true, $true, $true);
+        $matcher = new All($true, $true, $true, $true, $true);
         $this->assertTrue($matcher->validate($context));
     }
 

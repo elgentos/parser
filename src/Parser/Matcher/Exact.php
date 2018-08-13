@@ -12,23 +12,23 @@ namespace Elgentos\Parser\Matcher;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
-class IsRegExp implements MatcherInterface
+class Exact implements MatcherInterface
 {
 
-    /** @var string */
-    private $pattern;
+    /** @var mixed */
+    private $matcher;
     /** @var string */
     private $method;
 
-    public function __construct(string $pattern, string $method = 'getCurrent')
+    public function __construct($matcher, string $method = 'getCurrent')
     {
-        $this->pattern = $pattern;
+        $this->matcher = $matcher;
         $this->method = $method;
     }
 
     public function validate(Context $context): bool
     {
-        return preg_match($this->pattern, $context->{$this->method}()) > 0;
+        return $this->matcher === $context->{$this->method}();
     }
 
 }

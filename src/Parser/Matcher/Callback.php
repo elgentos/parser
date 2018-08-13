@@ -12,7 +12,7 @@ namespace Elgentos\Parser\Matcher;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
-class IsCallback implements MatcherInterface
+class Callback implements MatcherInterface
 {
 
     /** @var \Closure */

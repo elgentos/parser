@@ -11,12 +11,12 @@ namespace Elgentos\Parser\Matcher;
 
 use Elgentos\Parser\Context;
 
-class IsCallbackTest extends MatcherAbstract
+class CallbackTest extends MatcherAbstract
 {
     public function testValidateTrue()
     {
         $context = $this->context;
-        $matcher = new IsCallback(function(Context $context){
+        $matcher = new Callback(function(Context $context){
             return true;
         });
 
@@ -26,7 +26,7 @@ class IsCallbackTest extends MatcherAbstract
     public function testValidateFalse()
     {
         $context = $this->context;
-        $matcher = new IsCallback(function(Context $context){
+        $matcher = new Callback(function(Context $context){
             return false;
         });
 

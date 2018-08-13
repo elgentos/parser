@@ -12,10 +12,10 @@ use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\RuleInterface;
 use Elgentos\Parser\Interfaces\StoriesInterface;
 use Elgentos\Parser\Matcher\IsArray;
-use Elgentos\Parser\Matcher\IsExact;
-use Elgentos\Parser\Matcher\IsRegExp;
+use Elgentos\Parser\Matcher\Exact;
+use Elgentos\Parser\Matcher\RegExp;
 use Elgentos\Parser\Matcher\IsString;
-use Elgentos\Parser\Matcher\MatchAll;
+use Elgentos\Parser\Matcher\All;
 use Elgentos\Parser\Rule\Callback;
 use Elgentos\Parser\Rule\Changed;
 use Elgentos\Parser\Rule\Csv;
@@ -83,12 +83,12 @@ class Reader implements StoriesInterface
     protected function import(string $rootDir, string $pattern, bool $checkIndex): RuleInterface
     {
         return new Match(
-                new MatchAll(
-                        $checkIndex ? new MatchAll(
+                new All(
+                        $checkIndex ? new All(
                                 new IsString,
-                                new IsExact(self::IMPORT, 'getIndex')
+                                new Exact(self::IMPORT, 'getIndex')
                         ) : new IsString,
-                        new IsRegExp($pattern)
+                        new RegExp($pattern)
                 ),
                 new Import($rootDir)
         );
@@ -199,14 +199,14 @@ class Reader implements StoriesInterface
     protected function globStory(string $rootDir): RuleInterface
     {
         $isCsv = true;
-        $csvIsBefore = new Match(new IsRegExp('#\.csv$#'));
+        $csvIsBefore = new Match(new RegExp('#\.csv$#'));
         $csvIsAfter = new Match(new IsArray);
 
         return new LoopAll(
                 new Match(
-                        new MatchAll(
+                        new All(
                                 new IsString,
-                                new IsExact(self::IMPORT_DIR, 'getIndex')
+                                new Exact(self::IMPORT_DIR, 'getIndex')
                         )
                 ),
                 $this->getMetrics()->createStory(
@@ -283,9 +283,9 @@ class Reader implements StoriesInterface
     protected function mergeImport(): RuleInterface
     {
         return new Match(
-                new MatchAll(
+                new All(
                         new IsArray,
-                        new IsExact(self::PREFIX . self::IMPORT, 'getIndex')
+                        new Exact(self::PREFIX . self::IMPORT, 'getIndex')
                 ),
                 $this->getMetrics()
                         ->createStory(
@@ -298,9 +298,9 @@ class Reader implements StoriesInterface
     protected function mergeText(): RuleInterface
     {
         return new Match(
-                new MatchAll(
+                new All(
                         new IsString,
-                        new IsExact(self::PREFIX . self::IMPORT, 'getIndex')
+                        new Exact(self::PREFIX . self::IMPORT, 'getIndex')
                 ),
                 $this->getMetrics()
                         ->createStory(
@@ -313,9 +313,9 @@ class Reader implements StoriesInterface
     protected function mergeGlob(): RuleInterface
     {
         return new Match(
-                new MatchAll(
+                new All(
                         new IsArray,
-                        new IsExact(self::PREFIX . self::IMPORT_DIR, 'getIndex')
+                        new Exact(self::PREFIX . self::IMPORT_DIR, 'getIndex')
                 ),
                 $this->getMetrics()->createStory(
                         '1.2.3-glob',

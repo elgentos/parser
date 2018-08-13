@@ -11,7 +11,7 @@ namespace Elgentos\Parser\Matcher;
 use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
 
-class IsExistsTest extends TestCase
+class ExistsTest extends TestCase
 {
 
     public function testValidateEmpty()
@@ -19,7 +19,7 @@ class IsExistsTest extends TestCase
         $root = [];
         $context = new Context($root);
 
-        $matcher = new IsExists;
+        $matcher = new Exists;
 
         $this->assertFalse($matcher->validate($context));
     }
@@ -33,7 +33,7 @@ class IsExistsTest extends TestCase
         ];
         $context = new Context($root);
 
-        $matcher = new IsExists;
+        $matcher = new Exists;
         $this->assertTrue($matcher->validate($context));
 
         $context->setIndex('non-existant');

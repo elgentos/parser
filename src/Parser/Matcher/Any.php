@@ -11,7 +11,7 @@ namespace Elgentos\Parser\Matcher;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
-class MatchAny implements MatcherInterface
+class Any implements MatcherInterface
 {
     /** @var []MatcherInterface */
     private $matchers;

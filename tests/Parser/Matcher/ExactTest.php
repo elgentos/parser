@@ -8,14 +8,14 @@
 
 namespace Elgentos\Parser\Matcher;
 
-class IsExactTest extends MatcherAbstract
+class ExactTest extends MatcherAbstract
 {
 
     public function testValidate()
     {
         $context = $this->context;
 
-        $matcher = new IsExact('test', 'getIndex');
+        $matcher = new Exact('test', 'getIndex');
         $context->setIndex('test');
 
         $this->assertTrue($matcher->validate($context));
@@ -31,7 +31,7 @@ class IsExactTest extends MatcherAbstract
         $root['test'] = true;
         $context->setIndex('test');
 
-        $matcher = new IsExact(true);
+        $matcher = new Exact(true);
         $this->assertTrue($matcher->validate($context));
     }
 
@@ -43,7 +43,7 @@ class IsExactTest extends MatcherAbstract
         $root['test'] = 123;
         $context->setIndex('test');
 
-        $matcher = new IsExact(123);
+        $matcher = new Exact(123);
         $this->assertTrue($matcher->validate($context));
         $root['test'] = 123.12;
         $this->assertFalse($matcher->validate($context));
@@ -57,7 +57,7 @@ class IsExactTest extends MatcherAbstract
         $root['test'] = 'value';
         $context->setIndex('test');
 
-        $matcher = new IsExact('value');
+        $matcher = new Exact('value');
         $this->assertTrue($matcher->validate($context));
     }
 }

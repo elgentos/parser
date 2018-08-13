@@ -2,23 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: jeroen
- * Date: 12-7-18
- * Time: 11:25
+ * Date: 16-7-18
+ * Time: 13:00
  */
 
 namespace Elgentos\Parser\Matcher;
 
-
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
-class IsTrue implements MatcherInterface
+class Exists implements MatcherInterface
 {
 
     public function validate(Context $context): bool
     {
-        return true;
+        return $context->exists();
     }
 
 }
-

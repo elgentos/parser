@@ -12,7 +12,7 @@ namespace Elgentos\Parser\Matcher;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
-class IsFalse implements MatcherInterface
+class ResolveFalse implements MatcherInterface
 {
 
     public function validate(Context $context): bool

@@ -9,14 +9,15 @@
 
 namespace Elgentos\Parser\Matcher;
 
-class IsTrueTest extends MatcherAbstract
+class ResolveFalseTest extends MatcherAbstract
 {
+
     public function testValidate()
     {
         $context = $this->context;
-        $matcher = new IsTrue();
+        $matcher = new ResolveFalse();
 
-        $this->assertTrue($matcher->validate($context));
+        $this->assertFalse($matcher->validate($context));
     }
 
 }
