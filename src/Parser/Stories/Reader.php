@@ -8,6 +8,7 @@
 
 namespace Elgentos\Parser\Stories;
 
+use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\RuleInterface;
 use Elgentos\Parser\Interfaces\StoriesInterface;
 use Elgentos\Parser\Matcher\IsArray;
@@ -15,6 +16,7 @@ use Elgentos\Parser\Matcher\IsExact;
 use Elgentos\Parser\Matcher\IsRegExp;
 use Elgentos\Parser\Matcher\IsString;
 use Elgentos\Parser\Matcher\MatchAll;
+use Elgentos\Parser\Rule\Callback;
 use Elgentos\Parser\Rule\Changed;
 use Elgentos\Parser\Rule\Csv;
 use Elgentos\Parser\Rule\Explode;
@@ -169,7 +171,10 @@ class Reader implements StoriesInterface
         return $this->getMetrics()->createStory(
                 'root-files-iterate',
                 new Iterate(
-                        $this->importStory($rootDir, true),
+                        new LoopAny(
+                            $this->importStory($rootDir, true),
+                            $this->globStory($rootDir)
+                        ),
                         true
                 )
         );
@@ -177,31 +182,60 @@ class Reader implements StoriesInterface
 
     protected function globStory(string $rootDir): RuleInterface
     {
+        $isCsv = true;
+        $csvIsBefore = new Match(new IsRegExp('#\.csv$#'));
+        $csvIsAfter = new Match(new IsArray);
+
         return $this->getMetrics()->createStory(
-                'root-files-glob',
-                new Iterate(
-                    new LoopAll(
-                            new Match(
-                                    new MatchAll(
-                                            new IsString,
-                                            new IsExact(self::IMPORT_DIR, 'getIndex')
-                                    )
-                            ),
-                            $this->getMetrics()->createStory(
-                                    '@glob',
-                                    new Glob($rootDir),
-                                    new Iterate(
-                                            $this->getMetrics()->createStory(
-                                                    '@glob-import',
-                                                    $this->importStory($rootDir, false)
-                                            ),
-                                            false
-                                    )
-                            ),
-                            new Rename(self::PREFIX . self::IMPORT_DIR)
-                    ),
-                    true
-            )
+                '@glob',
+                new LoopAll(
+                        new Match(
+                                new MatchAll(
+                                        new IsString,
+                                        new IsExact(self::IMPORT_DIR, 'getIndex')
+                                )
+                        ),
+                        $this->getMetrics()->createStory(
+                                '@glob-read',
+                                new Callback(function() use (&$isCsv) {
+                                    $isCsv = true;
+                                    return true;
+                                }),
+                                new Glob($rootDir),
+                                new Iterate(
+                                        $this->getMetrics()->createStory(
+                                                '@glob-import',
+                                                new Callback(function(Context $context) use (&$isCsv, $csvIsBefore) {
+                                                    if (! $isCsv) {
+                                                        return false;
+                                                    }
+
+                                                    return $isCsv = $csvIsBefore->parse($context);
+                                                }),
+                                                $this->importStory($rootDir, false),
+                                                new Callback(function(Context $context) use (&$isCsv, $csvIsAfter) {
+                                                    if (! $isCsv) {
+                                                        return false;
+                                                    }
+
+                                                    return $isCsv = $csvIsAfter->parse($context);
+                                                })
+                                        ),
+                                        false
+                                ),
+                                new Callback(function(Context $context) use (&$isCsv) {
+                                    if (! $isCsv) {
+                                        return false;
+                                    }
+
+                                    $current = &$context->getCurrent();
+                                    $current = [array_merge(...$current)];
+
+                                    return true;
+                                })
+                        ),
+                        new Rename(self::PREFIX . self::IMPORT_DIR)
+                )
         );
     }
 
@@ -212,7 +246,6 @@ class Reader implements StoriesInterface
                         'root-files'
                         , $this->importStory($rootDir, true)
                         , $this->iterateStory($rootDir)
-                        , $this->globStory($rootDir)
                 )
         );
     }

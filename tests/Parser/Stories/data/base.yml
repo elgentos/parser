@@ -10,4 +10,5 @@ csv:
   - "@import": "csv/1-one.csv"
   - "@import": "csv/2-two.csv"
 csvdir:
-  "@import-csv": "csv"
+  "@import-dir": "csv"
+

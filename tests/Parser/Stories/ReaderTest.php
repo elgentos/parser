@@ -91,7 +91,9 @@ class ReaderTest extends TestCase
                     ],
             ],
             'csvdir' => [
-                    '@import-csv' => 'csv'
+                    ['column1' => '1', 'column2' => '1'],
+                    ['column1' => '2', 'column2' => '2'],
+                    ['column1' => '3', 'column2' => '3']
             ],
         ];
 
