@@ -58,14 +58,21 @@ class ReaderTest extends TestCase
                         ['context' => 'JSON'],
                         [
                             ['@import' => 'CSV'],
-                            ['text' => 'This is a TEXT']
+                            ['text' => 'This is a TEXT'],
+                            ['xml' => ['config' => 'test']]
                         ]
                     ]
                 ],
                 [
                     'xml' => ['config' => 'test']
                 ],
-                ['text' => 'TEXT4'],
+                [
+                        'This is a TEXT',
+                        'TEXT1',
+                        'TEXT2',
+                        'TEXT3',
+                        'TEXT4',
+                ],
                 [
                     'globtext' => [
                         ['text' => 'TEXT1'],
@@ -73,7 +80,19 @@ class ReaderTest extends TestCase
                     ]
                 ]
             ],
-            'second' => ['text' => 'TEXT1']
+            'second' => ['text' => 'TEXT1'],
+            'csv' => [
+                    [
+                            ['column1' => '1', 'column2' => '1']
+                    ],
+                    [
+                            ['column1' => '2', 'column2' => '2'],
+                            ['column1' => '3', 'column2' => '3']
+                    ],
+            ],
+            'csvdir' => [
+                    '@import-csv' => 'csv'
+            ],
         ];
 
         $context = new Context($data);
