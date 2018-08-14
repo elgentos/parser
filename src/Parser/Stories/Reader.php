@@ -74,7 +74,7 @@ class Reader implements StoriesInterface
     protected function initStory(string $rootDir): Story
     {
         return $this->getMetrics()->createStory(
-                '1-root',
+                '0-root',
                 $this->filesStory($rootDir),
                 $this->mergeStory(),
                 $this->finalStory()
@@ -188,7 +188,7 @@ class Reader implements StoriesInterface
     protected function iterateStory(string $rootDir): RuleInterface
     {
         return $this->getMetrics()->createStory(
-                '1.1.1-iterate',
+                '1.1-iterate',
                 new Iterate(
                         new LoopAny(
                             $this->importStory($rootDir, true),
@@ -259,7 +259,7 @@ class Reader implements StoriesInterface
     {
         return new Changed(
                 $this->getMetrics()->createStory(
-                        '1.1-files'
+                        '1-files'
                         , $this->importStory($rootDir, true)
                         , $this->iterateStory($rootDir)
                 )
@@ -270,7 +270,7 @@ class Reader implements StoriesInterface
     {
         return new Changed(
                 $this->getMetrics()->createStory(
-                        '1.2-merge',
+                        '2-merge',
                         new Iterate(
                                 new LoopAny(
                                         $this->mergeImport(),
@@ -292,7 +292,7 @@ class Reader implements StoriesInterface
                 ),
                 $this->getMetrics()
                         ->createStory(
-                                '1.2.1-import',
+                                '2.1-import',
                                 new MergeDown(true)
                         )
         );
@@ -307,7 +307,7 @@ class Reader implements StoriesInterface
                 ),
                 $this->getMetrics()
                         ->createStory(
-                                '1.2.2-text',
+                                '2.2-text',
                                 new Rename('text')
                         )
         );
@@ -321,7 +321,7 @@ class Reader implements StoriesInterface
                         new Exact(self::PREFIX . self::IMPORT_DIR, 'getIndex')
                 ),
                 $this->getMetrics()->createStory(
-                        '1.2.3-glob',
+                        '2.3-glob',
                         new Iterate(
                                 new Match(
                                         new IsArray,
@@ -338,7 +338,7 @@ class Reader implements StoriesInterface
     {
         return $this->getMetrics()
                 ->createStory(
-                        '1.3-final',
+                        '3-final',
                         new MergeDown(false)
                 );
     }

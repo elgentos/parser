@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Stories;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
 use PHPUnit\Framework\TestCase;
@@ -42,12 +43,28 @@ class ReaderTest extends TestCase
         $readerMock->__construct('./');
     }
 
+    public function testInvalidFile()
+    {
+        $reader = new Reader(__DIR__ . '/data');
+
+        $data = [
+                '@import' => 'base.yml'
+        ];
+
+        $this->expectException(RuleInvalidContextException::class);
+
+        $context = new Context($data);
+
+        $reader->getStory()
+                ->parse($context);
+    }
+
     public function testIntegration()
     {
         $reader = new Reader(__DIR__ . '/data');
 
         $data = [
-            '@import' => 'base.yml'
+            '@import' => 'base.yaml'
         ];
 
         $result = [
