@@ -11,11 +11,12 @@ namespace Elgentos\Parser\Stories;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\RuleInterface;
 use Elgentos\Parser\Interfaces\StoriesInterface;
+use Elgentos\Parser\Matcher\EndsWith;
 use Elgentos\Parser\Matcher\IsArray;
 use Elgentos\Parser\Matcher\Exact;
-use Elgentos\Parser\Matcher\RegExp;
 use Elgentos\Parser\Matcher\IsString;
 use Elgentos\Parser\Matcher\All;
+use Elgentos\Parser\Matcher\ResolveTrue;
 use Elgentos\Parser\Rule\Callback;
 use Elgentos\Parser\Rule\Changed;
 use Elgentos\Parser\Rule\Csv;
@@ -84,11 +85,11 @@ class Reader implements StoriesInterface
     {
         return new Match(
                 new All(
-                        $checkIndex ? new All(
-                                new IsString,
-                                new Exact(self::IMPORT, 'getIndex')
-                        ) : new IsString,
-                        new RegExp($pattern)
+                        new IsString,
+                        $checkIndex
+                                ? new Exact(self::IMPORT, 'getIndex')
+                                : new ResolveTrue,
+                        new EndsWith($pattern)
                 ),
                 new Import($rootDir)
         );
@@ -97,7 +98,7 @@ class Reader implements StoriesInterface
     protected function fromJson(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '#\.json$#', $checkIndex),
+                $this->import($rootDir, '.json', $checkIndex),
                 $this->getMetrics()->createStory(
                         self::IMPORT . '::json' . ($checkIndex ? '+' : '-'),
                         new Json,
@@ -109,7 +110,7 @@ class Reader implements StoriesInterface
     protected function fromText(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '#\.txt$#', $checkIndex),
+                $this->import($rootDir, '.txt', $checkIndex),
                 $this->getMetrics()->createStory(
                         self::IMPORT . '::text' . ($checkIndex ? '+' : '-'),
                         new Trim,
@@ -121,7 +122,7 @@ class Reader implements StoriesInterface
     protected function fromYaml(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '#\.ya?ml$#', $checkIndex),
+                $this->import($rootDir, '.yaml', $checkIndex),
                 $this->getMetrics()->createStory(
                         self::IMPORT . '::yaml' . ($checkIndex ? '+' : '-'),
                         new Yaml,
@@ -133,7 +134,7 @@ class Reader implements StoriesInterface
     protected function fromCsv(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '#\.csv$#', $checkIndex),
+                $this->import($rootDir, '.csv', $checkIndex),
                 $this->getMetrics()->createStory(
                         self::IMPORT . '::csv' . ($checkIndex ? '+' : '-'),
                         new Trim,
@@ -147,7 +148,7 @@ class Reader implements StoriesInterface
     protected function fromXml(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '#\.xml$#', $checkIndex),
+                $this->import($rootDir, '.xml', $checkIndex),
                 $this->getMetrics()->createStory(
                         self::IMPORT . '::xml' . ($checkIndex ? '+' : '-'),
                         new Trim,
@@ -201,7 +202,7 @@ class Reader implements StoriesInterface
     protected function globStory(string $rootDir): RuleInterface
     {
         $isCsv = true;
-        $csvIsBefore = new Match(new RegExp('#\.csv$#'));
+        $csvIsBefore = new Match(new EndsWith('.csv'));
         $csvIsAfter = new Match(new IsArray);
 
         return new LoopAll(
