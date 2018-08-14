@@ -8,16 +8,8 @@
 
 namespace Elgentos\Parser\Matcher;
 
-use Elgentos\Parser\Interfaces\MatcherInterface;
-
 class ContainsTest extends MatcherAbstract
 {
-
-    public function testInstanceOfMatcherInterface()
-    {
-        $contains = new Contains('test');
-        $this->assertInstanceOf(MatcherInterface::class, $contains);
-    }
 
     public function testParseCaseSensitive()
     {
@@ -59,16 +51,6 @@ class ContainsTest extends MatcherAbstract
         $current = 'isTest';
         $this->assertTrue($contains->validate($context));
         $current = 'is_test';
-        $this->assertTrue($contains->validate($context));
-    }
-
-    public function testMethod()
-    {
-        $contains = new Contains('Test', false, 'getIndex');
-
-        $context = $this->context;
-
-        $context->setIndex('test');
         $this->assertTrue($contains->validate($context));
     }
 
