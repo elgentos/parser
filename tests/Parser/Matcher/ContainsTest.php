@@ -8,50 +8,19 @@
 
 namespace Elgentos\Parser\Matcher;
 
-class ContainsTest extends MatcherAbstract
+class ContainsTest extends CoreTestAbstract
 {
 
-    public function testParseCaseSensitive()
+    public function dataProvider(): array
     {
-        $contains = new Contains('test');
-
-        $context = $this->context;
-
-        $current = &$context->getCurrent();
-
-
-        $current = 'somethingselse';
-        $this->assertFalse($contains->validate($context));
-
-        $current = 'testing';
-        $this->assertTrue($contains->validate($context));
-        $current = 'Testing';
-        $this->assertFalse($contains->validate($context));
-        $current = 'isTest';
-        $this->assertFalse($contains->validate($context));
-        $current = 'is_test';
-        $this->assertTrue($contains->validate($context));
-    }
-
-    public function testParseCaseInSensitive()
-    {
-        $contains = new Contains('Test', false);
-
-        $context = $this->context;
-
-        $current = &$context->getCurrent();
-
-        $current = 'somethingselse';
-        $this->assertFalse($contains->validate($context));
-
-        $current = 'testing';
-        $this->assertTrue($contains->validate($context));
-        $current = 'Testing';
-        $this->assertTrue($contains->validate($context));
-        $current = 'isTest';
-        $this->assertTrue($contains->validate($context));
-        $current = 'is_test';
-        $this->assertTrue($contains->validate($context));
+        $containsCaseSensitive = new Contains('test');
+        return [
+                [$containsCaseSensitive, false, 'somethingselse'],
+                [$containsCaseSensitive, true, 'testing'],
+                [$containsCaseSensitive, false, 'Testing'],
+                [$containsCaseSensitive, false, 'isTest'],
+                [$containsCaseSensitive, true, 'is_test']
+        ];
     }
 
 }

@@ -9,32 +9,17 @@
 
 namespace Elgentos\Parser\Matcher;
 
-class RegExpTest extends MatcherAbstract
+class RegExpTest extends CoreTestAbstract
 {
 
-    public function testValidate()
+    public function dataProvider(): array
     {
-        $context = $this->context;
-        $true = new RegExp("#^\d+$#", 'getIndex');
+        $regExp = new RegExp("#^\d+$#");
 
-        $this->assertFalse($true->validate($context));
-        $context->setIndex('132');
-        $this->assertTrue($true->validate($context));
-    }
-
-    public function testValidateCurrent()
-    {
-        $context = $this->context;
-        $true = new RegExp("#^\d+$#");
-
-        $root = &$context->getRoot();
-
-        $root['test'] = 'nomatch';
-        $context->setIndex('test');
-
-        $this->assertFalse($true->validate($context));
-        $root['test'] = '123';
-        $this->assertTrue($true->validate($context));
+        return [
+            [$regExp, false, 'test'],
+            [$regExp, true, '132'],
+        ];
     }
 
 }

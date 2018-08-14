@@ -92,4 +92,17 @@ class CoreAbstractTest extends TestCase
         $stringAbstract->validate($context);
     }
 
+    public function testOtherTypeDisableCaseInsensitive()
+    {
+        $stringAbstract = $this->getMockBuilder(CoreAbstract::class)
+                ->setMethods(['execute'])
+                ->setConstructorArgs([true, false])
+                ->getMock();
+
+        $reflectionValue = new \ReflectionProperty($stringAbstract, 'caseSensitive');
+        $reflectionValue->setAccessible(true);
+
+        $this->assertTrue($reflectionValue->getValue($stringAbstract));
+    }
+
 }

@@ -2,19 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: jeroen
- * Date: 12-7-18
- * Time: 11:25
+ * Date: 14-8-18
+ * Time: 11:20
  */
 
 namespace Elgentos\Parser\Matcher;
 
-class RegExp extends CoreAbstract
+class BeginsWith extends CoreAbstract
 {
 
     public function execute(&$haystack): bool
     {
-        return 0 < \preg_match($this->needle, $haystack);
+        return 0 === \strpos($haystack, $this->needle);
     }
 
 }
-
