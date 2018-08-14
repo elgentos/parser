@@ -25,7 +25,7 @@ class StoryMetrics
      */
     public function addStories(Story ...$stories)//: void
     {
-        array_walk($stories, function ($story) {
+        \array_walk($stories, function ($story) {
             $this->stories[] = $story;
             $this->storyCount++;
         });
@@ -58,7 +58,7 @@ class StoryMetrics
 
     protected function getMetric(string $metric): float
     {
-        return array_reduce($this->stories, function($cnt, Story $story) use ($metric) {
+        return \array_reduce($this->stories, function($cnt, Story $story) use ($metric) {
             return $cnt + $story->{$metric}();
         }, 0);
     }
@@ -108,8 +108,8 @@ class StoryMetrics
     ): array {
         $sortedStories = $this->getStoriesSortedByName();
 
-        $storyStatistics = array_map(function(Story $story) use (&$message) {
-            return sprintf(
+        $storyStatistics = \array_map(function(Story $story) use (&$message) {
+            return \sprintf(
                     $message,
                     $story->getName(),
                     $story->getPages(),
@@ -130,7 +130,7 @@ class StoryMetrics
     private function getStoriesSortedByName(): array
     {
         $stories = $this->stories;
-        usort($stories, function(Story $storyA, Story $storyB) {
+        \usort($stories, function(Story $storyA, Story $storyB) {
             return $storyA->getName() <=> $storyB->getName();
         });
 

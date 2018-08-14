@@ -23,7 +23,7 @@ class Contains implements MatcherInterface
 
     public function __construct(string $needle, bool $caseSensitive = true, string $method = 'getCurrent')
     {
-        $this->needle = $caseSensitive ? $needle : strtolower($needle);
+        $this->needle = $caseSensitive ? $needle : \strtolower($needle);
         $this->caseSensitive = $caseSensitive;
         $this->method = $method;
     }
@@ -33,10 +33,10 @@ class Contains implements MatcherInterface
     {
         $haystack = $context->{$this->method}();
         if (! $this->caseSensitive) {
-            $haystack = strtolower($haystack);
+            $haystack = \strtolower($haystack);
         }
 
-        return false !== strpos($haystack, $this->needle);
+        return false !== \strpos($haystack, $this->needle);
     }
 
 }

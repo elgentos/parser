@@ -28,7 +28,7 @@ class RegExp implements MatcherInterface
 
     public function validate(Context $context): bool
     {
-        return preg_match($this->pattern, $context->{$this->method}()) > 0;
+        return \preg_match($this->pattern, $context->{$this->method}()) > 0;
     }
 
 }

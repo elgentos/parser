@@ -24,8 +24,8 @@ class Context
     public function __construct(array &$root = [])
     {
         $this->root = &$root;
-        reset($this->root);
-        $this->setIndex((string)key($this->root));
+        \reset($this->root);
+        $this->setIndex((string)\key($this->root));
         $this->changed = false;
     }
 
@@ -60,14 +60,14 @@ class Context
 
     public function search(string $path, string $seperator = '/'): Context
     {
-        $path = explode($seperator, $path);
+        $path = \explode($seperator, $path);
 
         $root = &$this->getRoot();
         foreach ($path as $index) {
             if (! isset($root[$index])) {
                 throw new ContextPathNotFoundException('Path not found');
             }
-            if (! is_array($root[$index])) {
+            if (! \is_array($root[$index])) {
                 throw new ContextPathNoArrayException('Path is not an array');
             }
 

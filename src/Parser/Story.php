@@ -32,22 +32,22 @@ class Story implements RuleInterface
         $this->name = $name;
         $this->rules = $rules;
 
-        $this->pages = count($rules);
+        $this->pages = \count($rules);
     }
 
     public function parse(Context $context): bool
     {
         // Measure cost of story
-        $start = microtime(true);
+        $start = \microtime(true);
 
-        $successful = array_reduce($this->rules, function($succesful, $rule) use ($context) {
+        $successful = \array_reduce($this->rules, function($succesful, $rule) use ($context) {
             if (! $this->execute($rule, $context)) {
                 return $succesful;
             }
             return $succesful + 1;
         }, 0);
 
-        $end = microtime(true);
+        $end = \microtime(true);
 
         // Update statistics
         $this->successful += $successful;
