@@ -159,11 +159,13 @@ class Reader implements StoriesInterface
 
     protected function importStory(string $rootDir, bool $checkIndex): RuleInterface
     {
+        // @codeCoverageIgnoreStart
         if ($checkIndex && null !== $this->importStoryCheckIndex) {
             return $this->importStoryCheckIndex;
-        } elseif (!$checkIndex && null !== $this->importStoryNoCheckIndex) {
+        } elseif (! $checkIndex && null !== $this->importStoryNoCheckIndex) {
             return $this->importStoryNoCheckIndex;
         }
+        // @codeCoverageIgnoreEnd
 
         $importStory = $this->getMetrics()
                 ->createStory(
