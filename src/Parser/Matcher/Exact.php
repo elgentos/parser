@@ -12,23 +12,12 @@ namespace Elgentos\Parser\Matcher;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
-class Exact implements MatcherInterface
+class Exact extends CoreAbstract
 {
 
-    /** @var mixed */
-    private $matcher;
-    /** @var string */
-    private $method;
-
-    public function __construct($matcher, string $method = 'getCurrent')
+    public function execute(&$haystack): bool
     {
-        $this->matcher = $matcher;
-        $this->method = $method;
-    }
-
-    public function validate(Context $context): bool
-    {
-        return $this->matcher === $context->{$this->method}();
+        return $haystack === $this->needle;
     }
 
 }

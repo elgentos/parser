@@ -8,28 +8,29 @@
 
 namespace Elgentos\Parser\Matcher;
 
-class ExactTest extends MatcherAbstract
+use Elgentos\Parser\Context;
+use PHPUnit\Framework\TestCase;
+
+class ExactTest extends TestCase
 {
 
     public function testValidate()
     {
-        $context = $this->context;
+        $root = ['test'];
+        $context = new Context($root);
+        $current = &$context->getCurrent();
 
-        $matcher = new Exact('test', 'getIndex');
-        $context->setIndex('test');
+        $matcher = new Exact('test');
 
         $this->assertTrue($matcher->validate($context));
-        $context->setIndex('testje');
+        $current = 'testje';
         $this->assertFalse($matcher->validate($context));
     }
 
     public function testValidateBool()
     {
-        $context = $this->context;
-
-        $root = &$context->getRoot();
-        $root['test'] = true;
-        $context->setIndex('test');
+        $root = [true];
+        $context = new Context($root);
 
         $matcher = new Exact(true);
         $this->assertTrue($matcher->validate($context));
@@ -37,27 +38,23 @@ class ExactTest extends MatcherAbstract
 
     public function testValidateInt()
     {
-        $context = $this->context;
-
-        $root = &$context->getRoot();
-        $root['test'] = 123;
-        $context->setIndex('test');
+        $root = [123];
+        $context = new Context($root);
 
         $matcher = new Exact(123);
         $this->assertTrue($matcher->validate($context));
-        $root['test'] = 123.12;
+        $root[0] = 123.12;
         $this->assertFalse($matcher->validate($context));
     }
 
     public function testValidateCurrent()
     {
-        $context = $this->context;
-
-        $root = &$context->getRoot();
-        $root['test'] = 'value';
-        $context->setIndex('test');
+        $root = ['value'];
+        $context = new Context($root);
 
         $matcher = new Exact('value');
         $this->assertTrue($matcher->validate($context));
+        $root[0] = 123.12;
+        $this->assertFalse($matcher->validate($context));
     }
 }
