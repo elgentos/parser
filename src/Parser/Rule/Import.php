@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 
 class Import extends FileAbstract
 {
@@ -24,6 +25,9 @@ class Import extends FileAbstract
     public function parse(Context $context): bool
     {
         $filename = $context->getCurrent();
+        if (! \is_string($filename)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a path/to/file", self::class));
+        }
 
         $current = &$context->getCurrent();
         $current = $this->getContent($filename);
@@ -41,7 +45,7 @@ class Import extends FileAbstract
      */
     protected function getContent(string $filename): string
     {
-        return file_get_contents($this->getSafepath($this->rootDir . DIRECTORY_SEPARATOR . $filename));
+        return \file_get_contents($this->getSafepath($this->rootDir . DIRECTORY_SEPARATOR . $filename));
     }
 
 }

@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Csv implements RuleInterface
@@ -46,25 +47,25 @@ class Csv implements RuleInterface
         if (empty($current)) {
             return false;
         }
-        if (! is_array($current)) {
-            return false;
+        if (! \is_array($current)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
         }
 
-        if ($this->firstHasKeys && count($current) < 2) {
+        if ($this->firstHasKeys && \count($current) < 2) {
             return false;
         }
         $context->changed();
 
         $length = [];
-        $current = array_map(function(string $line) use (&$length) {
-            $result = str_getcsv(
+        $current = \array_map(function(string $line) use (&$length) {
+            $result = \str_getcsv(
                     $line,
                     $this->delimiter,
                     $this->enclosure,
                     $this->escape
             );
 
-            $length[] = count($result);
+            $length[] = \count($result);
             return $result;
         }, $current);
 
@@ -72,22 +73,22 @@ class Csv implements RuleInterface
             return true;
         }
 
-        $keys = array_shift($current);
-        $longest = max(...$length);
-        $numkeys = array_shift($length);
+        $keys = \array_shift($current);
+        $longest = \max(...$length);
+        $numkeys = \array_shift($length);
 
         if ($numkeys < $longest) {
-            $keys = array_merge($keys, range($numkeys, $longest - 1));
+            $keys = \array_merge($keys, \range($numkeys, $longest - 1));
         }
 
-        $current = array_map(function($line, $length) use (&$keys, &$longest) {
+        $current = \array_map(function($line, $length) use (&$keys, &$longest) {
             if ($length < $longest) {
-                $line = array_merge(
+                $line = \array_merge(
                         $line,
-                        array_fill(0, $longest - $length, null)
+                        \array_fill(0, $longest - $length, null)
                 );
             }
-            return array_combine($keys, $line);
+            return \array_combine($keys, $line);
         }, $current, $length);
 
         return true;

@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -28,16 +29,12 @@ class XmlTest extends TestCase
                 true
         ];
 
-        $result = [
-                true
-        ];
-
         $context = new Context($data);
 
         $xml = new Xml;
 
-        $this->assertFalse($xml->parse($context));
-        $this->assertSame($data, $result);
+        $this->expectException(RuleInvalidContextException::class);
+        $xml->parse($context);
     }
 
     public function testParse()

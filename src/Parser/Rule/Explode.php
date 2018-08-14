@@ -10,6 +10,7 @@ namespace Elgentos\Parser\Rule;
 
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Explode implements RuleInterface
@@ -26,7 +27,11 @@ class Explode implements RuleInterface
     public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
-        $current = explode($this->delimiter, $current);
+        if (! \is_string($current)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a string", self::class));
+        }
+
+        $current = \explode($this->delimiter, $current);
 
         $context->changed();
 

@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use PHPUnit\Framework\TestCase;
 
 class FilterTest extends TestCase
@@ -146,6 +147,17 @@ class FilterTest extends TestCase
         $this->assertTrue($rule->parse($context));
         $this->assertNotSame($test, $root);
         $this->assertTrue($context->isChanged());
+    }
+
+    public function testInvalidType()
+    {
+        $rule = new Filter('.');
+
+        $root = ['test'];
+        $context = new Context($root);
+
+        $this->expectException(RuleInvalidContextException::class);
+        $rule->parse($context);
     }
 
 }

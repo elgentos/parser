@@ -10,6 +10,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -134,6 +135,20 @@ class IterateTest extends TestCase
 
         $this->assertTrue($rule->parse($context));
         $this->assertTrue($context->isChanged());
+    }
+
+    public function testInvalidType()
+    {
+        $subRule = $this->getMockBuilder(RuleInterface::class)
+                ->getMock();
+
+        $rule = new Iterate($subRule, false);
+
+        $root = ['test'];
+        $context = new Context($root);
+
+        $this->expectException(RuleInvalidContextException::class);
+        $rule->parse($context);
     }
 
 }

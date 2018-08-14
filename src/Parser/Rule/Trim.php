@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Trim implements RuleInterface
@@ -27,7 +28,11 @@ class Trim implements RuleInterface
     public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
-        $current = trim($current, $this->charlist);
+        if (! \is_string($current)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a string", self::class));
+        }
+
+        $current = \trim($current, $this->charlist);
         $context->changed();
 
         return true;

@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
 class MergeDown implements RuleInterface
@@ -28,13 +29,16 @@ class MergeDown implements RuleInterface
 
         $index = $context->getIndex();
         $content = $context->getCurrent();
+        if (! \is_array($content)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
+        }
         unset($root[$index]);
 
         $root = $this->merge($content, $root);
         $context->changed();
 
-        reset($root);
-        $context->setIndex((string)key($root));
+        \reset($root);
+        $context->setIndex((string)\key($root));
 
         return true;
     }

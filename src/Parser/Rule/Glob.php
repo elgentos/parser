@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 
 class Glob extends FileAbstract
 {
@@ -24,6 +25,10 @@ class Glob extends FileAbstract
     public function parse(Context $context): bool
     {
         $path = $context->getCurrent();
+        if (! \is_string($path)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a string", self::class));
+        }
+
         $files = $this->getFiles($path);
 
         $current = &$context->getCurrent();
@@ -53,7 +58,7 @@ class Glob extends FileAbstract
             $fileIterator->next();
         }
 
-        sort($files, SORT_STRING | SORT_NATURAL);
+        \sort($files, SORT_STRING | SORT_NATURAL);
 
         return $files;
     }

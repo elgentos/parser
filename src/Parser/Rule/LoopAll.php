@@ -19,7 +19,7 @@ class LoopAll implements RuleInterface
 
     public function __construct(RuleInterface ...$rules)
     {
-        if (func_num_args() < 2) {
+        if (\func_num_args() < 2) {
             throw new \InvalidArgumentException("Should at least have two rules");
         }
 

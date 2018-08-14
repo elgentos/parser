@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Iterate implements RuleInterface
@@ -36,18 +37,18 @@ class Iterate implements RuleInterface
         }
 
         $current = &$context->getCurrent();
-        if (! is_array($current)) {
-            return false;
+        if (! \is_array($current)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
         }
 
         $iterateContext = new Context($current);
-        foreach (array_keys($current) as $key) {
+        foreach (\array_keys($current) as $key) {
             $iterateContext->setIndex((string)$key);
 
             if ($this->rule->parse($iterateContext)) {
                 continue;
             }
-            if (! is_array($iterateContext->getCurrent())) {
+            if (! \is_array($iterateContext->getCurrent())) {
                 continue;
             }
 

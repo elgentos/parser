@@ -9,6 +9,8 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
+use Elgentos\Parser\Exceptions\RuleSymfonyYamlNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 class YamlTest extends TestCase
@@ -38,6 +40,23 @@ class YamlTest extends TestCase
         $rule = new Yaml;
         $this->assertTrue($rule->parse($context));
         $this->assertSame($this->yamlContent, $context->getCurrent());
+    }
+
+    public function testInvalidType()
+    {
+        $rule = new Yaml;
+
+        $root = [['test']];
+        $context = new Context($root);
+
+        $this->expectException(RuleInvalidContextException::class);
+        $rule->parse($context);
+    }
+
+    public function testNonExistantClass()
+    {
+        $this->expectException(RuleSymfonyYamlNotFoundException::class);
+        new Yaml('non_existant\class');
     }
 
 }

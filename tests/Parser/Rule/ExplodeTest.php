@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use PHPUnit\Framework\TestCase;
 
 class ExplodeTest extends TestCase
@@ -45,6 +46,18 @@ class ExplodeTest extends TestCase
         $rule = new Explode(',');
         $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getCurrent());
+    }
+
+    public function testInvalidType()
+    {
+        $rule = new Explode;
+
+        $context = $this->context;
+        $current = &$context->getCurrent();
+
+        $current = [];
+        $this->expectException(RuleInvalidContextException::class);
+        $rule->parse($context);
     }
 
 }

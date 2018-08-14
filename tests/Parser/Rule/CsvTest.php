@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use PHPUnit\Framework\TestCase;
 
 class CsvTest extends TestCase
@@ -135,6 +136,18 @@ class CsvTest extends TestCase
         $rule->parse($context);
         $this->assertSame($result, $context->getCurrent());
         $this->assertTrue($context->isChanged());
+    }
+
+    public function testInvalidType()
+    {
+        $rule = new Csv(false);
+
+        $context = $this->context;
+        $current = &$context->getCurrent();
+
+        $current = 'test';
+        $this->expectException(RuleInvalidContextException::class);
+        $rule->parse($context);
     }
 
 }

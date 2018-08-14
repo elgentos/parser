@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use PHPUnit\Framework\TestCase;
 
 class JsonTest extends TestCase
@@ -39,6 +40,17 @@ class JsonTest extends TestCase
 
         $this->assertTrue($rule->parse($context));
         $this->assertSame($this->jsonContent, $context->getCurrent());
+    }
+
+    public function testInvalidType()
+    {
+        $rule = new Json;
+
+        $root = [['test']];
+        $context = new Context($root);
+
+        $this->expectException(RuleInvalidContextException::class);
+        $rule->parse($context);
     }
 
 }

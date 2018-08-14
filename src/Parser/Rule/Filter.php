@@ -10,6 +10,7 @@ namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Exceptions\GeneralException;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Filter implements RuleInterface
@@ -27,9 +28,8 @@ class Filter implements RuleInterface
     {
         $filter = $context->getCurrent();
         $root = &$context->getRoot();
-
-        if (! is_array($filter)) {
-            return false;
+        if (! \is_array($filter)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
         }
 
         unset($root[$context->getIndex()]);
@@ -57,8 +57,8 @@ class Filter implements RuleInterface
     {
         $root = &$context->getRoot();
 
-        $root = array_filter($root, function(&$row) use ($index, $values, $inverse) {
-            if (! is_array($row)) {
+        $root = \array_filter($root, function(&$row) use ($index, $values, $inverse) {
+            if (! \is_array($row)) {
                 return true;
             }
 
@@ -66,7 +66,7 @@ class Filter implements RuleInterface
                 return true;
             }
 
-            return (array_search($row[$index], $values) !== false) !== $inverse;
+            return (\array_search($row[$index], $values) !== false) !== $inverse;
         });
 
         return true;

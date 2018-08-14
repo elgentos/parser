@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use PHPUnit\Framework\TestCase;
 
 class ImportTest extends TestCase
@@ -53,6 +54,17 @@ class ImportTest extends TestCase
 
         $rule->parse($context);
         $this->assertSame($this->content, $context->getCurrent());
+    }
+
+    public function testInvalidType()
+    {
+        $rule = new Import('.');
+
+        $root = [['test']];
+        $context = new Context($root);
+
+        $this->expectException(RuleInvalidContextException::class);
+        $rule->parse($context);
     }
 
 }

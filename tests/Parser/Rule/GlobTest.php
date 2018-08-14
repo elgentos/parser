@@ -9,6 +9,7 @@
 namespace Elgentos\Parser\Rule;
 
 use Elgentos\Parser\Context;
+use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use PHPUnit\Framework\TestCase;
 
 class GlobTest extends TestCase
@@ -49,6 +50,17 @@ class GlobTest extends TestCase
         $this->assertTrue($rule->parse($context));
         $this->assertSame($this->files, $context->getCurrent());
         $this->assertTrue($context->isChanged());
+    }
+
+    public function testInvalidType()
+    {
+        $rule = new Glob('.');
+
+        $root = [['test']];
+        $context = new Context($root);
+
+        $this->expectException(RuleInvalidContextException::class);
+        $rule->parse($context);
     }
 
 }
