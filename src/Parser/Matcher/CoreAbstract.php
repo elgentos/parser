@@ -21,7 +21,7 @@ abstract class CoreAbstract implements MatcherInterface
     /** @var bool */
     protected $caseSensitive;
 
-    public function __construct($needle, bool $caseSensitive = true, string $method = 'getCurrent')
+    public function __construct($needle, string $method = 'getCurrent', bool $caseSensitive = true)
     {
         $caseSensitive = ! \is_string($needle) ? true : $caseSensitive;
         $this->caseSensitive = $caseSensitive;

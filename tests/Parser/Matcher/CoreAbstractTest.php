@@ -55,7 +55,7 @@ class CoreAbstractTest extends TestCase
     {
         $stringAbstract = $this->getMockBuilder(CoreAbstract::class)
                 ->setMethods(['execute'])
-                ->setConstructorArgs(['Test', false])
+                ->setConstructorArgs(['Test', 'getCurrent', false])
                 ->getMock();
 
         $reflectionValue = new \ReflectionProperty($stringAbstract, 'needle');
@@ -77,7 +77,7 @@ class CoreAbstractTest extends TestCase
     {
         $stringAbstract = $this->getMockBuilder(CoreAbstract::class)
                 ->setMethods(['execute'])
-                ->setConstructorArgs(['Test', false, 'getIndex'])
+                ->setConstructorArgs(['Test', 'getIndex', false])
                 ->getMock();
 
         $stringAbstract->expects($this->once())
@@ -96,7 +96,7 @@ class CoreAbstractTest extends TestCase
     {
         $stringAbstract = $this->getMockBuilder(CoreAbstract::class)
                 ->setMethods(['execute'])
-                ->setConstructorArgs([true, false])
+                ->setConstructorArgs([true, 'getCurrent', false])
                 ->getMock();
 
         $reflectionValue = new \ReflectionProperty($stringAbstract, 'caseSensitive');
