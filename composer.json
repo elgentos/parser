@@ -14,7 +14,9 @@
       "homepage": "https://github.com/JeroenBoersma"
     }
   ],
-  "require": {},
+  "require": {
+    "php": ">=7.0"
+  },
   "require-dev": {
     "phpunit/phpunit": "^6.0",
     "symfony/yaml": "^3.4"
