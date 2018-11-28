@@ -64,20 +64,22 @@ class MergeDown implements RuleInterface
      */
     private function niceMerge(array &$source, array &$destination): array
     {
+        $merged = $source;
+
         foreach ($destination as $key => &$value) {
             if (
-                    ! isset($source[$key]) ||
-                    !is_array($value) ||
-                    ! $this->mergeRecursive
+                    $this->mergeRecursive &&
+                    isset($merged[$key]) &&
+                    is_array($merged[$key])
             ) {
-                $source[$key] = &$value;
+                $merged[$key] = $this->niceMerge($source[$key], $value);
                 continue;
             }
 
-            $source[$key] = $this->niceMerge($source[$key], $value);
+            $merged[$key] = $value;
         }
 
-        return $source;
+        return $merged;
     }
 
 }
