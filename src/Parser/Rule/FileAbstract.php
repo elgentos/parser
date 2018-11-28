@@ -21,7 +21,7 @@ abstract class FileAbstract implements RuleInterface
      */
     private function safePath(string $path): string
     {
-        while (($newPath = \str_replace(['..', '//'], ['', '/'], $path)) !== $path) {
+        while (($newPath = \str_replace('..', '', $path)) !== $path) {
             $path = $newPath;
         }
 
