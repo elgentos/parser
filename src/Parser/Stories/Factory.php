@@ -32,6 +32,7 @@ class Factory
     protected function defaults()//: void
     {
         $this->stories['reader'] = Reader::class;
+        $this->stories['builder'] = Builder::class;
     }
 
     /**
