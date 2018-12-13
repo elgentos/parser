@@ -58,12 +58,6 @@ base:
 }
 ```
 
-## Todo
-Things that need some work.
-
-### Object builder
-Convert a array to objects based on a set of rules.
-
 ## Customization
 We rely heavily on service contracts you can easily add your own;
 - Rules `\Elgenttos\Parser\Interfaces\RuleInterface`

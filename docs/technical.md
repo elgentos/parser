@@ -24,35 +24,39 @@ Provide 2 or more rules which will be executed as long as one is successful.
 `b` is true, `a` is true 2 times, `a|b|c` all fail. (logical OR)
 - `NoLogic(bool $result)`
 Does no manipulation, use as dummy or circuit braker.
+- `Matcher(MatcherInterface $matcher, RuleInterface $rule)`
+Will only execute rules if Match returns true
 
 ### String rules
 Next are equivalents of string manipulation rules.
 
-- `Explode(*string $delimiter, *MatcherInterface $matcher)`
-- `Rename(string $nexIndex, *MatcherInterface $matcher)`
-- `Trim(*string $charlist, *MatcherInterface $matcher)`
-- `Csv(*bool $firstHasKeys, *string $delimiter, *string $enclosure, *string $escape, *MatcherInterFace $matcher)`
+- `Explode(*string $delimiter)`
+- `Rename(string $nexIndex)`
+- `Trim(*string $charlist)`
+- `Csv(*bool $firstHasKeys, *string $delimiter, *string $enclosure, *string $escape)`
 Set firstHasKeys to true if the first row contains keys.
 This will use these keys to all following rows.
 
 ### Manipulation rules
-- `Callback(\Closure $closure, *MatcherInterface $matcher)`
+- `Callback(\Closure $closure)`
 The closure will be called with `Context` and MUST return a bool.
-- `Import(string $rootDir, *MatcherInterface $matcher)`
+- `Import(string $rootDir)`
 Read contents to current Context, scoped to $rootDir 
 - `Json(*MatcherInterface $matcher)`
 Parse Json string to array.
 - `Yaml(*MatcherInterface $matcher)`
 Parse Yaml string to array, requires package `symfony/yaml`
-- `Filter(string $pathSeperator, *MatcherInterface $matcher)`
+- `Filter(string $pathSeperator)`
 Filter content from context.
+- `Factory(string $className)`
+Create a class from context
 
 ### Structure rules
-- `Iterate(RuleInterface $rule, *bool $recursive, *MatcherInterface $matcher)`
+- `Iterate(RuleInterface $rule, *bool $recursive)`
 Execute `$rule` for every index in the array, recursive will do as it says.
-- `MergeDown(bool $mergeRecursive, *MatcherInterface $matcher)`
+- `MergeDown(bool $mergeRecursive)`
 Merge contents of `Context` to `getRoot()`, `getRoot()` is leading.
-- `MergeUp(bool $mergeRecursive, *MatcherInterface $matcher)`
+- `MergeUp(bool $mergeRecursive)`
 Merge contents of `Context` to `getRoot()`, `getCurrent()`is leading.
 
 ## Matchers
