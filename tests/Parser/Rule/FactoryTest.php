@@ -75,6 +75,27 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(\stdClass::class, $current);
     }
 
+    public function testParseArgumentsWithDefaults()
+    {
+        $factoryRule = new Factory(FactoryTestConstrutor::class, [
+            'argument1' => 'default1',
+            'argument2' => 'default2'
+        ]);
+
+        $content = [[
+            'argument2' => 'test2',
+            'ignored_argument' => true
+        ]];
+        $context = new Context($content);
+
+        $this->assertTrue($factoryRule->parse($context));
+
+        $result = $context->getCurrent();
+
+        $this->assertSame('default1', $result->argument1);
+        $this->assertSame('test2', $result->argument2);
+    }
+
     public function testParseArguments()
     {
         $factoryRule = new Factory(FactoryTestConstrutor::class, [
@@ -99,7 +120,7 @@ class FactoryTest extends TestCase
     public function testParseSetters()
     {
         $factoryRule = new Factory(FactoryTestSetters::class, [], [
-            'setData' => 'data'
+            'data' => 'setData'
         ]);
 
         $content = [[

@@ -21,6 +21,8 @@ class Factory implements RuleInterface
     private $arguments;
     /** @var array*/
     private $setters;
+    /** @var bool */
+    private $defaults;
 
     /**
      * Factory constructor.
@@ -33,7 +35,14 @@ class Factory implements RuleInterface
     public function __construct(string $className, array $arguments = null, array $setters = null)
     {
         $this->className = new \ReflectionClass($className);
-        $this->arguments = $arguments;
+
+        if (null !== $arguments) {
+            $numArguments = count($arguments);
+            $hasDefaults = range(0, $numArguments - 1) !== array_keys($arguments);
+            $this->arguments = $hasDefaults ? array_keys($arguments) : $arguments;
+            $this->defaults = $hasDefaults ? $arguments : array_fill(0, $numArguments, null);
+        }
+
         $this->setters = $setters;
     }
 
@@ -65,9 +74,9 @@ class Factory implements RuleInterface
             return $current;
         }
 
-        return array_map(function($fieldName) use ($current) {
-            return $current[$fieldName];
-        }, $this->arguments);
+        return array_map(function($fieldName, $default) use ($current) {
+            return $current[$fieldName] ?? $default;
+        }, $this->arguments, $this->defaults);
     }
 
     private function getSetters(array $current): array
@@ -78,7 +87,7 @@ class Factory implements RuleInterface
 
         return array_map(function($setter) use ($current) {
             return $current[$setter];
-        }, $this->setters);
+        }, array_keys($this->setters));
     }
 
     private function applySetters($object, array $setters)//: void
@@ -89,7 +98,7 @@ class Factory implements RuleInterface
 
         array_map(function($data, $setter) use ($object) {
             $object->{$setter}($data);
-        }, $setters, array_keys($this->setters));
+        }, $setters, $this->setters);
     }
 
 }
