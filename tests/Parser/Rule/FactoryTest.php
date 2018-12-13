@@ -11,19 +11,36 @@ namespace Elgentos\Parser\Rule;
 use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
 
-class FactoryTest extends TestCase
+class FactoryTestConstrutor
 {
 
-    /** @var Context */
-    private $context;
+    public $argument1;
+    public $argument2;
 
-    public function setUp()
+    public function __construct($argument1, $argument2)
     {
-        $content = [
-            []
-        ];
-        $this->context = new Context($content);
+        $this->argument1 = $argument1;
+        $this->argument2 = $argument2;
     }
+
+}
+
+
+class FactoryTestSetters
+{
+
+    public $data;
+
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+
+}
+
+
+class FactoryTest extends TestCase
+{
 
     public function testConstructor()
     {
@@ -33,14 +50,70 @@ class FactoryTest extends TestCase
         new Factory('\Elgentos\Parser\Rule\NonExistantClass');
     }
 
+    public function testParseNoArray()
+    {
+        $factoryRule = new Factory(\stdClass::class);
+
+        $content = [
+            'no' => 'array'
+        ];
+        $context = new Context($content);
+
+        $this->assertFalse($factoryRule->parse($context));
+    }
+
     public function testParse()
     {
         $factoryRule = new Factory(\stdClass::class);
 
-        $current = &$this->context->getCurrent();
+        $content = [[]];
+        $context = new Context($content);
 
-        $this->assertTrue($factoryRule->parse($this->context));
+        $current = &$context->getCurrent();
+
+        $this->assertTrue($factoryRule->parse($context));
         $this->assertInstanceOf(\stdClass::class, $current);
+    }
+
+    public function testParseArguments()
+    {
+        $factoryRule = new Factory(FactoryTestConstrutor::class, [
+            'argument1', 'argument2'
+        ]);
+
+        $content = [[
+            'argument2' => 'test2',
+            'argument1' => 'test1',
+            'ignored_argument' => true
+        ]];
+        $context = new Context($content);
+
+        $this->assertTrue($factoryRule->parse($context));
+
+        $result = $context->getCurrent();
+
+        $this->assertSame('test1', $result->argument1);
+        $this->assertSame('test2', $result->argument2);
+    }
+
+    public function testParseSetters()
+    {
+        $factoryRule = new Factory(FactoryTestSetters::class, [], [
+            'setData' => 'data'
+        ]);
+
+        $content = [[
+            'data' => 'test3',
+            'argument1' => 'test1',
+            'ignored_argument' => true
+        ]];
+        $context = new Context($content);
+
+        $this->assertTrue($factoryRule->parse($context));
+
+        $result = $context->getCurrent();
+
+        $this->assertSame('test3', $result->data);
     }
 
 }

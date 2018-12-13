@@ -48,8 +48,11 @@ Parse Json string to array.
 Parse Yaml string to array, requires package `symfony/yaml`
 - `Filter(string $pathSeperator)`
 Filter content from context.
-- `Factory(string $className)`
+- `Factory(string $className, array *$arguments, array *$setters)`
 Create a class from context
+    - `$className` FQN for class
+    - `$arguments` array containing keys for arguments to use when creating a object
+    - `$setters` setters will run directly after initiation `["setter" => "index_in_current_context"]`
 
 ### Structure rules
 - `Iterate(RuleInterface $rule, *bool $recursive)`
