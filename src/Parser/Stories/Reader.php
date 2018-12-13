@@ -50,9 +50,7 @@ class Reader implements StoriesInterface
     const IMPORT_DIR = '@import-dir';
 
     /** @var Story */
-    private $importStoryCheckIndex;
-    /** @var Story */
-    private $importStoryNoCheckIndex;
+    private $importStory;
 
     public function __construct(string $rootDir = '.')
     {
@@ -74,128 +72,124 @@ class Reader implements StoriesInterface
     protected function initStory(string $rootDir): Story
     {
         return $this->getMetrics()->createStory(
-                '0-root',
-                $this->filesStory($rootDir),
-                $this->mergeStory(),
-                $this->finalStory()
+            '0-root',
+            $this->filesStory($rootDir),
+            $this->mergeStory(),
+            $this->finalStory()
         );
     }
 
     protected function import(string $rootDir, string $pattern, bool $checkIndex): RuleInterface
     {
         return new Match(
-                new All(
-                        new IsString,
-                        $checkIndex
-                                ? new Exact(self::IMPORT, 'getIndex')
-                                : new ResolveTrue,
-                        new EndsWith($pattern)
-                ),
-                new Import($rootDir)
+            new All(
+                new IsString,
+                $checkIndex
+                    ? new Exact(self::IMPORT, 'getIndex')
+                    : new ResolveTrue,
+                new EndsWith($pattern)
+            ),
+            new Import($rootDir)
         );
     }
 
     protected function fromJson(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '.json', $checkIndex),
-                $this->getMetrics()->createStory(
-                        self::IMPORT . '::json' . ($checkIndex ? '+' : '-'),
-                        new Json,
-                        $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
-                )
+            $this->import($rootDir, '.json', $checkIndex),
+            $this->getMetrics()->createStory(
+                self::IMPORT . '::json' . ($checkIndex ? '+' : '-'),
+                new Json,
+                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+            )
         );
     }
 
     protected function fromText(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '.txt', $checkIndex),
-                $this->getMetrics()->createStory(
-                        self::IMPORT . '::text' . ($checkIndex ? '+' : '-'),
-                        new Trim,
-                        $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
-                )
+            $this->import($rootDir, '.txt', $checkIndex),
+            $this->getMetrics()->createStory(
+                self::IMPORT . '::text' . ($checkIndex ? '+' : '-'),
+                new Trim,
+                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+            )
         );
     }
 
     protected function fromYaml(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '.yaml', $checkIndex),
-                $this->getMetrics()->createStory(
-                        self::IMPORT . '::yaml' . ($checkIndex ? '+' : '-'),
-                        new Yaml,
-                        $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
-                )
+            $this->import($rootDir, '.yaml', $checkIndex),
+            $this->getMetrics()->createStory(
+                self::IMPORT . '::yaml' . ($checkIndex ? '+' : '-'),
+                new Yaml,
+                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+            )
         );
     }
 
     protected function fromCsv(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '.csv', $checkIndex),
-                $this->getMetrics()->createStory(
-                        self::IMPORT . '::csv' . ($checkIndex ? '+' : '-'),
-                        new Trim,
-                        new Explode,
-                        new Csv(true),
-                        $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
-                )
+            $this->import($rootDir, '.csv', $checkIndex),
+            $this->getMetrics()->createStory(
+                self::IMPORT . '::csv' . ($checkIndex ? '+' : '-'),
+                new Trim,
+                new Explode,
+                new Csv(true),
+                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+            )
         );
     }
 
     protected function fromXml(string $rootDir, bool $checkIndex): RuleInterface
     {
         return new LoopAll(
-                $this->import($rootDir, '.xml', $checkIndex),
-                $this->getMetrics()->createStory(
-                        self::IMPORT . '::xml' . ($checkIndex ? '+' : '-'),
-                        new Trim,
-                        new Xml,
-                        $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
-                )
+            $this->import($rootDir, '.xml', $checkIndex),
+            $this->getMetrics()->createStory(
+                self::IMPORT . '::xml' . ($checkIndex ? '+' : '-'),
+                new Trim,
+                new Xml,
+                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+            )
         );
     }
 
     protected function importStory(string $rootDir, bool $checkIndex): RuleInterface
     {
         // @codeCoverageIgnoreStart
-        if ($checkIndex && null !== $this->importStoryCheckIndex) {
-            return $this->importStoryCheckIndex;
-        } elseif (! $checkIndex && null !== $this->importStoryNoCheckIndex) {
-            return $this->importStoryNoCheckIndex;
+        $index = $checkIndex ? 0 : 1;
+        if (isset($this->importStory[$index])) {
+            return $this->importStory[$index];
         }
         // @codeCoverageIgnoreEnd
 
         $importStory = $this->getMetrics()
-                ->createStory(
-                        self::IMPORT . ($checkIndex ? '+' : '-'),
-                        $this->fromText($rootDir, $checkIndex)
-                        , $this->fromJson($rootDir, $checkIndex)
-                        , $this->fromXml($rootDir, $checkIndex)
-                        , $this->fromYaml($rootDir, $checkIndex)
-                        , $this->fromCsv($rootDir, $checkIndex)
-                );
+            ->createStory(
+                self::IMPORT . ($checkIndex ? '+' : '-'),
+                $this->fromText($rootDir, $checkIndex)
+                , $this->fromJson($rootDir, $checkIndex)
+                , $this->fromXml($rootDir, $checkIndex)
+                , $this->fromYaml($rootDir, $checkIndex)
+                , $this->fromCsv($rootDir, $checkIndex)
+            );
 
-        $checkIndex
-                && ($this->importStoryCheckIndex = $importStory)
-                || ($this->importStoryNoCheckIndex = $importStory);
-
+        $this->importStory[$index] = $importStory;
         return $importStory;
     }
 
     protected function iterateStory(string $rootDir): RuleInterface
     {
         return $this->getMetrics()->createStory(
-                '1.1-iterate',
-                new Iterate(
-                        new LoopAny(
-                            $this->importStory($rootDir, true),
-                            $this->globStory($rootDir)
-                        ),
-                        true
-                )
+            '1.1-iterate',
+            new Iterate(
+                new LoopAny(
+                    $this->importStory($rootDir, true),
+                    $this->globStory($rootDir)
+                ),
+                true
+            )
         );
     }
 
@@ -206,141 +200,139 @@ class Reader implements StoriesInterface
         $csvIsAfter = new Match(new IsArray);
 
         return new LoopAll(
-                new Match(
-                        new All(
-                                new IsString,
-                                new Exact(self::IMPORT_DIR, 'getIndex')
-                        )
-                ),
-                $this->getMetrics()->createStory(
-                        self::IMPORT_DIR,
-                        new Callback(function() use (&$isCsv) {
-                            $isCsv = true;
-                            return true;
-                        }),
-                        new Glob($rootDir),
-                        new Iterate(
-                                $this->getMetrics()->createStory(
-                                        self::IMPORT_DIR . '::iterate',
-                                        new Callback(function(Context $context) use (&$isCsv, $csvIsBefore) {
-                                            if (! $isCsv) {
-                                                return false;
-                                            }
-
-                                            return $isCsv = $csvIsBefore->parse($context);
-                                        }),
-                                        $this->importStory($rootDir, false),
-                                        new Callback(function(Context $context) use (&$isCsv, $csvIsAfter) {
-                                            if (! $isCsv) {
-                                                return false;
-                                            }
-
-                                            return $isCsv = $csvIsAfter->parse($context);
-                                        })
-                                ),
-                                false
-                        ),
-                        new Callback(function(Context $context) use (&$isCsv) {
+            new Match(
+                new All(
+                    new IsString,
+                    new Exact(self::IMPORT_DIR, 'getIndex')
+                )
+            ),
+            $this->getMetrics()->createStory(
+                self::IMPORT_DIR,
+                new Callback(function() use (&$isCsv) {
+                    $isCsv = true;
+                    return true;
+                }),
+                new Glob($rootDir),
+                new Iterate(
+                    $this->getMetrics()->createStory(
+                        self::IMPORT_DIR . '::iterate',
+                        new Callback(function(Context $context) use (&$isCsv, $csvIsBefore) {
                             if (! $isCsv) {
                                 return false;
                             }
 
-                            $current = &$context->getCurrent();
-                            $current = [array_merge(...$current)];
+                            return $isCsv = $csvIsBefore->parse($context);
+                        }),
+                        $this->importStory($rootDir, false),
+                        new Callback(function(Context $context) use (&$isCsv, $csvIsAfter) {
+                            if (! $isCsv) {
+                                return false;
+                            }
 
-                            return true;
+                            return $isCsv = $csvIsAfter->parse($context);
                         })
+                    ),
+                    false
                 ),
-                new Rename(self::PREFIX . self::IMPORT_DIR)
+                new Callback(function(Context $context) use (&$isCsv) {
+                    if (! $isCsv) {
+                        return false;
+                    }
+
+                    $current = &$context->getCurrent();
+                    $current = [array_merge(...$current)];
+
+                    return true;
+                })
+            ),
+            new Rename(self::PREFIX . self::IMPORT_DIR)
         );
     }
 
     protected function filesStory(string $rootDir): RuleInterface
     {
-        return new Changed(
-                $this->getMetrics()->createStory(
-                        '1-files'
-                        , $this->importStory($rootDir, true)
-                        , $this->iterateStory($rootDir)
-                )
+        return $this->getMetrics()->createStory(
+            '1-files'
+            , $this->importStory($rootDir, true)
+            , $this->iterateStory($rootDir)
         );
     }
 
     protected function mergeStory(): RuleInterface
     {
         return new Changed(
-                $this->getMetrics()->createStory(
-                        '2-merge',
-                        new Iterate(
-                                new LoopAny(
-                                        $this->mergeImport(),
-                                        $this->mergeText(),
-                                        $this->mergeGlob()
-                                ),
-                                true
-                        )
+            $this->getMetrics()->createStory(
+                '2-merge',
+                new Iterate(
+                    new LoopAny(
+                        $this->mergeImport(),
+                        $this->mergeText(),
+                        $this->mergeGlob()
+                    ),
+                    true
                 )
+            )
         );
     }
 
     protected function mergeImport(): RuleInterface
     {
         return new Match(
-                new All(
-                        new IsArray,
-                        new Exact(self::PREFIX . self::IMPORT, 'getIndex')
-                ),
-                $this->getMetrics()
-                        ->createStory(
-                                '2.1-import',
-                                new MergeDown(true)
-                        )
+            new All(
+                new IsArray,
+                new Exact(self::PREFIX . self::IMPORT, 'getIndex')
+            ),
+            $this->getMetrics()
+                ->createStory(
+                    '2.1-import',
+                    new MergeDown(true)
+                )
         );
     }
 
     protected function mergeText(): RuleInterface
     {
         return new Match(
-                new All(
-                        new IsString,
-                        new Exact(self::PREFIX . self::IMPORT, 'getIndex')
-                ),
-                $this->getMetrics()
-                        ->createStory(
-                                '2.2-text',
-                                new Rename('text')
-                        )
+            new All(
+                new IsString,
+                new Exact(self::PREFIX . self::IMPORT, 'getIndex')
+            ),
+            $this->getMetrics()
+                ->createStory(
+                    '2.2-text',
+                    new Rename('text')
+                )
         );
     }
 
     protected function mergeGlob(): RuleInterface
     {
         return new Match(
-                new All(
+            new All(
+                new IsArray,
+                new Exact(self::PREFIX . self::IMPORT_DIR, 'getIndex')
+            ),
+            $this->getMetrics()->createStory(
+                '2.3-glob',
+                new Iterate(
+                    new Match(
                         new IsArray,
-                        new Exact(self::PREFIX . self::IMPORT_DIR, 'getIndex')
+                        new MergeUp(true)
+                    ),
+                    false
                 ),
-                $this->getMetrics()->createStory(
-                        '2.3-glob',
-                        new Iterate(
-                                new Match(
-                                        new IsArray,
-                                        new MergeUp(true)
-                                ),
-                                false
-                        ),
-                        new MergeDown(false)
-                )
+                new MergeDown(false)
+            )
         );
     }
 
     protected function finalStory(): RuleInterface
     {
         return $this->getMetrics()
-                ->createStory(
-                        '3-final',
-                        new MergeDown(false)
-                );
+            ->createStory(
+                '3-final',
+                new MergeDown(false)
+            );
     }
 
 }
