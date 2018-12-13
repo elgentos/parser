@@ -58,11 +58,9 @@ Create a class from context
 - `Iterate(RuleInterface $rule, *bool $recursive)`
 Execute `$rule` for every index in the array, recursive will do as it says.
 - `MergeDown(bool $mergeRecursive)`
-Merge contents of `Context` to `getRoot()`, `getRoot()` is leading
+Merge contents of `Context` to `getRoot()`, `getRoot()` is leading.
 - `MergeUp(bool $mergeRecursive)`
-Merge contents of `Context` to `getRoot()`, `getCurrent()`is leading
-- `ContextIndex(string $newIndex)`
-Set new index in `Context`
+Merge contents of `Context` to `getRoot()`, `getCurrent()`is leading.
 
 ## Matchers
 Most rules rely on matchers to determine if a rule should be applied.
