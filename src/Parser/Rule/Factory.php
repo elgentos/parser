@@ -86,7 +86,7 @@ class Factory implements RuleInterface
         }
 
         return array_map(function($setter) use ($current) {
-            return $current[$setter];
+            return $current[$setter] ?? null;
         }, array_keys($this->setters));
     }
 
@@ -97,6 +97,9 @@ class Factory implements RuleInterface
         }
 
         array_map(function($data, $setter) use ($object) {
+            if (null === $data) {
+                return;
+            }
             $object->{$setter}($data);
         }, $setters, $this->setters);
     }

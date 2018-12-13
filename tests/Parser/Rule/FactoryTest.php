@@ -120,7 +120,8 @@ class FactoryTest extends TestCase
     public function testParseSetters()
     {
         $factoryRule = new Factory(FactoryTestSetters::class, [], [
-            'data' => 'setData'
+            'data' => 'setData',
+            'noData' => 'setData'
         ]);
 
         $content = [[
