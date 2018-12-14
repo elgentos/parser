@@ -8,10 +8,20 @@
 
 namespace Elgentos\Parser\Stories;
 
+use Elgentos\Parser\Story;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
 class ReaderSimple extends Reader
 {
+
+    protected function initStory(string $rootDir): Story
+    {
+        return $this->getMetrics()->createStory(
+            '0-root',
+            $this->filesStory($rootDir),
+            $this->finalStory()
+        );
+    }
 
     protected function filesStory(string $rootDir): RuleInterface
     {
