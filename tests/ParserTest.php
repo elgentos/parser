@@ -19,7 +19,24 @@ class ParserTest extends TestCase
         $parserMock = $this->getMockBuilder(ParserInterface::class)
                 ->getMock();
 
+        $parserMock->expects($this->once())
+            ->method('parse');
+
         $data = Parser::readFile('test.mock', '.', $parserMock);
         $this->assertSame(['@import' => 'test.mock'], $data);
     }
+
+    public function testReadSimple()
+    {
+        $parserMock = $this->getMockBuilder(ParserInterface::class)
+                ->getMock();
+
+        $parserMock->expects($this->once())
+                ->method('parse');
+
+        $data = Parser::readSimple('test.mock', '.', $parserMock);
+        $this->assertSame(['@import' => 'test.mock'], $data);
+    }
+
+
 }

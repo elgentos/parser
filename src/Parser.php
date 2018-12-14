@@ -34,4 +34,21 @@ class Parser
         return $data;
     }
 
+    /**
+     * Read a file without recursion
+     *
+     * @param string $filename
+     * @param string $rootDir
+     * @param ParserInterface|null $parser
+     * @return array
+     */
+    public static function readSimple(string $filename, string $rootDir = '.', ParserInterface $parser = null): array
+    {
+        $data = ['@import' => $filename];
+
+        $parser = $parser ?? new Standard;
+        $parser->parse($data, 'readerSimple', $rootDir);
+        return $data;
+    }
+
 }
