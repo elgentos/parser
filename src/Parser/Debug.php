@@ -38,6 +38,7 @@ class Debug implements ParserInterface
      * Get last story to retrieve metrics
      *
      * @return StoriesInterface
+     * @throws DebugNoLastStoryException
      */
     public function getLastStory(): StoriesInterface
     {
