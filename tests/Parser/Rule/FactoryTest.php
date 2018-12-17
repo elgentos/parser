@@ -8,8 +8,8 @@
 
 namespace Elgentos\Parser\Rule;
 
-require PARSERTEST_DATA_DIR . '/php/FactoryTestConstrutor.php';
-require PARSERTEST_DATA_DIR . '/php/FactoryTestSetters.php';
+require_once PARSERTEST_DATA_DIR . '/php/FactoryTestConstrutor.php';
+require_once PARSERTEST_DATA_DIR . '/php/FactoryTestSetters.php';
 
 use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
