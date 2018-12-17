@@ -22,7 +22,7 @@ use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
 use mysql_xdevapi\Exception;
 
-class Structures implements StoriesInterface
+class Structure implements StoriesInterface
 {
 
     /** @var array */

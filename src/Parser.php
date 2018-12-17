@@ -11,6 +11,7 @@ namespace Elgentos;
 use Elgentos\Parser\Interfaces\ParserInterface;
 use Elgentos\Parser\Standard;
 use Elgentos\Parser\Stories\Builder\Factories;
+use Elgentos\Parser\Stories\Builder\Structure;
 use Elgentos\Parser\Stories\Reader\Complex;
 use Elgentos\Parser\Stories\Reader\Simple;
 
@@ -70,6 +71,25 @@ class Parser
         $data = ['@template' => $template];
 
         $story = new Factories;
+        $parser = $parser ?? new Standard;
+
+        $parser->parse($data, $story);
+        return $data;
+    }
+
+    /**
+     * Build factories from a array template
+     *
+     * @param array $template
+     * @param array $factories
+     * @param ParserInterface|null $parser
+     * @return array
+     */
+    public static function buildStructure(array $template, array $factories = [], ParserInterface $parser = null): array
+    {
+        $data = ['@template' => $template];
+
+        $story = new Structure($factories);
         $parser = $parser ?? new Standard;
 
         $parser->parse($data, $story);

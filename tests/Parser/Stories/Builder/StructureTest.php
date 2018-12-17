@@ -17,18 +17,18 @@ use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
 use PHPUnit\Framework\TestCase;
 
-class StructuresTest extends TestCase
+class StructureTest extends TestCase
 {
 
     public function testGetMetrics()
     {
-        $structures = new Structures;
+        $structures = new Structure;
         $this->assertInstanceOf(StoryMetrics::class, $structures->getMetrics());
     }
 
     public function testGetStory()
     {
-        $structures = new Structures;
+        $structures = new Structure;
         $this->assertInstanceOf(Story::class, $structures->getStory());
     }
 
@@ -41,12 +41,12 @@ class StructuresTest extends TestCase
         ];
 
         $this->expectException(\TypeError::class);
-        new Structures($factories);
+        new Structure($factories);
     }
 
     public function testStoryMetrics()
     {
-        $structures = new Structures;
+        $structures = new Structure;
 
         $metrics = $structures->getMetrics()
                 ->getStatistics('%s');
@@ -62,7 +62,7 @@ class StructuresTest extends TestCase
             'stdClass' => new Factory(\stdClass::class)
         ];
 
-        $structures = new Structures($factories);
+        $structures = new Structure($factories);
 
         /** @var Story $template */
         $template = [
@@ -129,7 +129,7 @@ class StructuresTest extends TestCase
         $context = new Context($content);
 
 
-        $structures = new Structures($factories);
+        $structures = new Structure($factories);
 
         $structures->getStory()
                 ->parse($context);
