@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class JsonTest extends TestCase
 {
 
-    const DATAPATH = __DIR__ . '/data';
+    const DATAPATH = PARSERTEST_DATA_DIR;
 
     /** @var Context */
     private $context;

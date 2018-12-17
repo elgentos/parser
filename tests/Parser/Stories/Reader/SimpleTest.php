@@ -16,7 +16,7 @@ class SimpleTest extends TestCase
 
     public function testIntegration()
     {
-        $reader = new Simple(__DIR__ . '/data');
+        $reader = new Simple(PARSERTEST_DATA_DIR);
 
         $data = [
             '@import' => 'base.yaml'

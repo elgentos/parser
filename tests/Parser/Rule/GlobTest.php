@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class GlobTest extends TestCase
 {
 
-    const DATAPATH = __DIR__ . '/data';
+    const DATAPATH = PARSERTEST_DATA_DIR . '/texts';
 
     /** @var Context */
     private $context;
@@ -33,7 +33,7 @@ class GlobTest extends TestCase
                 function($file) {
                     return './' . basename($file);
                 },
-                glob(self::DATAPATH . DIRECTORY_SEPARATOR . '*')
+                glob(self::DATAPATH . '/*')
         );
         sort($this->files, SORT_STRING | SORT_NATURAL);
     }

@@ -24,7 +24,7 @@ class YamlTest extends TestCase
     public function setUp()
     {
         $root = [
-                "test" => file_get_contents(__DIR__ . '/data/jsonImportData.yaml')
+                "test" => file_get_contents(PARSERTEST_DATA_DIR . '/jsonImportData.yaml')
         ];
         $this->context = new Context($root);
 

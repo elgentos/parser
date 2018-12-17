@@ -19,13 +19,13 @@ class ComplextTest extends TestCase
 
     public function testGetStory()
     {
-        $reader = new Complex(__DIR__);
+        $reader = new Complex(PARSERTEST_DATA_DIR);
         $this->assertInstanceOf(Story::class, $reader->getStory());
     }
 
     public function testGetMetrics()
     {
-        $reader = new Complex(__DIR__);
+        $reader = new Complex(PARSERTEST_DATA_DIR);
         $this->assertInstanceOf(StoryMetrics::class, $reader->getMetrics());
     }
 
@@ -45,7 +45,7 @@ class ComplextTest extends TestCase
 
     public function testInvalidFile()
     {
-        $reader = new Complex(__DIR__ . '/data');
+        $reader = new Complex(PARSERTEST_DATA_DIR);
 
         $data = [
                 '@import' => 'base.yml'
@@ -61,7 +61,7 @@ class ComplextTest extends TestCase
 
     public function testIntegration()
     {
-        $reader = new Complex(__DIR__ . '/data');
+        $reader = new Complex(PARSERTEST_DATA_DIR);
 
         $data = [
             '@import' => 'base.yaml'
