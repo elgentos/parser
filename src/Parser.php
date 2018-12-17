@@ -65,14 +65,15 @@ class Parser
      * Build factories from a array template
      *
      * @param array $template
+     * @param bool $singleton
      * @param ParserInterface|null $parser
      * @return array
      */
-    public static function buildFactories(array $template, ParserInterface $parser = null): array
+    public static function buildFactories(array $template, $singleton = false, ParserInterface $parser = null): array
     {
         $data = ['@template' => $template];
 
-        $story = new Factories;
+        $story = new Factories($singleton);
         $parser = $parser ?? new Standard;
 
         $parser->parse($data, $story);

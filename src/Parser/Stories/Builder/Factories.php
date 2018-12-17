@@ -26,8 +26,17 @@ class Factories implements StoriesInterface
     /** @var Story */
     private $story;
 
-    public function __construct()
+    /** @var bool */
+    private $singleton;
+
+    /**
+     * Factories constructor.
+     * @param bool $singleton
+     */
+    public function __construct($singleton = false)
     {
+        $this->singleton = $singleton;
+
         $this->storyMetrics = new StoryMetrics;
         $this->story = $this->initStory();
     }
@@ -89,7 +98,12 @@ class Factories implements StoriesInterface
     {
         return $this->storyMetrics->createStory(
             '2-factory',
-            new Factory(Factory::class, ['class', 'arguments', 'setters'])
+            new Factory(Factory::class, [
+                'class' => null,
+                'arguments' => null,
+                'setters' => [],
+                'singleton' => $this->singleton
+            ])
         );
     }
 

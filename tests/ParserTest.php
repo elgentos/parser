@@ -58,7 +58,7 @@ class ParserTest extends TestCase
                 ->method('parse')
                 ->with($test, new IsInstanceOf(Factories::class));
 
-        $data = Parser::buildFactories($template, $parserMock);
+        $data = Parser::buildFactories($template, false, $parserMock);
         $this->assertSame($test, $data);
     }
 

@@ -65,19 +65,30 @@ class FactoriesTest extends TestCase
 
         $factories->getStory()->parse($context);
 
-        /** @var Factory $firstFactory */
-        $firstFactory = $content['first'];
+        /** @var Factory $factory */
+        $factory = $content['first'];
 
-        $this->assertInstanceOf(Factory::class, $firstFactory);
+        $this->assertInstanceOf(Factory::class, $factory);
 
         $noLogic = [];
         $empty = [&$noLogic];
         $emptyContext = new Context($empty);
 
-        $firstFactory->parse($emptyContext);
+        $noLogic2 = [];
+        $empty2 = [&$noLogic2];
+        $emptyContext2 = new Context($empty2);
+
+        $factory->parse($emptyContext);
+        $factory->parse($emptyContext2);
 
         $this->assertInstanceOf(NoLogic::class, $noLogic);
+        $this->assertInstanceOf(NoLogic::class, $noLogic2);
+
         $this->assertTrue($noLogic->parse($emptyContext));
+        $this->assertTrue($noLogic2->parse($emptyContext));
+
+        // No singletons
+        $this->assertNotSame($noLogic, $noLogic2);
     }
 
     public function testBuilderSetters()
@@ -114,5 +125,51 @@ class FactoriesTest extends TestCase
         $this->assertInstanceOf(\FactoryTestSetters::class, $setData);
         $this->assertSame('test-answer', $setData->data);
     }
+
+    public function testBuilderSingleton()
+    {
+        $content = [
+            'first' => [
+                'class' => NoLogic::class,
+                'arguments' => [
+                    'return' => true
+                ],
+                'singleton' => true
+            ]
+        ];
+
+        $data = [&$content];
+        $context = new Context($data);
+
+        $factories = new Factories;
+
+        $factories->getStory()->parse($context);
+
+        /** @var Factory $factory */
+        $factory = $content['first'];
+
+        $this->assertInstanceOf(Factory::class, $factory);
+
+        $noLogic = [];
+        $empty = [&$noLogic];
+        $emptyContext = new Context($empty);
+
+        $noLogic2 = [];
+        $empty2 = [&$noLogic2];
+        $emptyContext2 = new Context($empty2);
+
+        $factory->parse($emptyContext);
+        $factory->parse($emptyContext2);
+
+        $this->assertInstanceOf(NoLogic::class, $noLogic);
+        $this->assertInstanceOf(NoLogic::class, $noLogic2);
+
+        $this->assertTrue($noLogic->parse($emptyContext));
+        $this->assertTrue($noLogic2->parse($emptyContext));
+
+        // Singletons
+        $this->assertSame($noLogic, $noLogic2);
+    }
+
 
 }
