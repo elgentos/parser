@@ -135,4 +135,31 @@ class StructureTest extends TestCase
                 ->parse($context);
     }
 
+    public function testUndefinedFactoryIndex()
+    {
+        $factories = [
+            'stdClass' => new Factory(\stdClass::class)
+        ];
+
+        $this->expectException(GeneralException::class);
+
+        $template = [
+            'no-factory' => 'stdClass',
+            'children' => [
+                'standard' => [
+                    'factory' => 'non-existent'
+                ]
+            ],
+        ];
+
+        $content = [&$template];
+        $context = new Context($content);
+
+
+        $structures = new Structure($factories);
+
+        $structures->getStory()
+                ->parse($context);
+    }
+
 }
