@@ -8,36 +8,11 @@
 
 namespace Elgentos\Parser\Rule;
 
+require PARSERTEST_DATA_DIR . '/php/FactoryTestConstrutor.php';
+require PARSERTEST_DATA_DIR . '/php/FactoryTestSetters.php';
+
 use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
-
-class FactoryTestConstrutor
-{
-
-    public $argument1;
-    public $argument2;
-
-    public function __construct($argument1, $argument2)
-    {
-        $this->argument1 = $argument1;
-        $this->argument2 = $argument2;
-    }
-
-}
-
-
-class FactoryTestSetters
-{
-
-    public $data;
-
-    public function setData($data)
-    {
-        $this->data = $data;
-    }
-
-}
-
 
 class FactoryTest extends TestCase
 {
@@ -77,7 +52,7 @@ class FactoryTest extends TestCase
 
     public function testParseArgumentsWithDefaults()
     {
-        $factoryRule = new Factory(FactoryTestConstrutor::class, [
+        $factoryRule = new Factory(\FactoryTestConstrutor::class, [
             'argument1' => 'default1',
             'argument2' => 'default2'
         ]);
@@ -98,7 +73,7 @@ class FactoryTest extends TestCase
 
     public function testParseArguments()
     {
-        $factoryRule = new Factory(FactoryTestConstrutor::class, [
+        $factoryRule = new Factory(\FactoryTestConstrutor::class, [
             'argument1', 'argument2'
         ]);
 
@@ -119,7 +94,7 @@ class FactoryTest extends TestCase
 
     public function testParseSetters()
     {
-        $factoryRule = new Factory(FactoryTestSetters::class, [], [
+        $factoryRule = new Factory(\FactoryTestSetters::class, [], [
             'data' => 'setData',
             'noData' => 'setData'
         ]);
