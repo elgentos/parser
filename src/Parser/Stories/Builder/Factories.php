@@ -53,7 +53,7 @@ class Factories implements StoriesInterface
         return $this->storyMetrics;
     }
 
-    private function initStory(): Story
+    protected function initStory(): Story
     {
         return $this->storyMetrics
                 ->createStory(
@@ -67,7 +67,7 @@ class Factories implements StoriesInterface
      * @return Story
      * @throws \ReflectionException
      */
-    private function iterateStory(): Story
+    protected function iterateStory(): Story
     {
         return $this->storyMetrics->createStory(
                 '1-iterate',
@@ -85,7 +85,7 @@ class Factories implements StoriesInterface
      * @return Story
      * @throws \ReflectionException
      */
-    private function factoryStory(): Story
+    protected function factoryStory(): Story
     {
         return $this->storyMetrics->createStory(
             '2-factory',
@@ -93,7 +93,7 @@ class Factories implements StoriesInterface
         );
     }
 
-    private function finalStory(): Story
+    protected function finalStory(): Story
     {
         return $this->storyMetrics->createStory(
             '3-final',
