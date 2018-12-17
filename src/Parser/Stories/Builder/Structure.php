@@ -137,8 +137,9 @@ class Structure implements StoriesInterface
         $class = $factory['class'];
         $arguments = $factory['arguments'] ?? null;
         $setters = $factory['setters'] ?? null;
+        $singleton = $factory['singleton'] ?? false;
 
-        return new Factory($class, $arguments, $setters);
+        return new Factory($class, $arguments, $setters, $singleton);
     }
 
     protected function getDefinedFactory($factory)
