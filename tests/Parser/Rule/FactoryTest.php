@@ -113,4 +113,31 @@ class FactoryTest extends TestCase
         $this->assertSame('test3', $result->data);
     }
 
+    public function testParseSingleton()
+    {
+        $factory = new Factory(\FactoryTestConstrutor::class, [
+            'argument1' => 'default1',
+            'argument2' => 'default2'
+        ], [], true);
+
+        $first = $second = [];
+
+        $content = [
+            &$first,
+            &$second
+        ];
+
+        $context = new Context($content);
+
+        $context->setIndex(0);
+        $factory->parse($context);
+
+        $context->setIndex(1);
+        $factory->parse($context);
+
+        $this->assertInstanceOf(\FactoryTestConstrutor::class, $first);
+        $this->assertInstanceOf(\FactoryTestConstrutor::class, $second);
+        $this->assertSame($first, $second);
+    }
+
 }

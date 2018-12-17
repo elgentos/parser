@@ -23,6 +23,10 @@ class Factory implements RuleInterface
     private $setters;
     /** @var bool */
     private $defaults;
+    /** @var bool */
+    private $singleton;
+    /** @var object */
+    private $object;
 
     /**
      * Factory constructor.
@@ -30,9 +34,10 @@ class Factory implements RuleInterface
      * @param string $className
      * @param array $arguments
      * @param array $setters
+     * @param bool $singleton
      * @throws \ReflectionException
      */
-    public function __construct(string $className, array $arguments = null, array $setters = null)
+    public function __construct(string $className, array $arguments = null, array $setters = null, bool $singleton = false)
     {
         $this->className = new \ReflectionClass($className);
 
@@ -44,11 +49,18 @@ class Factory implements RuleInterface
         }
 
         $this->setters = $setters;
+        $this->singleton = $singleton;
     }
 
     public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
+
+        if ($this->singleton && $this->object) {
+            // Singletons are returned early
+            $current = $this->object;
+            return true;
+        }
 
         if (! is_array($current)) {
             return false;
@@ -64,6 +76,10 @@ class Factory implements RuleInterface
         $this->applySetters($object, $setters);
 
         $current = $object;
+
+        if ($this->singleton) {
+            $this->object = $object;
+        }
 
         return true;
     }
