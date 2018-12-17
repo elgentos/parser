@@ -9,6 +9,8 @@
 namespace Elgentos;
 
 use Elgentos\Parser\Interfaces\ParserInterface;
+use Elgentos\Parser\Stories\Builder\Factories;
+use PHPUnit\Framework\Constraint\IsInstanceOf;
 use PHPUnit\Framework\TestCase;
 
 class ParserTest extends TestCase
@@ -36,6 +38,27 @@ class ParserTest extends TestCase
 
         $data = Parser::readSimple('test.mock', '.', $parserMock);
         $this->assertSame(['@import' => 'test.mock'], $data);
+    }
+
+    public function testBuildFactories()
+    {
+        $parserMock = $this->getMockBuilder(ParserInterface::class)
+                ->getMock();
+
+        $template = [
+            'test' => [
+                'class' => ParserInterface::class
+            ]
+        ];
+
+        $test = ['@template' => $template];
+
+        $parserMock->expects($this->once())
+                ->method('parse')
+                ->with($test, new IsInstanceOf(Factories::class));
+
+        $data = Parser::buildFactories($template, $parserMock);
+        $this->assertSame($test, $data);
     }
 
 
