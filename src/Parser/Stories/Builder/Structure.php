@@ -90,6 +90,10 @@ class Structure implements StoriesInterface
     {
         $current = &$context->getCurrent();
 
+        if (! isset($current['factory'])) {
+            throw new GeneralException('You have to define a factory for this');
+        }
+
         $parser = $this->getFactory($current['factory']);
 
         if (isset($current['children'])) {

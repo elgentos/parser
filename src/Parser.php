@@ -9,11 +9,13 @@
 namespace Elgentos;
 
 use Elgentos\Parser\Interfaces\ParserInterface;
+use Elgentos\Parser\Interfaces\RuleInterface;
 use Elgentos\Parser\Standard;
 use Elgentos\Parser\Stories\Builder\Factories;
 use Elgentos\Parser\Stories\Builder\Structure;
 use Elgentos\Parser\Stories\Reader\Complex;
 use Elgentos\Parser\Stories\Reader\Simple;
+use Elgentos\Parser\Story;
 
 class Parser
 {
@@ -83,9 +85,9 @@ class Parser
      * @param array $template
      * @param array $factories
      * @param ParserInterface|null $parser
-     * @return array
+     * @return RuleInterface
      */
-    public static function buildStructure(array $template, array $factories = [], ParserInterface $parser = null): array
+    public static function buildStructure(array $template, array $factories = [], ParserInterface $parser = null): RuleInterface
     {
         $data = ['@template' => $template];
 
@@ -93,7 +95,7 @@ class Parser
         $parser = $parser ?? new Standard;
 
         $parser->parse($data, $story);
-        return $data;
+        return $data['@template'];
     }
 
 }
