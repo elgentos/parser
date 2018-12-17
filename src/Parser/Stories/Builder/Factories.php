@@ -14,7 +14,7 @@ use Elgentos\Parser\Matcher\IsArray;
 use Elgentos\Parser\Rule\Factory;
 use Elgentos\Parser\Rule\Iterate;
 use Elgentos\Parser\Rule\Match;
-use Elgentos\Parser\Rule\NoLogic;
+use Elgentos\Parser\Rule\MergeDown;
 use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
 
@@ -58,7 +58,8 @@ class Factories implements StoriesInterface
         return $this->storyMetrics
                 ->createStory(
                         '0-root',
-                        $this->iterateStory()
+                        $this->iterateStory(),
+                        $this->finalStory()
                 );
     }
 
@@ -89,6 +90,14 @@ class Factories implements StoriesInterface
         return $this->storyMetrics->createStory(
             '2-factory',
             new Factory(Factory::class, ['class', 'arguments', 'setters'])
+        );
+    }
+
+    private function finalStory(): Story
+    {
+        return $this->storyMetrics->createStory(
+            '3-final',
+            new MergeDown(false)
         );
     }
 

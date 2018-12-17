@@ -39,7 +39,12 @@ class FactoriesTest extends TestCase
 
         $metrics = $factories->getMetrics();
 
-        $this->assertSame(['0-root', '1-iterate', '2-factory'], $metrics->getStatistics('%s'));
+        $this->assertSame([
+            '0-root',
+            '1-iterate',
+            '2-factory',
+            '3-final'
+        ], $metrics->getStatistics('%s'));
     }
 
     public function testBuilderConstructor()
