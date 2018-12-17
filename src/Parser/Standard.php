@@ -9,6 +9,7 @@
 namespace Elgentos\Parser;
 
 use Elgentos\Parser\Interfaces\ParserInterface;
+use Elgentos\Parser\Interfaces\StoriesInterface;
 use Elgentos\Parser\Stories\Factory;
 
 class Standard implements ParserInterface
@@ -17,13 +18,11 @@ class Standard implements ParserInterface
     /**
      * @inheritdoc
      */
-    public function parse(array &$data, string $storyCode, ...$arguments)//: void
+    public function parse(array &$data, StoriesInterface $stories)
     {
         $context = new Context($data);
-
-        (Factory::create($storyCode, ...$arguments))
-                ->getStory()
-                ->parse($context);
+        $stories->getStory()
+            ->parse($context);
     }
 
 }

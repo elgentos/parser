@@ -10,6 +10,8 @@ namespace Elgentos;
 
 use Elgentos\Parser\Interfaces\ParserInterface;
 use Elgentos\Parser\Standard;
+use Elgentos\Parser\Stories\Reader\Complex;
+use Elgentos\Parser\Stories\Reader\Simple;
 
 class Parser
 {
@@ -29,8 +31,10 @@ class Parser
     {
         $data = ['@import' => $filename];
 
+        $story = new Complex($rootDir);
         $parser = $parser ?? new Standard;
-        $parser->parse($data, 'reader', $rootDir);
+
+        $parser->parse($data, $story);
         return $data;
     }
 
@@ -46,8 +50,10 @@ class Parser
     {
         $data = ['@import' => $filename];
 
+        $story = new Simple($rootDir);
         $parser = $parser ?? new Standard;
-        $parser->parse($data, 'readerSimple', $rootDir);
+
+        $parser->parse($data, $story);
         return $data;
     }
 

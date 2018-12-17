@@ -52,10 +52,8 @@ class DebugTest extends TestCase
                 ->method('getStory')
                 ->willReturn($storyMock);
 
-        Factory::setSingleton('empty', $storiesMock);
-
         $data = [];
-        $parser->parse($data, 'empty');
+        $parser->parse($data, $storiesMock);
 
         return [$parser, $storiesMock];
     }

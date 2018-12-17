@@ -6,20 +6,17 @@
  * Time: 13:02
  */
 
-namespace Elgentos\Parser\Stories;
+namespace Elgentos\Parser\Stories\Reader;
 
 use Elgentos\Parser\Context;
-use Elgentos\Parser\Exceptions\RuleInvalidContextException;
-use Elgentos\Parser\Story;
-use Elgentos\Parser\StoryMetrics;
 use PHPUnit\Framework\TestCase;
 
-class ReaderSimpleTest extends TestCase
+class SimpleTest extends TestCase
 {
 
     public function testIntegration()
     {
-        $reader = new ReaderSimple(__DIR__ . '/data');
+        $reader = new Simple(__DIR__ . '/data');
 
         $data = [
             '@import' => 'base.yaml'

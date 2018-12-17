@@ -22,14 +22,12 @@ class Debug implements ParserInterface
     /**
      * @inheritdoc
      */
-    public function parse(array &$data, string $storyCode, ...$arguments)
+    public function parse(array &$data, StoriesInterface $stories)
     {
         $context = new Context($data);
+        $story = $stories->getStory();
 
-        $stories = Factory::create($storyCode, ...$arguments);
-
-        $stories->getStory()
-                ->parse($context);
+        $story->parse($context);
 
         $this->lastStory = $stories;
     }

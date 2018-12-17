@@ -6,7 +6,7 @@
  * Time: 13:02
  */
 
-namespace Elgentos\Parser\Stories;
+namespace Elgentos\Parser\Stories\Reader;
 
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Exceptions\RuleInvalidContextException;
@@ -14,24 +14,24 @@ use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
 use PHPUnit\Framework\TestCase;
 
-class ReaderTest extends TestCase
+class ComplextTest extends TestCase
 {
 
     public function testGetStory()
     {
-        $reader = new Reader(__DIR__);
+        $reader = new Complex(__DIR__);
         $this->assertInstanceOf(Story::class, $reader->getStory());
     }
 
     public function testGetMetrics()
     {
-        $reader = new Reader(__DIR__);
+        $reader = new Complex(__DIR__);
         $this->assertInstanceOf(StoryMetrics::class, $reader->getMetrics());
     }
 
     public function test__construct()
     {
-        $readerMock = $this->getMockBuilder(Reader::class)
+        $readerMock = $this->getMockBuilder(Complex::class)
                 ->setMethods(['initStory'])
                 ->getMock();
 
@@ -45,7 +45,7 @@ class ReaderTest extends TestCase
 
     public function testInvalidFile()
     {
-        $reader = new Reader(__DIR__ . '/data');
+        $reader = new Complex(__DIR__ . '/data');
 
         $data = [
                 '@import' => 'base.yml'
@@ -61,7 +61,7 @@ class ReaderTest extends TestCase
 
     public function testIntegration()
     {
-        $reader = new Reader(__DIR__ . '/data');
+        $reader = new Complex(__DIR__ . '/data');
 
         $data = [
             '@import' => 'base.yaml'

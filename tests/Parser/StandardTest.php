@@ -25,11 +25,8 @@ class StandardTest extends TestCase
         $storiesMock->expects($this->once())
                 ->method('getStory');
 
-        $code = 'standard-parser-parse';
-        Factory::setSingleton($code, $storiesMock);
-
         $data = ['test' => 'test'];
-        $return = $standardParser->parse($data, $code);
+        $return = $standardParser->parse($data, $storiesMock);
 
         $this->assertNull($return);
     }

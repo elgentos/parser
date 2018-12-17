@@ -16,10 +16,9 @@ interface ParserInterface
      * Parse data with Factory
      *
      * @param array $data
-     * @param string $storyCode
-     * @param mixed ...$arguments
+     * @param StoriesInterface $stories
      * @return void
      */
-    public function parse(array &$data, string $storyCode, ...$arguments);//: void;
+    public function parse(array &$data, StoriesInterface $stories);//: void;
 
 }
