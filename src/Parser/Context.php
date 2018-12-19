@@ -34,7 +34,7 @@ class Context
         return $this->root;
     }
 
-    public function setIndex(string $index)//: void
+    public function setIndex(string $index): void
     {
         $this->index = $index;
     }
@@ -82,7 +82,7 @@ class Context
         return $this->changed;
     }
 
-    public function changed()//: void
+    public function changed(): void
     {
         $this->changed = true;
     }

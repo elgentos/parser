@@ -15,7 +15,6 @@ use Elgentos\Parser\Stories\Builder\Factories;
 use Elgentos\Parser\Stories\Builder\Structure;
 use Elgentos\Parser\Stories\Reader\Complex;
 use Elgentos\Parser\Stories\Reader\Simple;
-use Elgentos\Parser\Story;
 
 class Parser
 {

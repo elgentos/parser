@@ -22,7 +22,7 @@ class Debug implements ParserInterface
     /**
      * @inheritdoc
      */
-    public function parse(array &$data, StoriesInterface $stories)
+    public function parse(array &$data, StoriesInterface $stories): void
     {
         $context = new Context($data);
         $story = $stories->getStory();

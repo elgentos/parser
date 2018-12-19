@@ -17,8 +17,7 @@ interface ParserInterface
      *
      * @param array $data
      * @param StoriesInterface $stories
-     * @return void
      */
-    public function parse(array &$data, StoriesInterface $stories);//: void;
+    public function parse(array &$data, StoriesInterface $stories): void;
 
 }

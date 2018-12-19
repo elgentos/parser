@@ -41,7 +41,7 @@ class Changed implements RuleInterface
     /**
      * @param Context $context
      */
-    private function execute(Context $context)//: void
+    private function execute(Context $context): void
     {
         $this->counter++;
         $this->rule->parse($context);

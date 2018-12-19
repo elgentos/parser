@@ -106,7 +106,7 @@ class Factory implements RuleInterface
         }, array_keys($this->setters));
     }
 
-    private function applySetters($object, array $setters)//: void
+    private function applySetters($object, array $setters): void
     {
         if (count($setters) < 1) {
             return;

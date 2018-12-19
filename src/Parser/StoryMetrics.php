@@ -23,7 +23,7 @@ class StoryMetrics
      *
      * @param []Story ...$stories
      */
-    public function addStories(Story ...$stories)//: void
+    public function addStories(Story ...$stories): void
     {
         \array_walk($stories, function ($story) {
             $this->stories[] = $story;
