@@ -106,7 +106,7 @@ class Structure implements StoriesInterface
 
                 return new Iterate(
                     new Match(
-                        new Exact($index, 'getIndex'),
+                        new Exact((string)$index, 'getIndex'),
                         $childContext->getCurrent()
                     ),
                     false
