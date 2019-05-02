@@ -37,6 +37,7 @@ use Elgentos\Parser\Rule\Xml;
 use Elgentos\Parser\Rule\Yaml;
 use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
+use Symfony\Component\Yaml\Yaml as SymfonyYaml;
 
 class Complex implements StoriesInterface
 {
@@ -67,7 +68,6 @@ class Complex implements StoriesInterface
     {
         return $this->storyMetrics;
     }
-
 
     protected function initStory(string $rootDir): Story
     {
@@ -119,6 +119,10 @@ class Complex implements StoriesInterface
 
     protected function fromYaml(string $rootDir, bool $checkIndex): RuleInterface
     {
+        if (! \class_exists(SymfonyYaml::class)) {
+            return new NoLogic(false);
+        }
+        
         return new LoopAll(
             $this->import($rootDir, '.yaml', $checkIndex),
             $this->getMetrics()->createStory(
