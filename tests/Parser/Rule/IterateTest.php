@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 10:08
+ * Time: 10:08.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -16,14 +18,13 @@ use PHPUnit\Framework\TestCase;
 
 class IterateTest extends TestCase
 {
-
     /** @var Context */
     private $context;
 
     public function setUp()
     {
         $root = [
-                'root' => []
+                'root' => [],
         ];
         $this->context = new Context($root);
     }
@@ -117,7 +118,7 @@ class IterateTest extends TestCase
 
         $subRule->expects($this->exactly(2))
                 ->method('parse')
-                ->willReturnCallback(function(Context $context) {
+                ->willReturnCallback(function (Context $context) {
                     if ('two' === $context->getIndex()) {
                         $context->changed();
                     }
@@ -130,7 +131,7 @@ class IterateTest extends TestCase
 
         $current = &$context->getCurrent();
         $current['one'] = [
-            'two' => 'test'
+            'two' => 'test',
         ];
 
         $this->assertTrue($rule->parse($context));
@@ -150,5 +151,4 @@ class IterateTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

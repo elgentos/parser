@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 16-7-18
- * Time: 15:44
+ * Time: 15:44.
  */
 
 namespace Elgentos\Parser;
@@ -12,14 +14,13 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class StoryMetrics
 {
-
     /** @var []Story */
     private $stories = [];
     /** @var int */
     private $storyCount = 0;
 
     /**
-     * Add story to book
+     * Add story to book.
      *
      * @param []Story ...$stories
      */
@@ -32,10 +33,11 @@ class StoryMetrics
     }
 
     /**
-     * Create a story from rules and add to book
+     * Create a story from rules and add to book.
      *
-     * @param string $name
+     * @param string        $name
      * @param RuleInterface ...$rules
+     *
      * @return Story
      */
     public function createStory(string $name, RuleInterface ...$rules): Story
@@ -47,7 +49,7 @@ class StoryMetrics
     }
 
     /**
-     * Tell how many stories are in the book
+     * Tell how many stories are in the book.
      *
      * @return int
      */
@@ -58,43 +60,43 @@ class StoryMetrics
 
     protected function getMetric(string $metric): float
     {
-        return \array_reduce($this->stories, function($cnt, Story $story) use ($metric) {
+        return \array_reduce($this->stories, function ($cnt, Story $story) use ($metric) {
             return $cnt + $story->{$metric}();
         }, 0);
     }
 
     /**
-     * Tell how many pages in the book
+     * Tell how many pages in the book.
      *
      * @return int
      */
     public function getPages(): int
     {
-        return (int)$this->getMetric('getPages');
+        return (int) $this->getMetric('getPages');
     }
 
     /**
-     * Tell how often stories are read
+     * Tell how often stories are read.
      *
      * @return int
      */
     public function getRead(): int
     {
-        return (int)$this->getMetric('getRead');
+        return (int) $this->getMetric('getRead');
     }
 
     /**
-     * Tell how many pages where successful
+     * Tell how many pages where successful.
      *
      * @return int
      */
     public function getSuccessful(): int
     {
-        return (int)$this->getMetric('getSuccessful');
+        return (int) $this->getMetric('getSuccessful');
     }
 
     /**
-     * Tell how much time in all stories in ms
+     * Tell how much time in all stories in ms.
      *
      * @return float
      */
@@ -108,7 +110,7 @@ class StoryMetrics
     ): array {
         $sortedStories = $this->getStoriesSortedByName();
 
-        $storyStatistics = \array_map(function(Story $story) use (&$message) {
+        $storyStatistics = \array_map(function (Story $story) use (&$message) {
             return \sprintf(
                     $message,
                     $story->getName(),
@@ -123,18 +125,17 @@ class StoryMetrics
     }
 
     /**
-     * Sort stories by name
+     * Sort stories by name.
      *
      * @return array
      */
     private function getStoriesSortedByName(): array
     {
         $stories = $this->stories;
-        \usort($stories, function(Story $storyA, Story $storyB) {
+        \usort($stories, function (Story $storyA, Story $storyB) {
             return $storyA->getName() <=> $storyB->getName();
         });
 
         return $stories;
     }
-
 }

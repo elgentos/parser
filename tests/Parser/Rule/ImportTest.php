@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 13-7-18
- * Time: 9:10
+ * Time: 9:10.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class ImportTest extends TestCase
 {
-
     const DATAPATH = PARSERTEST_DATA_DIR;
 
     /** @var Context */
@@ -26,10 +27,10 @@ class ImportTest extends TestCase
     public function setUp()
     {
         $root = [
-                'import' => '/jsonImportData.json'
+                'import' => '/jsonImportData.json',
         ];
         $this->context = new Context($root);
-        $this->content = file_get_contents(self::DATAPATH . $root['import']);
+        $this->content = file_get_contents(self::DATAPATH.$root['import']);
     }
 
     public function testParse()
@@ -48,9 +49,9 @@ class ImportTest extends TestCase
         $context = $this->context;
 
         $current = &$context->getCurrent();
-        $current = '../../../' . $current;
+        $current = '../../../'.$current;
 
-        $rule = new Import(self::DATAPATH . '//../...//.');
+        $rule = new Import(self::DATAPATH.'//../...//.');
 
         $rule->parse($context);
         $this->assertSame($this->content, $context->getCurrent());
@@ -66,5 +67,4 @@ class ImportTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

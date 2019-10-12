@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 1:01
+ * Time: 1:01.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class CallbackTest extends TestCase
 {
-
     /** @var Context */
     private $context;
 
@@ -22,7 +23,6 @@ class CallbackTest extends TestCase
         $root = [];
         $this->context = new Context($root);
     }
-
 
     public function testParse()
     {
@@ -33,5 +33,4 @@ class CallbackTest extends TestCase
 
         $this->assertTrue($rule->parse($context));
     }
-
 }

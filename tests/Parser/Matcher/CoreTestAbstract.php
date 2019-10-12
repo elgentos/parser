@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 14-8-18
- * Time: 12:34
+ * Time: 12:34.
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -12,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 abstract class CoreTestAbstract extends TestCase
 {
-
     /**
      * @dataProvider dataProvider
      */
@@ -23,5 +24,4 @@ abstract class CoreTestAbstract extends TestCase
     }
 
     abstract public function dataProvider(): array;
-
 }

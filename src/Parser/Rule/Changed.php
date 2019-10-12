@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 13-7-18
- * Time: 12:31
+ * Time: 12:31.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,7 +15,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Changed implements RuleInterface
 {
-
     /** @var RuleInterface */
     private $rule;
     /** @var int */
@@ -26,7 +27,7 @@ class Changed implements RuleInterface
 
     public function parse(Context $context): bool
     {
-        for (;$this->execute($context), $context->isChanged();) {
+        for (; $this->execute($context), $context->isChanged();) {
             $context = new Context($context->getRoot());
         }
 
@@ -46,5 +47,4 @@ class Changed implements RuleInterface
         $this->counter++;
         $this->rule->parse($context);
     }
-
 }

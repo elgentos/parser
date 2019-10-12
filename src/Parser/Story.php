@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 16-7-18
- * Time: 11:48
+ * Time: 11:48.
  */
 
 namespace Elgentos\Parser;
@@ -12,7 +14,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Story implements RuleInterface
 {
-
     /** @var string */
     private $name;
     /** @var RuleInterface[] */
@@ -27,7 +28,7 @@ class Story implements RuleInterface
     /** @var float */
     private $cost = 0.0;
 
-    public function __construct(string $name, RuleInterface ... $rules)
+    public function __construct(string $name, RuleInterface ...$rules)
     {
         $this->name = $name;
         $this->rules = $rules;
@@ -40,10 +41,11 @@ class Story implements RuleInterface
         // Measure cost of story
         $start = \microtime(true);
 
-        $successful = \array_reduce($this->rules, function($succesful, $rule) use ($context) {
-            if (! $this->execute($rule, $context)) {
+        $successful = \array_reduce($this->rules, function ($succesful, $rule) use ($context) {
+            if (!$this->execute($rule, $context)) {
                 return $succesful;
             }
+
             return $succesful + 1;
         }, 0);
 
@@ -59,12 +61,13 @@ class Story implements RuleInterface
     protected function execute(RuleInterface $rule, Context $context): bool
     {
         $this->read++;
+
         return $rule->parse($context);
     }
 
     /**
      * Tell how many pages(rules) where read
-     * * count every $rule for every $story->parse()
+     * * count every $rule for every $story->parse().
      *
      * @return int
      */
@@ -75,7 +78,7 @@ class Story implements RuleInterface
 
     /**
      * Tell how many pages(rules) where successful
-     * * count $rule->parse() === true for $story->parse()
+     * * count $rule->parse() === true for $story->parse().
      *
      * @return int
      */
@@ -86,7 +89,7 @@ class Story implements RuleInterface
 
     /**
      * How often is this story told
-     * * count every $story->parse()
+     * * count every $story->parse().
      *
      * @return int
      */
@@ -96,7 +99,7 @@ class Story implements RuleInterface
     }
 
     /**
-     * How much time is spend parsing in ms
+     * How much time is spend parsing in ms.
      *
      * @return float
      */
@@ -109,5 +112,4 @@ class Story implements RuleInterface
     {
         return $this->name;
     }
-
 }

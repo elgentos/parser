@@ -1,13 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 12:34
+ * Time: 12:34.
  */
 
 namespace Elgentos\Parser\Matcher;
-
 
 use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
@@ -22,5 +23,4 @@ class MatcherAbstract extends TestCase
         $root = [];
         $this->context = new Context($root);
     }
-
 }

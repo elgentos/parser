@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 11-8-18
- * Time: 20:50
+ * Time: 20:50.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,7 +16,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Match implements RuleInterface
 {
-
     /** @var MatcherInterface */
     private $matcher;
     /** @var RuleInterface */
@@ -49,5 +50,4 @@ class Match implements RuleInterface
 
         return $this->nextRule->parse($context);
     }
-
 }

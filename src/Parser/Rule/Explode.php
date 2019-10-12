@@ -1,13 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 14-7-18
- * Time: 23:17
+ * Time: 23:17.
  */
 
 namespace Elgentos\Parser\Rule;
-
 
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Exceptions\RuleInvalidContextException;
@@ -15,7 +16,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Explode implements RuleInterface
 {
-
     /** @var string */
     private $delimiter;
 
@@ -27,8 +27,8 @@ class Explode implements RuleInterface
     public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
-        if (! \is_string($current)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a string", self::class));
+        if (!\is_string($current)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a string', self::class));
         }
 
         $current = \explode($this->delimiter, $current);
@@ -37,5 +37,4 @@ class Explode implements RuleInterface
 
         return true;
     }
-
 }

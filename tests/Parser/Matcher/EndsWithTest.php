@@ -1,16 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 14-8-18
- * Time: 11:19
+ * Time: 11:19.
  */
 
 namespace Elgentos\Parser\Matcher;
 
 class EndsWithTest extends CoreTestAbstract
 {
-
     public function dataProvider(): array
     {
         $endsWith = new EndsWith('test');
@@ -23,5 +24,4 @@ class EndsWithTest extends CoreTestAbstract
                 [$endsWith, true, 'is_test'],
         ];
     }
-
 }

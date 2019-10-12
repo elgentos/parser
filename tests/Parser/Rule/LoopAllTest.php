@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 13:13
+ * Time: 13:13.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class LoopAllTest extends TestCase
 {
-
     public function testConstructorInvalidArgument()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -46,7 +47,7 @@ class LoopAllTest extends TestCase
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $ruleMock2 = new $ruleMock;
+        $ruleMock2 = new $ruleMock();
 
         $ruleMock->expects($this->once())
                 ->method('parse')
@@ -68,7 +69,7 @@ class LoopAllTest extends TestCase
         $ruleMock = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
 
-        $ruleMock2 = new $ruleMock;
+        $ruleMock2 = new $ruleMock();
 
         $ruleMock->expects($this->exactly(2))
                 ->method('parse')
@@ -82,5 +83,4 @@ class LoopAllTest extends TestCase
         $this->assertFalse($loop->parse($context));
         $this->assertFalse($context->isChanged());
     }
-
 }

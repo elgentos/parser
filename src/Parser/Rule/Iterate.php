@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 11-7-18
- * Time: 14:25
+ * Time: 14:25.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -32,23 +34,23 @@ class Iterate implements RuleInterface
 
     private function recursive(Context $context, $level = 0): bool
     {
-        if (! $this->recursive && $level > 0) {
+        if (!$this->recursive && $level > 0) {
             return false;
         }
 
         $current = &$context->getCurrent();
-        if (! \is_array($current)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
+        if (!\is_array($current)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a array', self::class));
         }
 
         $iterateContext = new Context($current);
         foreach (\array_keys($current) as $key) {
-            $iterateContext->setIndex((string)$key);
+            $iterateContext->setIndex((string) $key);
 
             if ($this->rule->parse($iterateContext)) {
                 continue;
             }
-            if (! \is_array($iterateContext->getCurrent())) {
+            if (!\is_array($iterateContext->getCurrent())) {
                 continue;
             }
 
@@ -56,7 +58,7 @@ class Iterate implements RuleInterface
         }
 
         $iterateContext->isChanged() && $context->changed();
+
         return true;
     }
-
 }

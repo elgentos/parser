@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 17-7-18
- * Time: 14:25
+ * Time: 14:25.
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -18,5 +20,4 @@ class IsString implements MatcherInterface
         return IsType::factory(IsType::IS_STRING)
                 ->validate($context);
     }
-
 }

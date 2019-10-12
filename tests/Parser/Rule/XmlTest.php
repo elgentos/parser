@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 11-8-18
- * Time: 22:15
+ * Time: 22:15.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -15,10 +17,9 @@ use PHPUnit\Framework\TestCase;
 
 class XmlTest extends TestCase
 {
-
     public function testImplementsRuleInterface()
     {
-        $xml = new Xml;
+        $xml = new Xml();
 
         $this->assertInstanceOf(RuleInterface::class, $xml);
     }
@@ -26,12 +27,12 @@ class XmlTest extends TestCase
     public function testInvalidType()
     {
         $data = [
-                true
+                true,
         ];
 
         $context = new Context($data);
 
-        $xml = new Xml;
+        $xml = new Xml();
 
         $this->expectException(RuleInvalidContextException::class);
         $xml->parse($context);
@@ -40,7 +41,7 @@ class XmlTest extends TestCase
     public function testParse()
     {
         $data = [
-                <<<XML
+                <<<'XML'
 <xml>
     <person state="state1">
         <name>Person1</name>
@@ -61,31 +62,31 @@ XML
                 'person' => [
                     [
                         '@attributes' => [
-                            'state' => 'state1'
+                            'state' => 'state1',
                         ],
                         'name' => 'Person1',
-                        'age' => '10'
+                        'age'  => '10',
                     ],
                     [
                         'age' => [
                                 '20',
-                                '30'
+                                '30',
                         ],
                         'name' => [
                             '@attributes' => [
-                                'state' => 'state2'
+                                'state' => 'state2',
                             ],
-                            '@value' => 'Person2'
+                            '@value' => 'Person2',
                         ],
                     ],
                 ],
                 'otherperson' => '',
-            ]
+            ],
         ];
 
         $context = new Context($data);
 
-        $xml = new Xml;
+        $xml = new Xml();
 
         $this->assertTrue($xml->parse($context));
         $this->assertSame($result, $data);
@@ -94,7 +95,7 @@ XML
     public function testParseEmpty()
     {
         $data = [
-                <<<XML
+                <<<'XML'
 <xml>
 </xml>
 XML
@@ -104,10 +105,9 @@ XML
 
         $context = new Context($data);
 
-        $xml = new Xml;
+        $xml = new Xml();
 
         $this->assertTrue($xml->parse($context));
         $this->assertSame($result, $data);
     }
-
 }

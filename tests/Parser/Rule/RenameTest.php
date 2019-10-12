@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 21:27
+ * Time: 21:27.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class RenameTest extends TestCase
 {
-
     public function testParse()
     {
         $root = ['test' => 'text'];
@@ -26,5 +27,4 @@ class RenameTest extends TestCase
         $this->assertTrue($context->isChanged());
         $this->assertSame('test2', $context->getIndex());
     }
-
 }

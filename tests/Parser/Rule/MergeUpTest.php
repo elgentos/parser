@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 16-7-18
- * Time: 10:15
+ * Time: 10:15.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,34 +15,32 @@ use PHPUnit\Framework\TestCase;
 
 class MergeUpTest extends TestCase
 {
-
     public function testMerge()
     {
         $root = [
                 'merge' => [
-                        'test' => 'overwrite',
+                        'test'      => 'overwrite',
                         'recursive' => [
-                                ['overwrite']
-                        ]
+                                ['overwrite'],
+                        ],
                 ],
-                'test' => 'content',
+                'test'      => 'content',
                 'recursive' => [
-                        ['content']
-                ]
+                        ['content'],
+                ],
         ];
         $context = new Context($root);
 
         $rule = new MergeUp(true);
 
         $test = [
-                'test' => 'overwrite',
+                'test'      => 'overwrite',
                 'recursive' => [
-                        ['overwrite']
-                ]
+                        ['overwrite'],
+                ],
         ];
 
         $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
     }
-
 }

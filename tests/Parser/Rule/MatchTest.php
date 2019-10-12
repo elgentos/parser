@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 11-8-18
- * Time: 20:49
+ * Time: 20:49.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -16,7 +18,6 @@ use PHPUnit\Framework\TestCase;
 
 class MatchTest extends TestCase
 {
-
     /** @var MockObject */
     private $ruleMock;
     /** @var MockObject */
@@ -83,5 +84,4 @@ class MatchTest extends TestCase
         $this->assertTrue($match->parse($context));
         $this->assertFalse($match->parse($context));
     }
-
 }

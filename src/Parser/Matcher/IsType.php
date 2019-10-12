@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 17-7-18
- * Time: 13:26
+ * Time: 13:26.
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -13,15 +15,14 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class IsType implements MatcherInterface
 {
-
-    const IS_BOOL       = 'bool';
-    const IS_STRING     = 'string';
-    const IS_ARRAY      = 'array';
-    const IS_INT        = 'int';
-    const IS_OBJECT     = 'object';
-    const IS_FLOAT      = 'float';
-    const IS_NUMERIC    = 'numeric';
-    const IS_NULL       = 'null';
+    const IS_BOOL = 'bool';
+    const IS_STRING = 'string';
+    const IS_ARRAY = 'array';
+    const IS_INT = 'int';
+    const IS_OBJECT = 'object';
+    const IS_FLOAT = 'float';
+    const IS_NUMERIC = 'numeric';
+    const IS_NULL = 'null';
 
     /** @var string */
     private $type;
@@ -42,7 +43,7 @@ class IsType implements MatcherInterface
 
     public function __construct(string $type, string $method = 'getCurrent')
     {
-        if (! isset($this->validators[$type])) {
+        if (!isset($this->validators[$type])) {
             throw new \InvalidArgumentException(
                     sprintf('"%s" is not a allowed type for this class', $type)
             );
@@ -55,19 +56,20 @@ class IsType implements MatcherInterface
     public function validate(Context $context): bool
     {
         $validator = $this->validators[$this->type];
+
         return $validator($context->{$this->method}());
     }
 
     /**
-     * Allow static creation
+     * Allow static creation.
      *
      * @param string $type
      * @param string $method
+     *
      * @return IsType
      */
-    static public function factory(string $type, string $method = 'getCurrent'): IsType
+    public static function factory(string $type, string $method = 'getCurrent'): self
     {
         return new self($type, $method);
     }
-
 }

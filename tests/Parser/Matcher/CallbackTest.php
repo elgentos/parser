@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 12:28
+ * Time: 12:28.
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -16,7 +18,7 @@ class CallbackTest extends MatcherAbstract
     public function testValidateTrue()
     {
         $context = $this->context;
-        $matcher = new Callback(function(Context $context){
+        $matcher = new Callback(function (Context $context) {
             return true;
         });
 
@@ -26,11 +28,10 @@ class CallbackTest extends MatcherAbstract
     public function testValidateFalse()
     {
         $context = $this->context;
-        $matcher = new Callback(function(Context $context){
+        $matcher = new Callback(function (Context $context) {
             return false;
         });
 
         $this->assertFalse($matcher->validate($context));
     }
-
 }

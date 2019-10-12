@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 13-7-18
- * Time: 9:01
+ * Time: 9:01.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,7 +15,6 @@ use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 
 class Import extends FileAbstract
 {
-
     /** @var string */
     private $rootDir;
 
@@ -25,8 +26,8 @@ class Import extends FileAbstract
     public function parse(Context $context): bool
     {
         $filename = $context->getCurrent();
-        if (! \is_string($filename)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a path/to/file", self::class));
+        if (!\is_string($filename)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a path/to/file', self::class));
         }
 
         $current = &$context->getCurrent();
@@ -38,14 +39,14 @@ class Import extends FileAbstract
     }
 
     /**
-     * Get file contents
+     * Get file contents.
      *
      * @param string $filename
+     *
      * @return string
      */
     protected function getContent(string $filename): string
     {
-        return \file_get_contents($this->getSafepath($this->rootDir . DIRECTORY_SEPARATOR . $filename));
+        return \file_get_contents($this->getSafepath($this->rootDir.DIRECTORY_SEPARATOR.$filename));
     }
-
 }

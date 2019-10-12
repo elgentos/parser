@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 14-7-18
- * Time: 20:54
+ * Time: 20:54.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,10 +16,9 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Csv implements RuleInterface
 {
-
     const DEFAULT_DELIMITER = ',';
     const DEFAULT_ENCLOSURE = '"';
-    const DEFAULT_ESCAPE = "\\";
+    const DEFAULT_ESCAPE = '\\';
 
     /** @var bool */
     private $firstHasKeys;
@@ -47,8 +48,8 @@ class Csv implements RuleInterface
         if (empty($current)) {
             return false;
         }
-        if (! \is_array($current)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
+        if (!\is_array($current)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a array', self::class));
         }
 
         if ($this->firstHasKeys && \count($current) < 2) {
@@ -57,7 +58,7 @@ class Csv implements RuleInterface
         $context->changed();
 
         $length = [];
-        $current = \array_map(function(string $line) use (&$length) {
+        $current = \array_map(function (string $line) use (&$length) {
             $result = \str_getcsv(
                     $line,
                     $this->delimiter,
@@ -66,10 +67,11 @@ class Csv implements RuleInterface
             );
 
             $length[] = \count($result);
+
             return $result;
         }, $current);
 
-        if (! $this->firstHasKeys) {
+        if (!$this->firstHasKeys) {
             return true;
         }
 
@@ -81,17 +83,17 @@ class Csv implements RuleInterface
             $keys = \array_merge($keys, \range($numkeys, $longest - 1));
         }
 
-        $current = \array_map(function($line, $length) use (&$keys, &$longest) {
+        $current = \array_map(function ($line, $length) use (&$keys, &$longest) {
             if ($length < $longest) {
                 $line = \array_merge(
                         $line,
                         \array_fill(0, $longest - $length, null)
                 );
             }
+
             return \array_combine($keys, $line);
         }, $current, $length);
 
         return true;
     }
-
 }

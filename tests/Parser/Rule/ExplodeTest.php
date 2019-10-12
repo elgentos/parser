@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 14-7-18
- * Time: 23:19
+ * Time: 23:19.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,16 +16,14 @@ use PHPUnit\Framework\TestCase;
 
 class ExplodeTest extends TestCase
 {
-
     /** @var Context */
     private $context;
 
     public function setUp()
     {
         $root = [
-                '__explode' =>
-                        '"first1","first2","first3"' . "\n" .
-                        '"second1","second2"' . "\n"
+                '__explode' => '"first1","first2","first3"'."\n".
+                        '"second1","second2"'."\n",
         ];
         $this->context = new Context($root);
     }
@@ -33,7 +33,7 @@ class ExplodeTest extends TestCase
         $context = $this->context;
         $test = explode("\n", $context->getCurrent());
 
-        $rule = new Explode;
+        $rule = new Explode();
         $this->assertTrue($rule->parse($context));
         $this->assertSame($test, $context->getCurrent());
     }
@@ -50,7 +50,7 @@ class ExplodeTest extends TestCase
 
     public function testInvalidType()
     {
-        $rule = new Explode;
+        $rule = new Explode();
 
         $context = $this->context;
         $current = &$context->getCurrent();
@@ -59,5 +59,4 @@ class ExplodeTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

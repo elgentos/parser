@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 0:58
+ * Time: 0:58.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,7 +15,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Callback implements RuleInterface
 {
-
     /** @var \Closure */
     private $callback;
 
@@ -25,7 +26,7 @@ class Callback implements RuleInterface
     public function parse(Context $context): bool
     {
         $callback = $this->callback;
-        return !! $callback($context);
-    }
 
+        return (bool) $callback($context);
+    }
 }

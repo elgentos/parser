@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 1:34
+ * Time: 1:34.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,7 +15,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class NoLogic implements RuleInterface
 {
-
     /** @var bool */
     private $return;
 
@@ -26,5 +27,4 @@ class NoLogic implements RuleInterface
     {
         return $this->return;
     }
-
 }

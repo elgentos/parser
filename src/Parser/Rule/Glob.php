@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 17-7-18
- * Time: 11:44
+ * Time: 11:44.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,7 +15,6 @@ use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 
 class Glob extends FileAbstract
 {
-
     /** @var string */
     private $rootDir;
 
@@ -25,8 +26,8 @@ class Glob extends FileAbstract
     public function parse(Context $context): bool
     {
         $path = $context->getCurrent();
-        if (! \is_string($path)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a string", self::class));
+        if (!\is_string($path)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a string', self::class));
         }
 
         $files = $this->getFiles($path);
@@ -41,7 +42,7 @@ class Glob extends FileAbstract
 
     protected function getFiles($path): array
     {
-        $safepath = $this->getSafepath($this->rootDir . DIRECTORY_SEPARATOR . $path);
+        $safepath = $this->getSafepath($this->rootDir.DIRECTORY_SEPARATOR.$path);
 
         $fileIterator = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator(
@@ -54,7 +55,7 @@ class Glob extends FileAbstract
 
         $fileIterator->rewind();
         while ($fileIterator->valid()) {
-            $files[] = $path . DIRECTORY_SEPARATOR . $fileIterator->getSubPathName();
+            $files[] = $path.DIRECTORY_SEPARATOR.$fileIterator->getSubPathName();
             $fileIterator->next();
         }
 
@@ -62,5 +63,4 @@ class Glob extends FileAbstract
 
         return $files;
     }
-
 }

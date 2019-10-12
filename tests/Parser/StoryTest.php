@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 16-7-18
- * Time: 13:09
+ * Time: 13:09.
  */
 
 namespace Elgentos\Parser;
@@ -13,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class StoryTest extends TestCase
 {
-
     /** @var Context */
     private $context;
 
@@ -93,5 +94,4 @@ class StoryTest extends TestCase
         $this->assertSame(10, $story->getRead());
         $this->assertGreaterThan($cost, $story->getCost());
     }
-
 }

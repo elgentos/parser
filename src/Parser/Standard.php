@@ -1,22 +1,22 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 10-8-18
- * Time: 0:54
+ * Time: 0:54.
  */
 
 namespace Elgentos\Parser;
 
 use Elgentos\Parser\Interfaces\ParserInterface;
 use Elgentos\Parser\Interfaces\StoriesInterface;
-use Elgentos\Parser\Stories\Factory;
 
 class Standard implements ParserInterface
 {
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function parse(array &$data, StoriesInterface $stories): void
     {
@@ -24,5 +24,4 @@ class Standard implements ParserInterface
         $stories->getStory()
             ->parse($context);
     }
-
 }

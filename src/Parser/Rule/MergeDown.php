@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 0:13
+ * Time: 0:13.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,7 +16,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class MergeDown implements RuleInterface
 {
-
     /** @var bool */
     private $mergeRecursive;
 
@@ -29,8 +30,8 @@ class MergeDown implements RuleInterface
 
         $index = $context->getIndex();
         $content = $context->getCurrent();
-        if (! \is_array($content)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
+        if (!\is_array($content)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a array', self::class));
         }
         unset($root[$index]);
 
@@ -38,16 +39,17 @@ class MergeDown implements RuleInterface
         $context->changed();
 
         \reset($root);
-        $context->setIndex((string)\key($root));
+        $context->setIndex((string) \key($root));
 
         return true;
     }
 
     /**
-     * First call
+     * First call.
      *
      * @param array $source
      * @param array $destination
+     *
      * @return array
      */
     protected function merge(array &$source, array &$destination): array
@@ -56,10 +58,11 @@ class MergeDown implements RuleInterface
     }
 
     /**
-     * Recursive nice merge
+     * Recursive nice merge.
      *
      * @param array $source
      * @param array $destination
+     *
      * @return array
      */
     private function niceMerge(array &$source, array &$destination): array
@@ -81,5 +84,4 @@ class MergeDown implements RuleInterface
 
         return $merged;
     }
-
 }

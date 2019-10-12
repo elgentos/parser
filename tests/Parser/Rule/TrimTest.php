@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 2:04
+ * Time: 2:04.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class TrimTest extends TestCase
 {
-
     /** @var Context */
     private $context;
 
@@ -26,7 +27,7 @@ class TrimTest extends TestCase
                 remove all space\t
                 
                 ",
-                "ddddcharlistddd"
+                'ddddcharlistddd',
         ];
         $this->context = new Context($root);
     }
@@ -35,7 +36,7 @@ class TrimTest extends TestCase
     {
         $context = $this->context;
 
-        $rule = new Trim;
+        $rule = new Trim();
         $test = trim($context->getCurrent());
 
         $rule->parse($context);
@@ -56,7 +57,7 @@ class TrimTest extends TestCase
 
     public function testInvalidType()
     {
-        $rule = new Trim;
+        $rule = new Trim();
 
         $root = [['test']];
         $context = new Context($root);
@@ -64,5 +65,4 @@ class TrimTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

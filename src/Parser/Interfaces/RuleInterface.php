@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 11-7-18
- * Time: 14:29
+ * Time: 14:29.
  */
 
 namespace Elgentos\Parser\Interfaces;
@@ -12,7 +14,5 @@ use Elgentos\Parser\Context;
 
 interface RuleInterface
 {
-
     public function parse(Context $context): bool;
-
 }

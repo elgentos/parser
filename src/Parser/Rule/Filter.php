@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 14:20
+ * Time: 14:20.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -15,7 +17,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Filter implements RuleInterface
 {
-
     /** @var string */
     private $pathSeparator;
 
@@ -28,13 +29,13 @@ class Filter implements RuleInterface
     {
         $filter = $context->getCurrent();
         $root = &$context->getRoot();
-        if (! \is_array($filter)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
+        if (!\is_array($filter)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a array', self::class));
         }
 
         unset($root[$context->getIndex()]);
 
-        $path = (string)($filter['path'] ?? '0');
+        $path = (string) ($filter['path'] ?? '0');
 
         try {
             $subContext = $context->search($path, $this->pathSeparator);
@@ -44,9 +45,9 @@ class Filter implements RuleInterface
 
         $this->filter(
                 $subContext,
-                (string)($filter['index'] ?? ''),
-                (bool)($filter['inverse'] ?? false),
-                ... (array)($filter['value'] ?? '')
+                (string) ($filter['index'] ?? ''),
+                (bool) ($filter['inverse'] ?? false),
+                ...(array) ($filter['value'] ?? '')
         );
         $context->changed();
 
@@ -57,12 +58,12 @@ class Filter implements RuleInterface
     {
         $root = &$context->getRoot();
 
-        $root = \array_filter($root, function(&$row) use ($index, $values, $inverse) {
-            if (! \is_array($row)) {
+        $root = \array_filter($root, function (&$row) use ($index, $values, $inverse) {
+            if (!\is_array($row)) {
                 return true;
             }
 
-            if (! isset($row[$index])) {
+            if (!isset($row[$index])) {
                 return true;
             }
 
@@ -71,5 +72,4 @@ class Filter implements RuleInterface
 
         return true;
     }
-
 }

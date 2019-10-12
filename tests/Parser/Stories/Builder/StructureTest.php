@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: jeroen
  * Date: 17-12-18
- * Time: 21:33
+ * Time: 21:33.
  */
 
 namespace Elgentos\Parser\Stories\Builder;
@@ -19,16 +19,15 @@ use PHPUnit\Framework\TestCase;
 
 class StructureTest extends TestCase
 {
-
     public function testGetMetrics()
     {
-        $structures = new Structure;
+        $structures = new Structure();
         $this->assertInstanceOf(StoryMetrics::class, $structures->getMetrics());
     }
 
     public function testGetStory()
     {
-        $structures = new Structure;
+        $structures = new Structure();
         $this->assertInstanceOf(Story::class, $structures->getStory());
     }
 
@@ -37,7 +36,7 @@ class StructureTest extends TestCase
         $factories = [
             'factory1' => new Factory(NoLogic::class, [true]),
             'factory2' => new Factory(NoLogic::class, [false]),
-            'factory3' => new \stdClass,
+            'factory3' => new \stdClass(),
         ];
 
         $this->expectException(\TypeError::class);
@@ -46,55 +45,55 @@ class StructureTest extends TestCase
 
     public function testStoryMetrics()
     {
-        $structures = new Structure;
+        $structures = new Structure();
 
         $metrics = $structures->getMetrics()
                 ->getStatistics('%s');
         $this->assertSame([
                 '0-root',
-                '1-builder'
+                '1-builder',
         ], $metrics);
     }
 
     public function testStructure()
     {
         $factories = [
-            'stdClass' => new Factory(\stdClass::class)
+            'stdClass' => new Factory(\stdClass::class),
         ];
 
         $structures = new Structure($factories);
 
         /** @var Story $template */
         $template = [
-            /**
+            /*
              * factory is a defined class
              */
             'factory' => [
                 'class' => Story::class,
-                /**
+                /*
                  * default arguments
                  */
                 'arguments' => [
-                    'name' => 'test-story'
-                ]
+                    'name' => 'test-story',
+                ],
             ],
             'children' => [
                 'iterate' => [
                     'factory' => [
-                        'class' => Iterate::class,
+                        'class'     => Iterate::class,
                         'arguments' => [
                             'recursive' => false,
-                        ]
+                        ],
                     ],
                     'multiple' => true,
                 ],
-                /**
+                /*
                  * this is a lookup factory defined in factories
                  */
                 'standard' => [
                     'factory' => 'stdClass',
-                ]
-            ]
+                ],
+            ],
         ];
         $content = ['@template' => &$template];
 
@@ -102,7 +101,7 @@ class StructureTest extends TestCase
         $structures->getStory()->parse($context);
 
         $this->assertInstanceOf(Story::class, $template);
-        /**
+        /*
          * all childs should be a page before the actual root
          */
         $this->assertSame(3, $template->getPages());
@@ -111,23 +110,22 @@ class StructureTest extends TestCase
     public function testUndefinedFactory()
     {
         $factories = [
-            'stdClass' => new Factory(\stdClass::class)
+            'stdClass' => new Factory(\stdClass::class),
         ];
 
         $this->expectException(GeneralException::class);
 
         $template = [
-            'factory' => 'stdClass',
+            'factory'  => 'stdClass',
             'children' => [
                 'standard' => [
-                    'factory' => 'non-existent'
-                ]
+                    'factory' => 'non-existent',
+                ],
             ],
         ];
 
         $content = [&$template];
         $context = new Context($content);
-
 
         $structures = new Structure($factories);
 
@@ -138,28 +136,26 @@ class StructureTest extends TestCase
     public function testUndefinedFactoryIndex()
     {
         $factories = [
-            'stdClass' => new Factory(\stdClass::class)
+            'stdClass' => new Factory(\stdClass::class),
         ];
 
         $this->expectException(GeneralException::class);
 
         $template = [
             'no-factory' => 'stdClass',
-            'children' => [
+            'children'   => [
                 'standard' => [
-                    'factory' => 'non-existent'
-                ]
+                    'factory' => 'non-existent',
+                ],
             ],
         ];
 
         $content = [&$template];
         $context = new Context($content);
 
-
         $structures = new Structure($factories);
 
         $structures->getStory()
                 ->parse($context);
     }
-
 }

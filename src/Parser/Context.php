@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 11-7-18
- * Time: 14:54
+ * Time: 14:54.
  */
 
 namespace Elgentos\Parser;
@@ -13,7 +15,6 @@ use Elgentos\Parser\Exceptions\ContextPathNotFoundException;
 
 class Context
 {
-
     /** @var array */
     private $root;
     /** @var string */
@@ -25,7 +26,7 @@ class Context
     {
         $this->root = &$root;
         \reset($this->root);
-        $this->setIndex((string)\key($this->root));
+        $this->setIndex((string) \key($this->root));
         $this->changed = false;
     }
 
@@ -50,7 +51,6 @@ class Context
     }
 
     /**
-     *
      * @return mixed
      */
     public function &getCurrent()
@@ -58,23 +58,23 @@ class Context
         return $this->root[$this->index];
     }
 
-    public function search(string $path, string $seperator = '/'): Context
+    public function search(string $path, string $seperator = '/'): self
     {
         $path = \explode($seperator, $path);
 
         $root = &$this->getRoot();
         foreach ($path as $index) {
-            if (! isset($root[$index])) {
+            if (!isset($root[$index])) {
                 throw new ContextPathNotFoundException('Path not found');
             }
-            if (! \is_array($root[$index])) {
+            if (!\is_array($root[$index])) {
                 throw new ContextPathNoArrayException('Path is not an array');
             }
 
             $root = &$root[$index];
         }
 
-        return new Context($root);
+        return new self($root);
     }
 
     public function isChanged(): bool
@@ -86,5 +86,4 @@ class Context
     {
         $this->changed = true;
     }
-
 }

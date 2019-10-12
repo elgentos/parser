@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 13-7-18
- * Time: 23:28
+ * Time: 23:28.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class ChangedTest extends TestCase
 {
-
     /** @var Context */
     private $context;
 
@@ -57,5 +58,4 @@ class ChangedTest extends TestCase
 
         $this->assertSame(2, $rule->getCounter());
     }
-
 }

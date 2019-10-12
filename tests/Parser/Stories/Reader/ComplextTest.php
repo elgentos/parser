@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 10-8-18
- * Time: 13:02
+ * Time: 13:02.
  */
 
 namespace Elgentos\Parser\Stories\Reader;
@@ -16,7 +18,6 @@ use PHPUnit\Framework\TestCase;
 
 class ComplextTest extends TestCase
 {
-
     public function testGetStory()
     {
         $reader = new Complex(PARSERTEST_DATA_DIR);
@@ -48,7 +49,7 @@ class ComplextTest extends TestCase
         $reader = new Complex(PARSERTEST_DATA_DIR);
 
         $data = [
-                '@import' => 'base.yml'
+                '@import' => 'base.yml',
         ];
 
         $this->expectException(RuleInvalidContextException::class);
@@ -64,7 +65,7 @@ class ComplextTest extends TestCase
         $reader = new Complex(PARSERTEST_DATA_DIR);
 
         $data = [
-            '@import' => 'base.yaml'
+            '@import' => 'base.yaml',
         ];
 
         $result = [
@@ -76,12 +77,12 @@ class ComplextTest extends TestCase
                         [
                             ['@import' => 'CSV'],
                             ['text' => 'This is a TEXT'],
-                            ['xml' => ['config' => 'test']]
-                        ]
-                    ]
+                            ['xml'  => ['config' => 'test']],
+                        ],
+                    ],
                 ],
                 [
-                    'xml' => ['config' => 'test']
+                    'xml' => ['config' => 'test'],
                 ],
                 [
                         'This is a TEXT',
@@ -94,23 +95,23 @@ class ComplextTest extends TestCase
                     'globtext' => [
                         ['text' => 'TEXT1'],
                         ['text' => 'TEXT2'],
-                    ]
-                ]
+                    ],
+                ],
             ],
             'second' => ['text' => 'TEXT1'],
-            'csv' => [
+            'csv'    => [
                     [
-                            ['column1' => '1', 'column2' => '1']
+                            ['column1' => '1', 'column2' => '1'],
                     ],
                     [
                             ['column1' => '2', 'column2' => '2'],
-                            ['column1' => '3', 'column2' => '3']
+                            ['column1' => '3', 'column2' => '3'],
                     ],
             ],
             'csvdir' => [
                     ['column1' => '1', 'column2' => '1'],
                     ['column1' => '2', 'column2' => '2'],
-                    ['column1' => '3', 'column2' => '3']
+                    ['column1' => '3', 'column2' => '3'],
             ],
         ];
 
@@ -121,5 +122,4 @@ class ComplextTest extends TestCase
 
         $this->assertSame($result, $data);
     }
-
 }

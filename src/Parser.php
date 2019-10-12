@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 10-8-18
- * Time: 11:45
+ * Time: 11:45.
  */
 
 namespace Elgentos;
@@ -18,16 +20,16 @@ use Elgentos\Parser\Stories\Reader\Simple;
 
 class Parser
 {
-
     /**
      * Read a file in a given basedir
-     * defaults to current workdir
+     * defaults to current workdir.
      *
      * optional, give a own parser if you want to debug
      *
-     * @param string $filename
-     * @param string $rootDir
+     * @param string               $filename
+     * @param string               $rootDir
      * @param ParserInterface|null $parser
+     *
      * @return array
      */
     public static function readFile(string $filename, string $rootDir = '.', ParserInterface $parser = null): array
@@ -35,18 +37,20 @@ class Parser
         $data = ['@import' => $filename];
 
         $story = new Complex($rootDir);
-        $parser = $parser ?? new Standard;
+        $parser = $parser ?? new Standard();
 
         $parser->parse($data, $story);
+
         return $data;
     }
 
     /**
-     * Read a file without recursion
+     * Read a file without recursion.
      *
-     * @param string $filename
-     * @param string $rootDir
+     * @param string               $filename
+     * @param string               $rootDir
      * @param ParserInterface|null $parser
+     *
      * @return array
      */
     public static function readSimple(string $filename, string $rootDir = '.', ParserInterface $parser = null): array
@@ -54,18 +58,20 @@ class Parser
         $data = ['@import' => $filename];
 
         $story = new Simple($rootDir);
-        $parser = $parser ?? new Standard;
+        $parser = $parser ?? new Standard();
 
         $parser->parse($data, $story);
+
         return $data;
     }
 
     /**
-     * Build factories from a array template
+     * Build factories from a array template.
      *
-     * @param array $template
-     * @param bool $singleton
+     * @param array                $template
+     * @param bool                 $singleton
      * @param ParserInterface|null $parser
+     *
      * @return array
      */
     public static function buildFactories(array $template, $singleton = false, ParserInterface $parser = null): array
@@ -73,18 +79,20 @@ class Parser
         $data = ['@template' => $template];
 
         $story = new Factories($singleton);
-        $parser = $parser ?? new Standard;
+        $parser = $parser ?? new Standard();
 
         $parser->parse($data, $story);
+
         return $data;
     }
 
     /**
-     * Build factories from a array template
+     * Build factories from a array template.
      *
-     * @param array $template
-     * @param array $factories
+     * @param array                $template
+     * @param array                $factories
      * @param ParserInterface|null $parser
+     *
      * @return RuleInterface
      */
     public static function buildStructure(array $template, array $factories = [], ParserInterface $parser = null): RuleInterface
@@ -92,10 +100,10 @@ class Parser
         $data = ['@template' => $template];
 
         $story = new Structure($factories);
-        $parser = $parser ?? new Standard;
+        $parser = $parser ?? new Standard();
 
         $parser->parse($data, $story);
+
         return $data['@template'];
     }
-
 }

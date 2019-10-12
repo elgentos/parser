@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 10-8-18
- * Time: 13:01
+ * Time: 13:01.
  */
 
 namespace Elgentos;
@@ -16,7 +18,6 @@ use PHPUnit\Framework\TestCase;
 
 class ParserTest extends TestCase
 {
-
     public function testReadFile()
     {
         $parserMock = $this->getMockBuilder(ParserInterface::class)
@@ -48,8 +49,8 @@ class ParserTest extends TestCase
 
         $template = [
             'test' => [
-                'class' => ParserInterface::class
-            ]
+                'class' => ParserInterface::class,
+            ],
         ];
 
         $test = ['@template' => $template];
@@ -66,8 +67,8 @@ class ParserTest extends TestCase
     {
         $template = [
             'factory' => [
-                'class' => ParserInterface::class
-            ]
+                'class' => ParserInterface::class,
+            ],
         ];
 
         $factories = [];
@@ -75,5 +76,4 @@ class ParserTest extends TestCase
         $data = Parser::buildStructure($template, $factories);
         $this->assertInstanceOf(RuleInterface::class, $data);
     }
-
 }

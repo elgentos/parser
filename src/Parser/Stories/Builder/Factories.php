@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: jeroen
  * Date: 17-12-18
- * Time: 15:13
+ * Time: 15:13.
  */
 
 namespace Elgentos\Parser\Stories\Builder;
-
 
 use Elgentos\Parser\Interfaces\StoriesInterface;
 use Elgentos\Parser\Matcher\IsArray;
@@ -20,7 +19,6 @@ use Elgentos\Parser\StoryMetrics;
 
 class Factories implements StoriesInterface
 {
-
     /** @var StoryMetrics */
     private $storyMetrics;
     /** @var Story */
@@ -31,19 +29,19 @@ class Factories implements StoriesInterface
 
     /**
      * Factories constructor.
+     *
      * @param bool $singleton
      */
     public function __construct($singleton = false)
     {
         $this->singleton = $singleton;
 
-        $this->storyMetrics = new StoryMetrics;
+        $this->storyMetrics = new StoryMetrics();
         $this->story = $this->initStory();
     }
 
-
     /**
-     * Get Story
+     * Get Story.
      *
      * @return Story
      */
@@ -53,7 +51,7 @@ class Factories implements StoriesInterface
     }
 
     /**
-     * Get Story metrics
+     * Get Story metrics.
      *
      * @return StoryMetrics
      */
@@ -73,8 +71,9 @@ class Factories implements StoriesInterface
     }
 
     /**
-     * @return Story
      * @throws \ReflectionException
+     *
+     * @return Story
      */
     protected function iterateStory(): Story
     {
@@ -82,7 +81,7 @@ class Factories implements StoriesInterface
                 '1-iterate',
                 new Iterate(
                         new Match(
-                                new IsArray,
+                                new IsArray(),
                                 $this->factoryStory()
                         ),
                         false
@@ -91,18 +90,19 @@ class Factories implements StoriesInterface
     }
 
     /**
-     * @return Story
      * @throws \ReflectionException
+     *
+     * @return Story
      */
     protected function factoryStory(): Story
     {
         return $this->storyMetrics->createStory(
             '2-factory',
             new Factory(Factory::class, [
-                'class' => null,
+                'class'     => null,
                 'arguments' => null,
-                'setters' => [],
-                'singleton' => $this->singleton
+                'setters'   => [],
+                'singleton' => $this->singleton,
             ])
         );
     }
@@ -114,5 +114,4 @@ class Factories implements StoriesInterface
             new MergeDown(false)
         );
     }
-
 }

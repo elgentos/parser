@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 17-7-18
- * Time: 12:05
+ * Time: 12:05.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,8 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class GlobTest extends TestCase
 {
-
-    const DATAPATH = PARSERTEST_DATA_DIR . '/texts';
+    const DATAPATH = PARSERTEST_DATA_DIR.'/texts';
 
     /** @var Context */
     private $context;
@@ -25,15 +26,15 @@ class GlobTest extends TestCase
     public function setUp()
     {
         $root = [
-                'files' => '.'
+                'files' => '.',
         ];
         $this->context = new Context($root);
 
         $this->files = array_map(
-                function($file) {
-                    return './' . basename($file);
+                function ($file) {
+                    return './'.basename($file);
                 },
-                glob(self::DATAPATH . '/*')
+                glob(self::DATAPATH.'/*')
         );
         sort($this->files, SORT_STRING | SORT_NATURAL);
     }
@@ -41,7 +42,7 @@ class GlobTest extends TestCase
     public function testParse()
     {
         $root = [
-                'path' => '.'
+                'path' => '.',
         ];
         $context = new Context($root);
 
@@ -62,5 +63,4 @@ class GlobTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

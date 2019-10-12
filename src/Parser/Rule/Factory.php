@@ -3,23 +3,21 @@
  * Created by PhpStorm.
  * User: jeroen
  * Date: 13-12-18
- * Time: 12:09
+ * Time: 12:09.
  */
 
 namespace Elgentos\Parser\Rule;
-
 
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Factory implements RuleInterface
 {
-
     /** @var \ReflectionClass */
     private $className;
     /** @var array */
     private $arguments;
-    /** @var array*/
+    /** @var array */
     private $setters;
     /** @var bool */
     private $defaults;
@@ -32,9 +30,10 @@ class Factory implements RuleInterface
      * Factory constructor.
      *
      * @param string $className
-     * @param array $arguments
-     * @param array $setters
-     * @param bool $singleton
+     * @param array  $arguments
+     * @param array  $setters
+     * @param bool   $singleton
+     *
      * @throws \ReflectionException
      */
     public function __construct(string $className, array $arguments = null, array $setters = null, bool $singleton = false)
@@ -59,10 +58,11 @@ class Factory implements RuleInterface
         if ($this->singleton && $this->object) {
             // Singletons are returned early
             $current = $this->object;
+
             return true;
         }
 
-        if (! is_array($current)) {
+        if (!is_array($current)) {
             return false;
         }
 
@@ -90,7 +90,7 @@ class Factory implements RuleInterface
             return $current;
         }
 
-        return array_map(function($fieldName, $default) use ($current) {
+        return array_map(function ($fieldName, $default) use ($current) {
             return $current[$fieldName] ?? $default;
         }, $this->arguments, $this->defaults);
     }
@@ -101,7 +101,7 @@ class Factory implements RuleInterface
             return [];
         }
 
-        return array_map(function($setter) use ($current) {
+        return array_map(function ($setter) use ($current) {
             return $current[$setter] ?? null;
         }, array_keys($this->setters));
     }
@@ -112,12 +112,11 @@ class Factory implements RuleInterface
             return;
         }
 
-        array_map(function($data, $setter) use ($object) {
+        array_map(function ($data, $setter) use ($object) {
             if (null === $data) {
                 return;
             }
             $object->{$setter}($data);
         }, $setters, $this->setters);
     }
-
 }

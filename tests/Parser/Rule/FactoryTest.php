@@ -3,20 +3,19 @@
  * Created by PhpStorm.
  * User: jeroen
  * Date: 13-12-18
- * Time: 12:10
+ * Time: 12:10.
  */
 
 namespace Elgentos\Parser\Rule;
 
-require_once PARSERTEST_DATA_DIR . '/php/FactoryTestConstrutor.php';
-require_once PARSERTEST_DATA_DIR . '/php/FactoryTestSetters.php';
+require_once PARSERTEST_DATA_DIR.'/php/FactoryTestConstrutor.php';
+require_once PARSERTEST_DATA_DIR.'/php/FactoryTestSetters.php';
 
 use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
 
 class FactoryTest extends TestCase
 {
-
     public function testConstructor()
     {
         $this->expectException(\ReflectionException::class);
@@ -30,7 +29,7 @@ class FactoryTest extends TestCase
         $factoryRule = new Factory(\stdClass::class);
 
         $content = [
-            'no' => 'array'
+            'no' => 'array',
         ];
         $context = new Context($content);
 
@@ -54,12 +53,12 @@ class FactoryTest extends TestCase
     {
         $factoryRule = new Factory(\FactoryTestConstrutor::class, [
             'argument1' => 'default1',
-            'argument2' => 'default2'
+            'argument2' => 'default2',
         ]);
 
         $content = [[
-            'argument2' => 'test2',
-            'ignored_argument' => true
+            'argument2'        => 'test2',
+            'ignored_argument' => true,
         ]];
         $context = new Context($content);
 
@@ -74,13 +73,13 @@ class FactoryTest extends TestCase
     public function testParseArguments()
     {
         $factoryRule = new Factory(\FactoryTestConstrutor::class, [
-            'argument1', 'argument2'
+            'argument1', 'argument2',
         ]);
 
         $content = [[
-            'argument2' => 'test2',
-            'argument1' => 'test1',
-            'ignored_argument' => true
+            'argument2'        => 'test2',
+            'argument1'        => 'test1',
+            'ignored_argument' => true,
         ]];
         $context = new Context($content);
 
@@ -95,14 +94,14 @@ class FactoryTest extends TestCase
     public function testParseSetters()
     {
         $factoryRule = new Factory(\FactoryTestSetters::class, [], [
-            'data' => 'setData',
-            'noData' => 'setData'
+            'data'   => 'setData',
+            'noData' => 'setData',
         ]);
 
         $content = [[
-            'data' => 'test3',
-            'argument1' => 'test1',
-            'ignored_argument' => true
+            'data'             => 'test3',
+            'argument1'        => 'test1',
+            'ignored_argument' => true,
         ]];
         $context = new Context($content);
 
@@ -117,14 +116,14 @@ class FactoryTest extends TestCase
     {
         $factory = new Factory(\FactoryTestConstrutor::class, [
             'argument1' => 'default1',
-            'argument2' => 'default2'
+            'argument2' => 'default2',
         ], [], true);
 
         $first = $second = [];
 
         $content = [
             &$first,
-            &$second
+            &$second,
         ];
 
         $context = new Context($content);
@@ -139,5 +138,4 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(\FactoryTestConstrutor::class, $second);
         $this->assertSame($first, $second);
     }
-
 }

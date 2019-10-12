@@ -1,17 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 12:28
+ * Time: 12:28.
  */
 
 namespace Elgentos\Parser\Matcher;
 
 class AnyTest extends MatcherAbstract
 {
-
     public function testConstructorArguments()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -22,7 +23,7 @@ class AnyTest extends MatcherAbstract
     {
         $context = $this->context;
 
-        $true = new ResolveTrue;
+        $true = new ResolveTrue();
 
         $matcher = new Any($true, $true);
         $this->assertTrue($matcher->validate($context));
@@ -32,8 +33,8 @@ class AnyTest extends MatcherAbstract
     {
         $context = $this->context;
 
-        $true = new ResolveTrue;
-        $false = new ResolveFalse;
+        $true = new ResolveTrue();
+        $false = new ResolveFalse();
 
         $matcher = new Any($true, $false);
         $this->assertTrue($matcher->validate($context));
@@ -42,12 +43,11 @@ class AnyTest extends MatcherAbstract
         $this->assertTrue($matcher->validate($context));
     }
 
-
     public function testValidateFalse()
     {
         $context = $this->context;
 
-        $false = new ResolveFalse;
+        $false = new ResolveFalse();
 
         $matcher = new Any($false, $false);
         $this->assertFalse($matcher->validate($context));
@@ -68,5 +68,4 @@ class AnyTest extends MatcherAbstract
         $matcher = new Any($true, $true, $true, $true, $true);
         $this->assertTrue($matcher->validate($context));
     }
-
 }

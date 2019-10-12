@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 14-8-18
- * Time: 11:28
+ * Time: 11:28.
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -13,7 +15,6 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 
 abstract class CoreAbstract implements MatcherInterface
 {
-
     /** @var mixed */
     protected $needle;
     /** @var string */
@@ -23,7 +24,7 @@ abstract class CoreAbstract implements MatcherInterface
 
     public function __construct($needle, string $method = 'getCurrent', bool $caseSensitive = true)
     {
-        $caseSensitive = ! \is_string($needle) ? true : $caseSensitive;
+        $caseSensitive = !\is_string($needle) ? true : $caseSensitive;
         $this->caseSensitive = $caseSensitive;
 
         $this->needle = $caseSensitive ? $needle : \strtolower($needle);
@@ -33,7 +34,7 @@ abstract class CoreAbstract implements MatcherInterface
     public function validate(Context $context): bool
     {
         $haystack = $context->{$this->method}();
-        if (! $this->caseSensitive) {
+        if (!$this->caseSensitive) {
             $haystack = \strtolower($haystack);
         }
 
@@ -41,5 +42,4 @@ abstract class CoreAbstract implements MatcherInterface
     }
 
     abstract public function execute(&$haystack): bool;
-
 }

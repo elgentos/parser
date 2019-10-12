@@ -1,20 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 11:25
+ * Time: 11:25.
  */
 
 namespace Elgentos\Parser\Matcher;
-
 
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class Callback implements MatcherInterface
 {
-
     /** @var \Closure */
     private $callback;
 
@@ -26,8 +26,7 @@ class Callback implements MatcherInterface
     public function validate(Context $context): bool
     {
         $callback = $this->callback;
-        return !! $callback($context);
+
+        return (bool) $callback($context);
     }
-
 }
-

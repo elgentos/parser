@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 0:15
+ * Time: 0:15.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class MergeDownTest extends TestCase
 {
-
     /** @var Context */
     private $context;
 
@@ -22,19 +23,19 @@ class MergeDownTest extends TestCase
     {
         $root = [
                 'merge' => [
-                        "test" => "content",
-                        "recursive" => [
+                        'test'      => 'content',
+                        'recursive' => [
                                 [
-                                        "key" => "value"
-                                ]
-                        ]
+                                        'key' => 'value',
+                                ],
+                        ],
                 ],
                 'from' => [
-                        'me' => 'key'
+                        'me' => 'key',
                 ],
-                "recursive" => [
-                    "is" => "gone"
-                ]
+                'recursive' => [
+                    'is' => 'gone',
+                ],
         ];
         $this->context = new Context($root);
     }
@@ -105,5 +106,4 @@ class MergeDownTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

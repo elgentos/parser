@@ -3,13 +3,13 @@
  * Created by PhpStorm.
  * User: jeroen
  * Date: 17-12-18
- * Time: 15:31
+ * Time: 15:31.
  */
 
 namespace Elgentos\Parser\Stories\Builder;
 
-require_once PARSERTEST_DATA_DIR . '/php/FactoryTestConstrutor.php';
-require_once PARSERTEST_DATA_DIR . '/php/FactoryTestSetters.php';
+require_once PARSERTEST_DATA_DIR.'/php/FactoryTestConstrutor.php';
+require_once PARSERTEST_DATA_DIR.'/php/FactoryTestSetters.php';
 
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Rule\Factory;
@@ -20,22 +20,21 @@ use PHPUnit\Framework\TestCase;
 
 class FactoriesTest extends TestCase
 {
-
     public function testGetMetrics()
     {
-        $factories = new Factories;
+        $factories = new Factories();
         $this->assertInstanceOf(StoryMetrics::class, $factories->getMetrics());
     }
 
     public function testGetStory()
     {
-        $factories = new Factories;
+        $factories = new Factories();
         $this->assertInstanceOf(Story::class, $factories->getStory());
     }
 
     public function testMetrics()
     {
-        $factories = new Factories;
+        $factories = new Factories();
 
         $metrics = $factories->getMetrics();
 
@@ -43,7 +42,7 @@ class FactoriesTest extends TestCase
             '0-root',
             '1-iterate',
             '2-factory',
-            '3-final'
+            '3-final',
         ], $metrics->getStatistics('%s'));
     }
 
@@ -51,17 +50,17 @@ class FactoriesTest extends TestCase
     {
         $content = [
             'first' => [
-                'class' => NoLogic::class,
+                'class'     => NoLogic::class,
                 'arguments' => [
-                    'return' => true
-                ]
-            ]
+                    'return' => true,
+                ],
+            ],
         ];
 
         $data = [&$content];
         $context = new Context($data);
 
-        $factories = new Factories;
+        $factories = new Factories();
 
         $factories->getStory()->parse($context);
 
@@ -95,18 +94,18 @@ class FactoriesTest extends TestCase
     {
         $content = [
             'setter' => [
-                'class' => \FactoryTestSetters::class,
+                'class'     => \FactoryTestSetters::class,
                 'arguments' => [],
-                'setters' => [
-                    'setter' => 'setData'
-                ]
-            ]
+                'setters'   => [
+                    'setter' => 'setData',
+                ],
+            ],
         ];
 
         $data = [&$content];
         $context = new Context($data);
 
-        $factories = new Factories;
+        $factories = new Factories();
 
         $factories->getStory()->parse($context);
 
@@ -115,7 +114,7 @@ class FactoriesTest extends TestCase
         unset($content, $context);
 
         $setData = [
-            'setter' => 'test-answer'
+            'setter' => 'test-answer',
         ];
         $content = [&$setData];
         $context = new Context($content);
@@ -130,18 +129,18 @@ class FactoriesTest extends TestCase
     {
         $content = [
             'first' => [
-                'class' => NoLogic::class,
+                'class'     => NoLogic::class,
                 'arguments' => [
-                    'return' => true
+                    'return' => true,
                 ],
-                'singleton' => true
-            ]
+                'singleton' => true,
+            ],
         ];
 
         $data = [&$content];
         $context = new Context($data);
 
-        $factories = new Factories;
+        $factories = new Factories();
 
         $factories->getStory()->parse($context);
 
@@ -170,6 +169,4 @@ class FactoriesTest extends TestCase
         // Singletons
         $this->assertSame($noLogic, $noLogic2);
     }
-
-
 }

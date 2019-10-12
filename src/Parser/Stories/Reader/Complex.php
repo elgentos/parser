@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 10-8-18
- * Time: 1:16
+ * Time: 1:16.
  */
 
 namespace Elgentos\Parser\Stories\Reader;
@@ -11,11 +13,11 @@ namespace Elgentos\Parser\Stories\Reader;
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\RuleInterface;
 use Elgentos\Parser\Interfaces\StoriesInterface;
-use Elgentos\Parser\Matcher\EndsWith;
-use Elgentos\Parser\Matcher\IsArray;
-use Elgentos\Parser\Matcher\Exact;
-use Elgentos\Parser\Matcher\IsString;
 use Elgentos\Parser\Matcher\All;
+use Elgentos\Parser\Matcher\EndsWith;
+use Elgentos\Parser\Matcher\Exact;
+use Elgentos\Parser\Matcher\IsArray;
+use Elgentos\Parser\Matcher\IsString;
 use Elgentos\Parser\Matcher\ResolveTrue;
 use Elgentos\Parser\Rule\Callback;
 use Elgentos\Parser\Rule\Changed;
@@ -55,7 +57,7 @@ class Complex implements StoriesInterface
 
     public function __construct(string $rootDir = '.')
     {
-        $this->storyMetrics = new StoryMetrics;
+        $this->storyMetrics = new StoryMetrics();
         $this->story = $this->initStory($rootDir);
     }
 
@@ -83,10 +85,10 @@ class Complex implements StoriesInterface
     {
         return new Match(
             new All(
-                new IsString,
+                new IsString(),
                 $checkIndex
                     ? new Exact(self::IMPORT, 'getIndex')
-                    : new ResolveTrue,
+                    : new ResolveTrue(),
                 new EndsWith($pattern)
             ),
             new Import($rootDir)
@@ -98,9 +100,9 @@ class Complex implements StoriesInterface
         return new LoopAll(
             $this->import($rootDir, '.json', $checkIndex),
             $this->getMetrics()->createStory(
-                self::IMPORT . '::json' . ($checkIndex ? '+' : '-'),
-                new Json,
-                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+                self::IMPORT.'::json'.($checkIndex ? '+' : '-'),
+                new Json(),
+                $checkIndex ? new Rename(self::PREFIX.self::IMPORT) : new NoLogic(true)
             )
         );
     }
@@ -110,25 +112,25 @@ class Complex implements StoriesInterface
         return new LoopAll(
             $this->import($rootDir, '.txt', $checkIndex),
             $this->getMetrics()->createStory(
-                self::IMPORT . '::text' . ($checkIndex ? '+' : '-'),
-                new Trim,
-                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+                self::IMPORT.'::text'.($checkIndex ? '+' : '-'),
+                new Trim(),
+                $checkIndex ? new Rename(self::PREFIX.self::IMPORT) : new NoLogic(true)
             )
         );
     }
 
     protected function fromYaml(string $rootDir, bool $checkIndex): RuleInterface
     {
-        if (! \class_exists(SymfonyYaml::class)) {
+        if (!\class_exists(SymfonyYaml::class)) {
             return new NoLogic(false);
         }
-        
+
         return new LoopAll(
             $this->import($rootDir, '.yaml', $checkIndex),
             $this->getMetrics()->createStory(
-                self::IMPORT . '::yaml' . ($checkIndex ? '+' : '-'),
-                new Yaml,
-                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+                self::IMPORT.'::yaml'.($checkIndex ? '+' : '-'),
+                new Yaml(),
+                $checkIndex ? new Rename(self::PREFIX.self::IMPORT) : new NoLogic(true)
             )
         );
     }
@@ -138,11 +140,11 @@ class Complex implements StoriesInterface
         return new LoopAll(
             $this->import($rootDir, '.csv', $checkIndex),
             $this->getMetrics()->createStory(
-                self::IMPORT . '::csv' . ($checkIndex ? '+' : '-'),
-                new Trim,
-                new Explode,
+                self::IMPORT.'::csv'.($checkIndex ? '+' : '-'),
+                new Trim(),
+                new Explode(),
                 new Csv(true),
-                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+                $checkIndex ? new Rename(self::PREFIX.self::IMPORT) : new NoLogic(true)
             )
         );
     }
@@ -152,10 +154,10 @@ class Complex implements StoriesInterface
         return new LoopAll(
             $this->import($rootDir, '.xml', $checkIndex),
             $this->getMetrics()->createStory(
-                self::IMPORT . '::xml' . ($checkIndex ? '+' : '-'),
-                new Trim,
-                new Xml,
-                $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
+                self::IMPORT.'::xml'.($checkIndex ? '+' : '-'),
+                new Trim(),
+                new Xml(),
+                $checkIndex ? new Rename(self::PREFIX.self::IMPORT) : new NoLogic(true)
             )
         );
     }
@@ -171,15 +173,12 @@ class Complex implements StoriesInterface
 
         $importStory = $this->getMetrics()
             ->createStory(
-                self::IMPORT . ($checkIndex ? '+' : '-'),
-                $this->fromText($rootDir, $checkIndex)
-                , $this->fromJson($rootDir, $checkIndex)
-                , $this->fromXml($rootDir, $checkIndex)
-                , $this->fromYaml($rootDir, $checkIndex)
-                , $this->fromCsv($rootDir, $checkIndex)
+                self::IMPORT.($checkIndex ? '+' : '-'),
+                $this->fromText($rootDir, $checkIndex), $this->fromJson($rootDir, $checkIndex), $this->fromXml($rootDir, $checkIndex), $this->fromYaml($rootDir, $checkIndex), $this->fromCsv($rootDir, $checkIndex)
             );
 
         $this->importStory[$index] = $importStory;
+
         return $importStory;
     }
 
@@ -201,35 +200,36 @@ class Complex implements StoriesInterface
     {
         $isCsv = true;
         $csvIsBefore = new Match(new EndsWith('.csv'));
-        $csvIsAfter = new Match(new IsArray);
+        $csvIsAfter = new Match(new IsArray());
 
         return new LoopAll(
             new Match(
                 new All(
-                    new IsString,
+                    new IsString(),
                     new Exact(self::IMPORT_DIR, 'getIndex')
                 )
             ),
             $this->getMetrics()->createStory(
                 self::IMPORT_DIR,
-                new Callback(function() use (&$isCsv) {
+                new Callback(function () use (&$isCsv) {
                     $isCsv = true;
+
                     return true;
                 }),
                 new Glob($rootDir),
                 new Iterate(
                     $this->getMetrics()->createStory(
-                        self::IMPORT_DIR . '::iterate',
-                        new Callback(function(Context $context) use (&$isCsv, $csvIsBefore) {
-                            if (! $isCsv) {
+                        self::IMPORT_DIR.'::iterate',
+                        new Callback(function (Context $context) use (&$isCsv, $csvIsBefore) {
+                            if (!$isCsv) {
                                 return false;
                             }
 
                             return $isCsv = $csvIsBefore->parse($context);
                         }),
                         $this->importStory($rootDir, false),
-                        new Callback(function(Context $context) use (&$isCsv, $csvIsAfter) {
-                            if (! $isCsv) {
+                        new Callback(function (Context $context) use (&$isCsv, $csvIsAfter) {
+                            if (!$isCsv) {
                                 return false;
                             }
 
@@ -238,8 +238,8 @@ class Complex implements StoriesInterface
                     ),
                     false
                 ),
-                new Callback(function(Context $context) use (&$isCsv) {
-                    if (! $isCsv) {
+                new Callback(function (Context $context) use (&$isCsv) {
+                    if (!$isCsv) {
                         return false;
                     }
 
@@ -249,16 +249,14 @@ class Complex implements StoriesInterface
                     return true;
                 })
             ),
-            new Rename(self::PREFIX . self::IMPORT_DIR)
+            new Rename(self::PREFIX.self::IMPORT_DIR)
         );
     }
 
     protected function filesStory(string $rootDir): RuleInterface
     {
         return $this->getMetrics()->createStory(
-            '1-files'
-            , $this->importStory($rootDir, true)
-            , $this->iterateStory($rootDir)
+            '1-files', $this->importStory($rootDir, true), $this->iterateStory($rootDir)
         );
     }
 
@@ -283,8 +281,8 @@ class Complex implements StoriesInterface
     {
         return new Match(
             new All(
-                new IsArray,
-                new Exact(self::PREFIX . self::IMPORT, 'getIndex')
+                new IsArray(),
+                new Exact(self::PREFIX.self::IMPORT, 'getIndex')
             ),
             $this->getMetrics()
                 ->createStory(
@@ -298,8 +296,8 @@ class Complex implements StoriesInterface
     {
         return new Match(
             new All(
-                new IsString,
-                new Exact(self::PREFIX . self::IMPORT, 'getIndex')
+                new IsString(),
+                new Exact(self::PREFIX.self::IMPORT, 'getIndex')
             ),
             $this->getMetrics()
                 ->createStory(
@@ -313,14 +311,14 @@ class Complex implements StoriesInterface
     {
         return new Match(
             new All(
-                new IsArray,
-                new Exact(self::PREFIX . self::IMPORT_DIR, 'getIndex')
+                new IsArray(),
+                new Exact(self::PREFIX.self::IMPORT_DIR, 'getIndex')
             ),
             $this->getMetrics()->createStory(
                 '2.3-glob',
                 new Iterate(
                     new Match(
-                        new IsArray,
+                        new IsArray(),
                         new MergeUp(true)
                     ),
                     false
@@ -338,5 +336,4 @@ class Complex implements StoriesInterface
                 new MergeDown(false)
             );
     }
-
 }

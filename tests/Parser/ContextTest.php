@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 9:37
+ * Time: 9:37.
  */
 
 namespace Elgentos\Parser;
@@ -13,11 +15,10 @@ use PHPUnit\Framework\TestCase;
 
 class ContextTest extends TestCase
 {
-
     public function testGetRoot()
     {
         $root = [
-                'key' => 'value'
+                'key' => 'value',
         ];
         $context = new Context($root);
 
@@ -33,7 +34,7 @@ class ContextTest extends TestCase
     public function testGetIndex()
     {
         $root = [
-                'key' => 'value'
+                'key' => 'value',
         ];
         $context = new Context($root);
 
@@ -44,7 +45,7 @@ class ContextTest extends TestCase
     {
         $root = [
                 'key1' => 'value1',
-                'key2' => 'value2'
+                'key2' => 'value2',
         ];
         $context = new Context($root);
 
@@ -56,7 +57,7 @@ class ContextTest extends TestCase
     {
         $root = [
                 'key1' => 'value1',
-                'key2' => 'value2'
+                'key2' => 'value2',
         ];
         $context = new Context($root);
 
@@ -78,12 +79,12 @@ class ContextTest extends TestCase
                     'value',
                     'value2',
                     'value3',
-                ]
+                ],
         ];
         $root = [
                 'key1' => [
-                        $test
-                ]
+                        $test,
+                ],
         ];
 
         $context = new Context($root);
@@ -94,7 +95,7 @@ class ContextTest extends TestCase
 
         $current = &$result->getCurrent();
         $current[] = [
-                'key3' => 'value3'
+                'key3' => 'value3',
         ];
 
         $this->assertSame($root, $context->getRoot());
@@ -124,8 +125,8 @@ class ContextTest extends TestCase
     public function testExists()
     {
         $root = [
-                'test' => 'test',
-                'test2' => 'test'
+                'test'  => 'test',
+                'test2' => 'test',
         ];
         $context = new Context($root);
 
@@ -139,5 +140,4 @@ class ContextTest extends TestCase
         $context->setIndex('test2');
         $this->assertTrue($context->exists());
     }
-
 }

@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 16-7-18
- * Time: 15:50
+ * Time: 15:50.
  */
 
 namespace Elgentos\Parser;
@@ -13,14 +15,13 @@ use PHPUnit\Framework\TestCase;
 
 class StoryMetricsTest extends TestCase
 {
-
     public function testAddGetStories()
     {
         $story = $this->getMockBuilder(Story::class)
                 ->disableOriginalConstructor()
                 ->getMock();
 
-        $storyBook = new StoryMetrics;
+        $storyBook = new StoryMetrics();
 
         $this->assertSame(0, $storyBook->getStories());
         $storyBook->addStories($story);
@@ -51,7 +52,7 @@ class StoryMetricsTest extends TestCase
                 ->method('getCost')
                 ->willReturn(1.5);
 
-        $storyBook = new StoryMetrics;
+        $storyBook = new StoryMetrics();
 
         $this->assertSame(0, $storyBook->getPages());
         $this->assertSame(0, $storyBook->getRead());
@@ -73,7 +74,7 @@ class StoryMetricsTest extends TestCase
 
     public function testCreateStory()
     {
-        $storyBook = new StoryMetrics;
+        $storyBook = new StoryMetrics();
 
         $rule = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
@@ -90,7 +91,7 @@ class StoryMetricsTest extends TestCase
         $root = [];
         $context = new Context($root);
 
-        $storyBook = new StoryMetrics;
+        $storyBook = new StoryMetrics();
 
         $rule = $this->getMockBuilder(RuleInterface::class)
                 ->getMock();
@@ -119,7 +120,7 @@ class StoryMetricsTest extends TestCase
         $story1 = $this->getMockBuilder(Story::class)
                 ->setConstructorArgs([
                         $story1Name,
-                        $rule
+                        $rule,
                 ])
                 ->setMethods(['getCost'])
                 ->getMock();
@@ -129,10 +130,10 @@ class StoryMetricsTest extends TestCase
                 ->setConstructorArgs([
                         $story2Name,
                         $rule,
-                        $rule
+                        $rule,
                 ])
                 ->setMethods(['getCost'])
-                ->getMock();;
+                ->getMock();
 
         $story1->expects($this->any())
                 ->method('getCost')
@@ -142,8 +143,8 @@ class StoryMetricsTest extends TestCase
                 ->method('getCost')
                 ->willReturn(1.6);
 
-        /** @var Story $story1 */
-        /** @var Story $story2 */
+        /* @var Story $story1 */
+        /* @var Story $story2 */
         $storyBook->addStories($story1, $story2);
 
         // Story 1 3 times
@@ -159,14 +160,13 @@ class StoryMetricsTest extends TestCase
         $story2->parse($context);
 
         $this->assertSame([
-                '"' . $story2Name . '" has 2 page(s) and are read 7 of 10 time(s) successfully (1.600ms)',
-                '"' . $story1Name . '" has 1 page(s) and are read 2 of 3 time(s) successfully (1.300ms)',
+                '"'.$story2Name.'" has 2 page(s) and are read 7 of 10 time(s) successfully (1.600ms)',
+                '"'.$story1Name.'" has 1 page(s) and are read 2 of 3 time(s) successfully (1.300ms)',
         ], $storyBook->getStatistics());
 
         $this->assertSame([
-                $story2Name . ' 2 7 10 1.6000',
-                $story1Name . ' 1 2 3 1.3000',
+                $story2Name.' 2 7 10 1.6000',
+                $story1Name.' 1 2 3 1.3000',
         ], $storyBook->getStatistics('%s %d %d %d %01.4f'));
     }
-
 }

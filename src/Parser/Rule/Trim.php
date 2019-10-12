@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 2:01
+ * Time: 2:01.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,7 +16,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Trim implements RuleInterface
 {
-
     const DEFAULT_CHARLIST = " \t\n\r\0\x0B";
 
     /** @var string */
@@ -28,8 +29,8 @@ class Trim implements RuleInterface
     public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
-        if (! \is_string($current)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a string", self::class));
+        if (!\is_string($current)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a string', self::class));
         }
 
         $current = \trim($current, $this->charlist);
@@ -37,5 +38,4 @@ class Trim implements RuleInterface
 
         return true;
     }
-
 }

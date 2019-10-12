@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 10-8-18
- * Time: 10:59
+ * Time: 10:59.
  */
 
 namespace Elgentos\Parser;
@@ -11,16 +13,14 @@ namespace Elgentos\Parser;
 use Elgentos\Parser\Exceptions\DebugNoLastStoryException;
 use Elgentos\Parser\Interfaces\ParserInterface;
 use Elgentos\Parser\Interfaces\StoriesInterface;
-use Elgentos\Parser\Stories\Factory;
 
 class Debug implements ParserInterface
 {
-
     /** @var StoriesInterface */
     private $lastStory;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function parse(array &$data, StoriesInterface $stories): void
     {
@@ -33,18 +33,18 @@ class Debug implements ParserInterface
     }
 
     /**
-     * Get last story to retrieve metrics
+     * Get last story to retrieve metrics.
+     *
+     * @throws DebugNoLastStoryException
      *
      * @return StoriesInterface
-     * @throws DebugNoLastStoryException
      */
     public function getLastStory(): StoriesInterface
     {
-        if (! $this->lastStory) {
-            throw new DebugNoLastStoryException;
+        if (!$this->lastStory) {
+            throw new DebugNoLastStoryException();
         }
 
         return $this->lastStory;
     }
-
 }

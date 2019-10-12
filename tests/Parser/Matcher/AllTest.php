@@ -1,17 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 12:28
+ * Time: 12:28.
  */
 
 namespace Elgentos\Parser\Matcher;
 
 class AllTest extends MatcherAbstract
 {
-
     public function testConstructorArguments()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -22,7 +23,7 @@ class AllTest extends MatcherAbstract
     {
         $context = $this->context;
 
-        $true = new ResolveTrue;
+        $true = new ResolveTrue();
 
         $matcher = new All($true, $true);
         $this->assertTrue($matcher->validate($context));
@@ -32,8 +33,8 @@ class AllTest extends MatcherAbstract
     {
         $context = $this->context;
 
-        $true = new ResolveTrue;
-        $false = new ResolveFalse;
+        $true = new ResolveTrue();
+        $false = new ResolveFalse();
 
         $matcher = new All($true, $false);
         $this->assertFalse($matcher->validate($context));
@@ -54,5 +55,4 @@ class AllTest extends MatcherAbstract
         $matcher = new All($true, $true, $true, $true, $true);
         $this->assertTrue($matcher->validate($context));
     }
-
 }

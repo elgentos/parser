@@ -1,16 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 14-7-18
- * Time: 22:55
+ * Time: 22:55.
  */
 
 namespace Elgentos\Parser\Matcher;
 
 class IsTypeTest extends MatcherAbstract
 {
-
     public function testConstruct()
     {
         // Success
@@ -43,8 +44,8 @@ class IsTypeTest extends MatcherAbstract
      * @dataProvider dataValidationTests
      *
      * @param string $type
-     * @param mixed $test
-     * @param bool $result
+     * @param mixed  $test
+     * @param bool   $result
      */
     public function testValidate(string $type, $test, bool $result)
     {
@@ -88,13 +89,13 @@ class IsTypeTest extends MatcherAbstract
                 [IsType::IS_NUMERIC,    10.2,      true],
 
                 [IsType::IS_OBJECT,     new IsType(IsType::IS_STRING),
-                                                    true],
+                                                    true, ],
                 [IsType::IS_OBJECT,     'false',    false],
 
                 [IsType::IS_NULL,       null,       true],
                 [IsType::IS_NULL,       'null',     false],
                 [IsType::IS_NULL,       "\0",       false],
-                [IsType::IS_NULL,       "",         false],
+                [IsType::IS_NULL,       '',         false],
 
                 [IsType::IS_FLOAT,      10.0,       true],
                 [IsType::IS_FLOAT,      10.1,       true],
@@ -112,14 +113,14 @@ class IsTypeTest extends MatcherAbstract
 
     public function testShorthands()
     {
-        $isString = new IsString;
-        $isBool = new IsBool;
-        $isArray = new IsArray;
-        $isInt = new IsInt;
-        $isNumeric = new IsNumeric;
-        $isObject = new IsObject;
-        $isNull = new IsNull;
-        $isFloat = new IsFloat;
+        $isString = new IsString();
+        $isBool = new IsBool();
+        $isArray = new IsArray();
+        $isInt = new IsInt();
+        $isNumeric = new IsNumeric();
+        $isObject = new IsObject();
+        $isNull = new IsNull();
+        $isFloat = new IsFloat();
 
         $context = $this->context;
         $context->setIndex('test');
@@ -149,5 +150,4 @@ class IsTypeTest extends MatcherAbstract
         $current = 10.3;
         $this->assertTrue($isFloat->validate($context));
     }
-
 }

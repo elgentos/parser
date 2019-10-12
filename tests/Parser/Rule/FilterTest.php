@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 14:50
+ * Time: 14:50.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,11 +16,10 @@ use PHPUnit\Framework\TestCase;
 
 class FilterTest extends TestCase
 {
-
     public function testParseShouldRemoveSelf()
     {
         $root = [
-                '__filter' => []
+                '__filter' => [],
         ];
         $context = new Context($root);
         $rule = new Filter('/');
@@ -41,7 +42,7 @@ class FilterTest extends TestCase
                                 [
                                         'key' => 'blah',
                                 ],
-                            ]
+                            ],
                     ],
                     [
                             'values' => [
@@ -51,17 +52,17 @@ class FilterTest extends TestCase
                                     [
                                             'key' => 'blah2',
                                     ],
-                            ]
+                            ],
 
-                    ]
+                    ],
                 ],
         ];
 
         // Test filter 1 one value
         $root['__filter'] = [
-                'path' => 'test/1/values',
+                'path'  => 'test/1/values',
                 'index' => 'key',
-                'value' => 'test'
+                'value' => 'test',
         ];
         unset($test['test'][1]['values'][1]);
 
@@ -76,9 +77,9 @@ class FilterTest extends TestCase
 
         // Test filter 2 values which is no array
         $root['__filter'] = [
-                'path' => 'test/1/values/skip',
+                'path'  => 'test/1/values/skip',
                 'index' => 'key',
-                'value' => ['test2', 'blah2']
+                'value' => ['test2', 'blah2'],
         ];
 
         $this->assertFalse($rule->parse($context));
@@ -86,9 +87,9 @@ class FilterTest extends TestCase
 
         // Test filter 3 filter values with same result
         $root['__filter'] = [
-                'path' => 'test/2/values',
+                'path'  => 'test/2/values',
                 'index' => 'key',
-                'value' => ['test2', 'blah2']
+                'value' => ['test2', 'blah2'],
         ];
 
         $this->assertTrue($rule->parse($context));
@@ -96,9 +97,9 @@ class FilterTest extends TestCase
 
         // Test filter 4 no array
         $root['__filter'] = [
-                'path' => 'test/2/values',
+                'path'  => 'test/2/values',
                 'index' => 'nonexistant',
-                'value' => ['test2', 'blah2']
+                'value' => ['test2', 'blah2'],
         ];
 
         $this->assertTrue($rule->parse($context));
@@ -106,10 +107,10 @@ class FilterTest extends TestCase
 
         // Test filter 5 inverse filter
         $root['__filter'] = [
-                'path' => 'test/2/values',
-                'index' => 'key',
-                'value' => 'test2',
-                'inverse' => true
+                'path'    => 'test/2/values',
+                'index'   => 'key',
+                'value'   => 'test2',
+                'inverse' => true,
         ];
 
         unset($test['test'][2]['values'][0]);
@@ -125,19 +126,19 @@ class FilterTest extends TestCase
                         'to' => [
                                 'values' => [
                                         [
-                                                'key' => 'test'
+                                                'key' => 'test',
                                         ],
                                         [
-                                                'key' => 'remove'
+                                                'key' => 'remove',
                                         ],
-                                ]
-                        ]
+                                ],
+                        ],
                 ],
                 '__filter' => [
-                        'path' => 'path.to.values',
+                        'path'  => 'path.to.values',
                         'index' => 'key',
-                        'value' => 'test'
-                ]
+                        'value' => 'test',
+                ],
         ];
         $context = new Context($root);
 
@@ -159,5 +160,4 @@ class FilterTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

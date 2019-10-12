@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 14:23
+ * Time: 14:23.
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -35,5 +37,4 @@ class Any implements MatcherInterface
 
         return false;
     }
-
 }

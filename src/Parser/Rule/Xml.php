@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 11-8-18
- * Time: 22:16
+ * Time: 22:16.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,15 +16,15 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Xml implements RuleInterface
 {
-
     public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
-        if (! \is_string($current)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a xml string", self::class));
+        if (!\is_string($current)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a xml string', self::class));
         }
 
         $current = $this->fromXml($current);
+
         return true;
     }
 
@@ -31,7 +33,7 @@ class Xml implements RuleInterface
         $xml = \simplexml_load_string($current, \SimpleXMLIterator::class);
 
         $result = $this->walkXml($xml);
-        if (! \is_array($result)) {
+        if (!\is_array($result)) {
             return [$result];
         }
 
@@ -46,38 +48,39 @@ class Xml implements RuleInterface
         $hasAttributes = $attributes->count() > 0;
         $hasChildren = $parent->count() > 0;
 
-        if (! $hasAttributes && ! $hasChildren) {
-            return (string)$parent;
+        if (!$hasAttributes && !$hasChildren) {
+            return (string) $parent;
         }
 
         $result = [];
         if ($hasAttributes) {
-            $result['@attributes'] = ((array)$attributes)['@attributes'];
+            $result['@attributes'] = ((array) $attributes)['@attributes'];
         }
 
-        if (! $hasChildren) {
-            $result['@value'] = (string)$parent;
+        if (!$hasChildren) {
+            $result['@value'] = (string) $parent;
+
             return $result;
         }
 
         $children = [];
         for (; $parent->valid(); $parent->next()) {
-
             $key = $parent->key();
             /** @var \SimpleXMLIterator $current */
             $current = $parent->current();
 
-                if (! isset($children[$key])) {
+            if (!isset($children[$key])) {
                 $children[$key] = [];
             }
 
             $children[$key][] = $this->walkXml($current);
         }
 
-        $children = \array_map(function(&$child) {
+        $children = \array_map(function (&$child) {
             if (\count($child) > 1) {
                 return $child;
             }
+
             return $child[0];
         }, $children);
 
@@ -85,6 +88,4 @@ class Xml implements RuleInterface
 
         return $result;
     }
-
-
 }

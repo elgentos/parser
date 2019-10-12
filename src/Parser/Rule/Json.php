@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 11-7-18
- * Time: 14:25
+ * Time: 14:25.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -14,12 +16,11 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Json implements RuleInterface
 {
-
     public function parse(Context $context): bool
     {
         $jsonData = $context->getCurrent();
-        if (! \is_string($jsonData)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a json string", self::class));
+        if (!\is_string($jsonData)) {
+            throw new RuleInvalidContextException(sprintf('%s expects a json string', self::class));
         }
 
         $current = &$context->getCurrent();
@@ -28,5 +29,4 @@ class Json implements RuleInterface
 
         return true;
     }
-
 }

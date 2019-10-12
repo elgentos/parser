@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 15-7-18
- * Time: 1:37
+ * Time: 1:37.
  */
 
 namespace Elgentos\Parser\Rule;
@@ -13,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class NoLogicTest extends TestCase
 {
-
     public function testLogicalFalse()
     {
         $root = [];

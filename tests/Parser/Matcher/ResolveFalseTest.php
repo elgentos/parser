@@ -1,17 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 12-7-18
- * Time: 12:28
+ * Time: 12:28.
  */
 
 namespace Elgentos\Parser\Matcher;
 
 class ResolveFalseTest extends MatcherAbstract
 {
-
     public function testValidate()
     {
         $context = $this->context;
@@ -19,5 +20,4 @@ class ResolveFalseTest extends MatcherAbstract
 
         $this->assertFalse($matcher->validate($context));
     }
-
 }

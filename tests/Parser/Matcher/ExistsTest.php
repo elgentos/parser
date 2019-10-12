@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 16-7-18
- * Time: 13:02
+ * Time: 13:02.
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -13,13 +15,12 @@ use PHPUnit\Framework\TestCase;
 
 class ExistsTest extends TestCase
 {
-
     public function testValidateEmpty()
     {
         $root = [];
         $context = new Context($root);
 
-        $matcher = new Exists;
+        $matcher = new Exists();
 
         $this->assertFalse($matcher->validate($context));
     }
@@ -27,13 +28,13 @@ class ExistsTest extends TestCase
     public function testValidate()
     {
         $root = [
-                'test' => 'test',
+                'test'  => 'test',
                 'test2' => 'test',
                 'test3' => 'test',
         ];
         $context = new Context($root);
 
-        $matcher = new Exists;
+        $matcher = new Exists();
         $this->assertTrue($matcher->validate($context));
 
         $context->setIndex('non-existant');
@@ -42,6 +43,4 @@ class ExistsTest extends TestCase
         $context->setIndex('test2');
         $this->assertTrue($matcher->validate($context));
     }
-
-
 }

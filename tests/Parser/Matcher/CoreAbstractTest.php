@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: jeroen
  * Date: 14-8-18
- * Time: 11:48
+ * Time: 11:48.
  */
 
 namespace Elgentos\Parser\Matcher;
@@ -14,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class CoreAbstractTest extends TestCase
 {
-
     public function testShouldImplementMatcherInterface()
     {
         $stringAbstract = $this->getMockBuilder(CoreAbstract::class)
@@ -30,7 +31,6 @@ class CoreAbstractTest extends TestCase
                 ->setConstructorArgs([''])
                 ->getMock();
         $this->assertInstanceOf(MatcherInterface::class, $stringAbstract);
-
     }
 
     public function testValidate()
@@ -48,7 +48,6 @@ class CoreAbstractTest extends TestCase
         $context = new Context($root);
 
         $stringAbstract->validate($context);
-
     }
 
     public function testCaseInSensitive()
@@ -85,7 +84,7 @@ class CoreAbstractTest extends TestCase
                 ->with('testing');
 
         $root = [
-                'tesTing' => 'answer'
+                'tesTing' => 'answer',
         ];
         $context = new Context($root);
 
@@ -104,5 +103,4 @@ class CoreAbstractTest extends TestCase
 
         $this->assertTrue($reflectionValue->getValue($stringAbstract));
     }
-
 }
