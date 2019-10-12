@@ -37,5 +37,4 @@ class AppendTest extends TestCase
         $this->assertTrue($rule->parse($context));
         $this->assertSame([1,2,3,4,5,6], $context->getRoot());
     }
-
 }

@@ -23,5 +23,4 @@ abstract class CoreTestAbstract extends TestCase
     }
 
     abstract public function dataProvider(): array;
-
 }

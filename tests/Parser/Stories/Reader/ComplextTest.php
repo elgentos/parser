@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class ComplextTest extends TestCase
 {
-
     public function testGetStory()
     {
         $reader = new Complex(PARSERTEST_DATA_DIR);
@@ -121,5 +120,4 @@ class ComplextTest extends TestCase
 
         $this->assertSame($result, $data);
     }
-
 }

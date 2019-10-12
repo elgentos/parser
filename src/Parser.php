@@ -97,5 +97,4 @@ class Parser
         $parser->parse($data, $story);
         return $data['@template'];
     }
-
 }

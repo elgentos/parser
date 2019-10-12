@@ -16,7 +16,7 @@ class CallbackTest extends MatcherAbstract
     public function testValidateTrue()
     {
         $context = $this->context;
-        $matcher = new Callback(function(Context $context){
+        $matcher = new Callback(function (Context $context) {
             return true;
         });
 
@@ -26,11 +26,10 @@ class CallbackTest extends MatcherAbstract
     public function testValidateFalse()
     {
         $context = $this->context;
-        $matcher = new Callback(function(Context $context){
+        $matcher = new Callback(function (Context $context) {
             return false;
         });
 
         $this->assertFalse($matcher->validate($context));
     }
-
 }

@@ -12,7 +12,5 @@ use Elgentos\Parser\Context;
 
 interface RuleInterface
 {
-
     public function parse(Context $context): bool;
-
 }

@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class StandardTest extends TestCase
 {
-
     public function testParse()
     {
         $storiesMock = $this->getMockBuilder(StoriesInterface::class)
@@ -30,5 +29,4 @@ class StandardTest extends TestCase
 
         $this->assertNull($return);
     }
-
 }

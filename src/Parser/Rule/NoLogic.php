@@ -26,5 +26,4 @@ class NoLogic implements RuleInterface
     {
         return $this->return;
     }
-
 }

@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class ExactTest extends TestCase
 {
-
     public function testValidate()
     {
         $root = ['test'];

@@ -11,7 +11,6 @@ namespace Elgentos\Parser\Matcher;
 
 class AnyTest extends MatcherAbstract
 {
-
     public function testConstructorArguments()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -68,5 +67,4 @@ class AnyTest extends MatcherAbstract
         $matcher = new Any($true, $true, $true, $true, $true);
         $this->assertTrue($matcher->validate($context));
     }
-
 }

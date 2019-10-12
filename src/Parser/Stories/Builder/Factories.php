@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Stories\Builder;
 
-
 use Elgentos\Parser\Interfaces\StoriesInterface;
 use Elgentos\Parser\Matcher\IsArray;
 use Elgentos\Parser\Rule\Factory;
@@ -114,5 +113,4 @@ class Factories implements StoriesInterface
             new MergeDown(false)
         );
     }
-
 }

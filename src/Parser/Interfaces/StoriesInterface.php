@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Interfaces;
 
-
 use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
 
@@ -28,6 +27,4 @@ interface StoriesInterface
      * @return StoryMetrics
      */
     public function getMetrics(): StoryMetrics;
-
 }
-

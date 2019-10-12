@@ -37,5 +37,4 @@ class PrependTest extends TestCase
         $this->assertTrue($rule->parse($context));
         $this->assertSame([4,5,6,1,2,3], $context->getRoot());
     }
-
 }

@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class NoLogicTest extends TestCase
 {
-
     public function testLogicalFalse()
     {
         $root = [];

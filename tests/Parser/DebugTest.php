@@ -66,5 +66,4 @@ class DebugTest extends TestCase
         list($parser, $storiesMock) = $args;
         $this->assertInstanceOf(get_class($storiesMock), $parser->getLastStory());
     }
-
 }

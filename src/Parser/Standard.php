@@ -24,5 +24,4 @@ class Standard implements ParserInterface
         $stories->getStory()
             ->parse($context);
     }
-
 }

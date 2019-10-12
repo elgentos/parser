@@ -14,7 +14,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Trim implements RuleInterface
 {
-
     const DEFAULT_CHARLIST = " \t\n\r\0\x0B";
 
     /** @var string */
@@ -37,5 +36,4 @@ class Trim implements RuleInterface
 
         return true;
     }
-
 }

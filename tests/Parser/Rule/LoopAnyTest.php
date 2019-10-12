@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class LoopAnyTest extends TestCase
 {
-
     public function testConstructorInvalidArgument()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -82,5 +81,4 @@ class LoopAnyTest extends TestCase
         $this->assertFalse($loop->parse($context));
         $this->assertFalse($context->isChanged());
     }
-
 }

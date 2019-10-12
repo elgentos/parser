@@ -83,5 +83,4 @@ class MatchTest extends TestCase
         $this->assertTrue($match->parse($context));
         $this->assertFalse($match->parse($context));
     }
-
 }

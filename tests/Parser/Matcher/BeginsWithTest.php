@@ -10,7 +10,6 @@ namespace Elgentos\Parser\Matcher;
 
 class BeginsWithTest extends CoreTestAbstract
 {
-
     public function dataProvider(): array
     {
         $beginsWith = new BeginsWith('test');
@@ -23,5 +22,4 @@ class BeginsWithTest extends CoreTestAbstract
                 [$beginsWith, false, 'is_test'],
         ];
     }
-
 }

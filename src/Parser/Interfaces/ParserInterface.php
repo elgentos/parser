@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Interfaces;
 
-
 interface ParserInterface
 {
 
@@ -19,5 +18,4 @@ interface ParserInterface
      * @param StoriesInterface $stories
      */
     public function parse(array &$data, StoriesInterface $stories): void;
-
 }

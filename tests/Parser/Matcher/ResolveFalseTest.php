@@ -11,7 +11,6 @@ namespace Elgentos\Parser\Matcher;
 
 class ResolveFalseTest extends MatcherAbstract
 {
-
     public function testValidate()
     {
         $context = $this->context;
@@ -19,5 +18,4 @@ class ResolveFalseTest extends MatcherAbstract
 
         $this->assertFalse($matcher->validate($context));
     }
-
 }

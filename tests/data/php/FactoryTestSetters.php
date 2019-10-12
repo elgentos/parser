@@ -8,12 +8,10 @@
 
 class FactoryTestSetters
 {
-
     public $data;
 
     public function setData($data)
     {
         $this->data = $data;
     }
-
 }

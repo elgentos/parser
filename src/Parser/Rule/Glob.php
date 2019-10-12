@@ -62,5 +62,4 @@ class Glob extends FileAbstract
 
         return $files;
     }
-
 }

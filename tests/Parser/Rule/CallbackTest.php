@@ -33,5 +33,4 @@ class CallbackTest extends TestCase
 
         $this->assertTrue($rule->parse($context));
     }
-
 }

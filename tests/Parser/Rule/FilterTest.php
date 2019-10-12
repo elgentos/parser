@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class FilterTest extends TestCase
 {
-
     public function testParseShouldRemoveSelf()
     {
         $root = [
@@ -159,5 +158,4 @@ class FilterTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

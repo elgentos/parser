@@ -14,7 +14,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Json implements RuleInterface
 {
-
     public function parse(Context $context): bool
     {
         $jsonData = $context->getCurrent();
@@ -28,5 +27,4 @@ class Json implements RuleInterface
 
         return true;
     }
-
 }

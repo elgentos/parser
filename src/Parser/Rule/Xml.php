@@ -14,7 +14,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Xml implements RuleInterface
 {
-
     public function parse(Context $context): bool
     {
         $current = &$context->getCurrent();
@@ -62,19 +61,18 @@ class Xml implements RuleInterface
 
         $children = [];
         for (; $parent->valid(); $parent->next()) {
-
             $key = $parent->key();
             /** @var \SimpleXMLIterator $current */
             $current = $parent->current();
 
-                if (! isset($children[$key])) {
+            if (! isset($children[$key])) {
                 $children[$key] = [];
             }
 
             $children[$key][] = $this->walkXml($current);
         }
 
-        $children = \array_map(function(&$child) {
+        $children = \array_map(function (&$child) {
             if (\count($child) > 1) {
                 return $child;
             }
@@ -85,6 +83,4 @@ class Xml implements RuleInterface
 
         return $result;
     }
-
-
 }

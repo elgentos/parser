@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class MergeUpTest extends TestCase
 {
-
     public function testMerge()
     {
         $root = [
@@ -42,5 +41,4 @@ class MergeUpTest extends TestCase
         $rule->parse($context);
         $this->assertSame($test, $context->getRoot());
     }
-
 }

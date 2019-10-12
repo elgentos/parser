@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class StoryMetricsTest extends TestCase
 {
-
     public function testAddGetStories()
     {
         $story = $this->getMockBuilder(Story::class)
@@ -132,7 +131,8 @@ class StoryMetricsTest extends TestCase
                         $rule
                 ])
                 ->setMethods(['getCost'])
-                ->getMock();;
+                ->getMock();
+        ;
 
         $story1->expects($this->any())
                 ->method('getCost')
@@ -168,5 +168,4 @@ class StoryMetricsTest extends TestCase
                 $story1Name . ' 1 2 3 1.3000',
         ], $storyBook->getStatistics('%s %d %d %d %01.4f'));
     }
-
 }

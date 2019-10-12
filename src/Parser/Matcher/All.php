@@ -35,5 +35,4 @@ class All implements MatcherInterface
 
         return true;
     }
-
 }

@@ -20,7 +20,6 @@ use PHPUnit\Framework\TestCase;
 
 class FactoriesTest extends TestCase
 {
-
     public function testGetMetrics()
     {
         $factories = new Factories;
@@ -170,6 +169,4 @@ class FactoriesTest extends TestCase
         // Singletons
         $this->assertSame($noLogic, $noLogic2);
     }
-
-
 }

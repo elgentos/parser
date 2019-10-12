@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class FactoryTest extends TestCase
 {
-
     public function testConstructor()
     {
         $this->expectException(\ReflectionException::class);
@@ -139,5 +138,4 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(\FactoryTestConstrutor::class, $second);
         $this->assertSame($first, $second);
     }
-
 }

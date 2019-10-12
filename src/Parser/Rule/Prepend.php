@@ -10,10 +10,8 @@ namespace Elgentos\Parser\Rule;
 
 class Prepend extends Append
 {
-
     protected function merge(array $array1, array $array2): array
     {
         return array_merge($array2, $array1);
     }
-
 }

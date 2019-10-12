@@ -42,5 +42,4 @@ class Yaml implements RuleInterface
 
         return true;
     }
-
 }

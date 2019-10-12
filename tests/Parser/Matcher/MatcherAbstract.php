@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Matcher;
 
-
 use Elgentos\Parser\Context;
 use PHPUnit\Framework\TestCase;
 
@@ -22,5 +21,4 @@ class MatcherAbstract extends TestCase
         $root = [];
         $this->context = new Context($root);
     }
-
 }

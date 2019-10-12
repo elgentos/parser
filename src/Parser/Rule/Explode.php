@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Rule;
 
-
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Exceptions\RuleInvalidContextException;
 use Elgentos\Parser\Interfaces\RuleInterface;
@@ -37,5 +36,4 @@ class Explode implements RuleInterface
 
         return true;
     }
-
 }

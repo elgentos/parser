@@ -13,11 +13,9 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class IsNull implements MatcherInterface
 {
-
     public function validate(Context $context): bool
     {
         return IsType::factory(IsType::IS_NULL)
                 ->validate($context);
     }
-
 }

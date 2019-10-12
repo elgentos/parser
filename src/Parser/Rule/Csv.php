@@ -14,7 +14,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Csv implements RuleInterface
 {
-
     const DEFAULT_DELIMITER = ',';
     const DEFAULT_ENCLOSURE = '"';
     const DEFAULT_ESCAPE = "\\";
@@ -57,7 +56,7 @@ class Csv implements RuleInterface
         $context->changed();
 
         $length = [];
-        $current = \array_map(function(string $line) use (&$length) {
+        $current = \array_map(function (string $line) use (&$length) {
             $result = \str_getcsv(
                     $line,
                     $this->delimiter,
@@ -81,7 +80,7 @@ class Csv implements RuleInterface
             $keys = \array_merge($keys, \range($numkeys, $longest - 1));
         }
 
-        $current = \array_map(function($line, $length) use (&$keys, &$longest) {
+        $current = \array_map(function ($line, $length) use (&$keys, &$longest) {
             if ($length < $longest) {
                 $line = \array_merge(
                         $line,
@@ -93,5 +92,4 @@ class Csv implements RuleInterface
 
         return true;
     }
-
 }

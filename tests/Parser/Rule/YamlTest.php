@@ -30,7 +30,6 @@ class YamlTest extends TestCase
 
         $yamlParser = new \Symfony\Component\Yaml\Parser();
         $this->yamlContent = $yamlParser->parse($root['test']);
-
     }
 
     public function testParse()
@@ -58,5 +57,4 @@ class YamlTest extends TestCase
         $this->expectException(RuleSymfonyYamlNotFoundException::class);
         new Yaml('non_existant\class');
     }
-
 }

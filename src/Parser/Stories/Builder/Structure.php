@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Stories\Builder;
 
-
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Exceptions\GeneralException;
 use Elgentos\Parser\Interfaces\StoriesInterface;
@@ -39,7 +38,7 @@ class Structure implements StoriesInterface
      */
     public function __construct(array $factories = [])
     {
-        $this->factories = array_map(function(Factory $factory) {
+        $this->factories = array_map(function (Factory $factory) {
             return $factory;
         }, $factories);
 
@@ -73,14 +72,13 @@ class Structure implements StoriesInterface
                 '0-root',
                 $this->objectStory()
         );
-
     }
 
     protected function objectStory(): Story
     {
         return $this->storyMetrics->createStory(
                 '1-builder',
-                new Callback(function(Context $context) {
+                new Callback(function (Context $context) {
                     return $this->objectCallback($context);
                 })
         );
@@ -97,10 +95,8 @@ class Structure implements StoriesInterface
         $parser = $this->getFactory($current['factory']);
 
         if (isset($current['children'])) {
-
             $childContext = new Context($current['children']);
-            $stories = array_map(function($index) use ($childContext) {
-
+            $stories = array_map(function ($index) use ($childContext) {
                 $childContext->setIndex($index);
                 $this->objectCallback($childContext);
 
@@ -111,7 +107,6 @@ class Structure implements StoriesInterface
                     ),
                     false
                 );
-
             }, array_keys($current['children']));
 
             $stories[] = $parser;
@@ -150,5 +145,4 @@ class Structure implements StoriesInterface
 
         return $this->factories[$factory];
     }
-
 }

@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 class StructureTest extends TestCase
 {
-
     public function testGetMetrics()
     {
         $structures = new Structure;
@@ -161,5 +160,4 @@ class StructureTest extends TestCase
         $structures->getStory()
                 ->parse($context);
     }
-
 }

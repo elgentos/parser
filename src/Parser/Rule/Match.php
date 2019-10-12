@@ -49,5 +49,4 @@ class Match implements RuleInterface
 
         return $this->nextRule->parse($context);
     }
-
 }
