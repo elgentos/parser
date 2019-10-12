@@ -40,7 +40,7 @@ class Story implements RuleInterface
         // Measure cost of story
         $start = \microtime(true);
 
-        $successful = \array_reduce($this->rules, function($succesful, $rule) use ($context) {
+        $successful = \array_reduce($this->rules, function ($succesful, $rule) use ($context) {
             if (! $this->execute($rule, $context)) {
                 return $succesful;
             }
@@ -109,5 +109,4 @@ class Story implements RuleInterface
     {
         return $this->name;
     }
-
 }

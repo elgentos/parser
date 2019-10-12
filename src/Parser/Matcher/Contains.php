@@ -10,10 +10,8 @@ namespace Elgentos\Parser\Matcher;
 
 class Contains extends CoreAbstract
 {
-
     public function execute(&$haystack): bool
     {
         return false !== \strpos($haystack, $this->needle);
     }
-
 }

@@ -8,7 +8,6 @@
 
 class FactoryTestConstrutor
 {
-
     public $argument1;
     public $argument2;
 
@@ -17,5 +16,4 @@ class FactoryTestConstrutor
         $this->argument1 = $argument1;
         $this->argument2 = $argument2;
     }
-
 }

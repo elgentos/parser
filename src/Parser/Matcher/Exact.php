@@ -10,11 +10,8 @@ namespace Elgentos\Parser\Matcher;
 
 class Exact extends CoreAbstract
 {
-
     public function execute(&$haystack): bool
     {
         return $haystack === $this->needle;
     }
-
 }
-

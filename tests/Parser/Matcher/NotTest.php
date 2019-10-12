@@ -13,7 +13,6 @@ require_once __DIR__ . '/MatcherAbstract.php';
 
 class NotTest extends MatcherAbstract
 {
-
     public function testValidate()
     {
         $context = $this->context;
@@ -21,5 +20,4 @@ class NotTest extends MatcherAbstract
 
         $this->assertFalse($matcher->validate($context));
     }
-
 }

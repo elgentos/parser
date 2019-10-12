@@ -8,8 +8,6 @@
 
 namespace Elgentos\Parser\Exceptions;
 
-
 class ContextPathNotFoundException extends GeneralException
 {
-
 }

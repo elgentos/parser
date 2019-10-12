@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class ContextTest extends TestCase
 {
-
     public function testGetRoot()
     {
         $root = [
@@ -139,5 +138,4 @@ class ContextTest extends TestCase
         $context->setIndex('test2');
         $this->assertTrue($context->exists());
     }
-
 }

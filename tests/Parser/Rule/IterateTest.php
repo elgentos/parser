@@ -117,7 +117,7 @@ class IterateTest extends TestCase
 
         $subRule->expects($this->exactly(2))
                 ->method('parse')
-                ->willReturnCallback(function(Context $context) {
+                ->willReturnCallback(function (Context $context) {
                     if ('two' === $context->getIndex()) {
                         $context->changed();
                     }
@@ -150,5 +150,4 @@ class IterateTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

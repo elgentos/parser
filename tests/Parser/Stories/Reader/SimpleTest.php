@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class SimpleTest extends TestCase
 {
-
     public function testIntegration()
     {
         $reader = new Simple(PARSERTEST_DATA_DIR);
@@ -62,5 +61,4 @@ class SimpleTest extends TestCase
 
         $this->assertSame($result, $data);
     }
-
 }

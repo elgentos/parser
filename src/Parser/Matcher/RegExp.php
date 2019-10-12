@@ -10,11 +10,8 @@ namespace Elgentos\Parser\Matcher;
 
 class RegExp extends CoreAbstract
 {
-
     public function execute(&$haystack): bool
     {
         return 0 < \preg_match($this->needle, $haystack);
     }
-
 }
-

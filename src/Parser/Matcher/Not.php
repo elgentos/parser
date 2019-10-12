@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Matcher;
 
-
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
@@ -27,6 +26,4 @@ class Not implements MatcherInterface
     {
         return ! $this->matcher->validate($context);
     }
-
 }
-

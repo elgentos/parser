@@ -47,5 +47,4 @@ class Import extends FileAbstract
     {
         return \file_get_contents($this->getSafepath($this->rootDir . DIRECTORY_SEPARATOR . $filename));
     }
-
 }

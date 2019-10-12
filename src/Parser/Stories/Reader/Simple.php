@@ -13,7 +13,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Simple extends Complex
 {
-
     protected function initStory(string $rootDir): Story
     {
         return $this->getMetrics()->createStory(
@@ -26,9 +25,7 @@ class Simple extends Complex
     protected function filesStory(string $rootDir): RuleInterface
     {
         return $this->getMetrics()->createStory(
-            '1-files'
-            , $this->importStory($rootDir, true)
+            '1-files', $this->importStory($rootDir, true)
         );
     }
-
 }

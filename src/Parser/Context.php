@@ -86,5 +86,4 @@ class Context
     {
         $this->changed = true;
     }
-
 }

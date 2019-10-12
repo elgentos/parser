@@ -38,5 +38,4 @@ abstract class FileAbstract implements RuleInterface
     {
         return $this->safePath($path);
     }
-
 }

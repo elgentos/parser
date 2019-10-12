@@ -13,10 +13,8 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class Exists implements MatcherInterface
 {
-
     public function validate(Context $context): bool
     {
         return $context->exists();
     }
-
 }

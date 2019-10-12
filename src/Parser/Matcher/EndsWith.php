@@ -10,10 +10,8 @@ namespace Elgentos\Parser\Matcher;
 
 class EndsWith extends CoreAbstract
 {
-
     public function execute(&$haystack): bool
     {
         return \substr($haystack, - \strlen($this->needle)) === $this->needle;
     }
-
 }

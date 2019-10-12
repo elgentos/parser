@@ -58,5 +58,4 @@ class Iterate implements RuleInterface
         $iterateContext->isChanged() && $context->changed();
         return true;
     }
-
 }

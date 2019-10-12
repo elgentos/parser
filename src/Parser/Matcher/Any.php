@@ -35,5 +35,4 @@ class Any implements MatcherInterface
 
         return false;
     }
-
 }

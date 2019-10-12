@@ -46,5 +46,4 @@ class Changed implements RuleInterface
         $this->counter++;
         $this->rule->parse($context);
     }
-
 }

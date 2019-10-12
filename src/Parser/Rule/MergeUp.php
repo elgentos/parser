@@ -23,5 +23,4 @@ class MergeUp extends MergeDown
         // Flip direction
         return parent::merge($destination, $source);
     }
-
 }

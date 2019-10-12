@@ -46,5 +46,4 @@ class Debug implements ParserInterface
 
         return $this->lastStory;
     }
-
 }

@@ -18,5 +18,4 @@ class ResolveTrueTest extends MatcherAbstract
 
         $this->assertTrue($matcher->validate($context));
     }
-
 }

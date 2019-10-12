@@ -39,5 +39,4 @@ class LoopAll implements RuleInterface
 
         return false;
     }
-
 }

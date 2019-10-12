@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class RenameTest extends TestCase
 {
-
     public function testParse()
     {
         $root = ['test' => 'text'];
@@ -26,5 +25,4 @@ class RenameTest extends TestCase
         $this->assertTrue($context->isChanged());
         $this->assertSame('test2', $context->getIndex());
     }
-
 }

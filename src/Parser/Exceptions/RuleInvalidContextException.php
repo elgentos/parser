@@ -10,5 +10,4 @@ namespace Elgentos\Parser\Exceptions;
 
 class RuleInvalidContextException extends GeneralException
 {
-
 }

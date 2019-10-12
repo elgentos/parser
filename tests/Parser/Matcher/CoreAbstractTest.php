@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class CoreAbstractTest extends TestCase
 {
-
     public function testShouldImplementMatcherInterface()
     {
         $stringAbstract = $this->getMockBuilder(CoreAbstract::class)
@@ -30,7 +29,6 @@ class CoreAbstractTest extends TestCase
                 ->setConstructorArgs([''])
                 ->getMock();
         $this->assertInstanceOf(MatcherInterface::class, $stringAbstract);
-
     }
 
     public function testValidate()
@@ -48,7 +46,6 @@ class CoreAbstractTest extends TestCase
         $context = new Context($root);
 
         $stringAbstract->validate($context);
-
     }
 
     public function testCaseInSensitive()
@@ -104,5 +101,4 @@ class CoreAbstractTest extends TestCase
 
         $this->assertTrue($reflectionValue->getValue($stringAbstract));
     }
-
 }

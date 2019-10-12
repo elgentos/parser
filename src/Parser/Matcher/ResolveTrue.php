@@ -8,17 +8,13 @@
 
 namespace Elgentos\Parser\Matcher;
 
-
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class ResolveTrue implements MatcherInterface
 {
-
     public function validate(Context $context): bool
     {
         return true;
     }
-
 }
-

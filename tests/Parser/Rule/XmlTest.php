@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class XmlTest extends TestCase
 {
-
     public function testImplementsRuleInterface()
     {
         $xml = new Xml;
@@ -109,5 +108,4 @@ XML
         $this->assertTrue($xml->parse($context));
         $this->assertSame($result, $data);
     }
-
 }

@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Matcher;
 
-
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 
@@ -28,6 +27,4 @@ class Callback implements MatcherInterface
         $callback = $this->callback;
         return !! $callback($context);
     }
-
 }
-

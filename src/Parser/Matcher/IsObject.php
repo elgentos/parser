@@ -13,7 +13,6 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class IsObject implements MatcherInterface
 {
-
     public function validate(Context $context): bool
     {
         return IsType::factory(IsType::IS_OBJECT)

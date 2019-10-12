@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class GlobTest extends TestCase
 {
-
     const DATAPATH = PARSERTEST_DATA_DIR . '/texts';
 
     /** @var Context */
@@ -30,7 +29,7 @@ class GlobTest extends TestCase
         $this->context = new Context($root);
 
         $this->files = array_map(
-                function($file) {
+                function ($file) {
                     return './' . basename($file);
                 },
                 glob(self::DATAPATH . '/*')
@@ -62,5 +61,4 @@ class GlobTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

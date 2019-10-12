@@ -13,11 +13,9 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class IsNumeric implements MatcherInterface
 {
-
     public function validate(Context $context): bool
     {
         return IsType::factory(IsType::IS_NUMERIC)
                 ->validate($context);
     }
-
 }

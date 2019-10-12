@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 class ParserTest extends TestCase
 {
-
     public function testReadFile()
     {
         $parserMock = $this->getMockBuilder(ParserInterface::class)
@@ -75,5 +74,4 @@ class ParserTest extends TestCase
         $data = Parser::buildStructure($template, $factories);
         $this->assertInstanceOf(RuleInterface::class, $data);
     }
-
 }

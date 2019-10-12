@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class ImportTest extends TestCase
 {
-
     const DATAPATH = PARSERTEST_DATA_DIR;
 
     /** @var Context */
@@ -66,5 +65,4 @@ class ImportTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

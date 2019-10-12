@@ -10,7 +10,6 @@ namespace Elgentos\Parser\Matcher;
 
 class ContainsTest extends CoreTestAbstract
 {
-
     public function dataProvider(): array
     {
         $containsCaseSensitive = new Contains('test');
@@ -22,5 +21,4 @@ class ContainsTest extends CoreTestAbstract
                 [$containsCaseSensitive, true, 'is_test']
         ];
     }
-
 }

@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Rule;
 
-
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
@@ -90,7 +89,7 @@ class Factory implements RuleInterface
             return $current;
         }
 
-        return array_map(function($fieldName, $default) use ($current) {
+        return array_map(function ($fieldName, $default) use ($current) {
             return $current[$fieldName] ?? $default;
         }, $this->arguments, $this->defaults);
     }
@@ -101,7 +100,7 @@ class Factory implements RuleInterface
             return [];
         }
 
-        return array_map(function($setter) use ($current) {
+        return array_map(function ($setter) use ($current) {
             return $current[$setter] ?? null;
         }, array_keys($this->setters));
     }
@@ -112,12 +111,11 @@ class Factory implements RuleInterface
             return;
         }
 
-        array_map(function($data, $setter) use ($object) {
+        array_map(function ($data, $setter) use ($object) {
             if (null === $data) {
                 return;
             }
             $object->{$setter}($data);
         }, $setters, $this->setters);
     }
-
 }

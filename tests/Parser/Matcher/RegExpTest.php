@@ -11,7 +11,6 @@ namespace Elgentos\Parser\Matcher;
 
 class RegExpTest extends CoreTestAbstract
 {
-
     public function dataProvider(): array
     {
         $regExp = new RegExp("#^\d+$#");
@@ -21,5 +20,4 @@ class RegExpTest extends CoreTestAbstract
             [$regExp, true, '132'],
         ];
     }
-
 }

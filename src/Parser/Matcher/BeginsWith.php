@@ -10,10 +10,8 @@ namespace Elgentos\Parser\Matcher;
 
 class BeginsWith extends CoreAbstract
 {
-
     public function execute(&$haystack): bool
     {
         return 0 === \strpos($haystack, $this->needle);
     }
-
 }

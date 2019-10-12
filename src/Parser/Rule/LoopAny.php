@@ -41,5 +41,4 @@ class LoopAny implements RuleInterface
         // Stop if all rules fail
         return false;
     }
-
 }

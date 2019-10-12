@@ -13,7 +13,6 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class IsType implements MatcherInterface
 {
-
     const IS_BOOL       = 'bool';
     const IS_STRING     = 'string';
     const IS_ARRAY      = 'array';
@@ -65,9 +64,8 @@ class IsType implements MatcherInterface
      * @param string $method
      * @return IsType
      */
-    static public function factory(string $type, string $method = 'getCurrent'): IsType
+    public static function factory(string $type, string $method = 'getCurrent'): IsType
     {
         return new self($type, $method);
     }
-
 }

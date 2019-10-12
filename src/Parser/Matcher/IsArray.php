@@ -13,11 +13,9 @@ use Elgentos\Parser\Interfaces\MatcherInterface;
 
 class IsArray implements MatcherInterface
 {
-
     public function validate(Context $context): bool
     {
         return IsType::factory(IsType::IS_ARRAY)
                 ->validate($context);
     }
-
 }

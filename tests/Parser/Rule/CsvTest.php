@@ -149,5 +149,4 @@ class CsvTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

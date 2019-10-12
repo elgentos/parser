@@ -172,11 +172,7 @@ class Complex implements StoriesInterface
         $importStory = $this->getMetrics()
             ->createStory(
                 self::IMPORT . ($checkIndex ? '+' : '-'),
-                $this->fromText($rootDir, $checkIndex)
-                , $this->fromJson($rootDir, $checkIndex)
-                , $this->fromXml($rootDir, $checkIndex)
-                , $this->fromYaml($rootDir, $checkIndex)
-                , $this->fromCsv($rootDir, $checkIndex)
+                $this->fromText($rootDir, $checkIndex), $this->fromJson($rootDir, $checkIndex), $this->fromXml($rootDir, $checkIndex), $this->fromYaml($rootDir, $checkIndex), $this->fromCsv($rootDir, $checkIndex)
             );
 
         $this->importStory[$index] = $importStory;
@@ -212,7 +208,7 @@ class Complex implements StoriesInterface
             ),
             $this->getMetrics()->createStory(
                 self::IMPORT_DIR,
-                new Callback(function() use (&$isCsv) {
+                new Callback(function () use (&$isCsv) {
                     $isCsv = true;
                     return true;
                 }),
@@ -220,7 +216,7 @@ class Complex implements StoriesInterface
                 new Iterate(
                     $this->getMetrics()->createStory(
                         self::IMPORT_DIR . '::iterate',
-                        new Callback(function(Context $context) use (&$isCsv, $csvIsBefore) {
+                        new Callback(function (Context $context) use (&$isCsv, $csvIsBefore) {
                             if (! $isCsv) {
                                 return false;
                             }
@@ -228,7 +224,7 @@ class Complex implements StoriesInterface
                             return $isCsv = $csvIsBefore->parse($context);
                         }),
                         $this->importStory($rootDir, false),
-                        new Callback(function(Context $context) use (&$isCsv, $csvIsAfter) {
+                        new Callback(function (Context $context) use (&$isCsv, $csvIsAfter) {
                             if (! $isCsv) {
                                 return false;
                             }
@@ -238,7 +234,7 @@ class Complex implements StoriesInterface
                     ),
                     false
                 ),
-                new Callback(function(Context $context) use (&$isCsv) {
+                new Callback(function (Context $context) use (&$isCsv) {
                     if (! $isCsv) {
                         return false;
                     }
@@ -256,9 +252,7 @@ class Complex implements StoriesInterface
     protected function filesStory(string $rootDir): RuleInterface
     {
         return $this->getMetrics()->createStory(
-            '1-files'
-            , $this->importStory($rootDir, true)
-            , $this->iterateStory($rootDir)
+            '1-files', $this->importStory($rootDir, true), $this->iterateStory($rootDir)
         );
     }
 
@@ -338,5 +332,4 @@ class Complex implements StoriesInterface
                 new MergeDown(false)
             );
     }
-
 }

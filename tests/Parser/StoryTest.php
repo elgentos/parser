@@ -93,5 +93,4 @@ class StoryTest extends TestCase
         $this->assertSame(10, $story->getRead());
         $this->assertGreaterThan($cost, $story->getCost());
     }
-
 }

@@ -8,7 +8,6 @@
 
 namespace Elgentos\Parser\Rule;
 
-
 use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
@@ -36,5 +35,4 @@ class Rename implements RuleInterface
 
         return true;
     }
-
 }

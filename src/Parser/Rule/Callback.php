@@ -27,5 +27,4 @@ class Callback implements RuleInterface
         $callback = $this->callback;
         return !! $callback($context);
     }
-
 }

@@ -13,7 +13,6 @@ use Elgentos\Parser\Interfaces\RuleInterface;
 
 class Append implements RuleInterface
 {
-
     public function parse(Context $context): bool
     {
         $root = &$context->getRoot();
@@ -31,5 +30,4 @@ class Append implements RuleInterface
     {
         return array_merge($array1, $array2);
     }
-
 }

@@ -18,5 +18,4 @@ class IsString implements MatcherInterface
         return IsType::factory(IsType::IS_STRING)
                 ->validate($context);
     }
-
 }

@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class JsonTest extends TestCase
 {
-
     const DATAPATH = PARSERTEST_DATA_DIR;
 
     /** @var Context */
@@ -52,5 +51,4 @@ class JsonTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

@@ -41,5 +41,4 @@ abstract class CoreAbstract implements MatcherInterface
     }
 
     abstract public function execute(&$haystack): bool;
-
 }

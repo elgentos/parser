@@ -10,7 +10,6 @@ namespace Elgentos\Parser\Matcher;
 
 class EndsWithTest extends CoreTestAbstract
 {
-
     public function dataProvider(): array
     {
         $endsWith = new EndsWith('test');
@@ -23,5 +22,4 @@ class EndsWithTest extends CoreTestAbstract
                 [$endsWith, true, 'is_test'],
         ];
     }
-
 }

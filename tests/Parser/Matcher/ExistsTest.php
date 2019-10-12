@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class ExistsTest extends TestCase
 {
-
     public function testValidateEmpty()
     {
         $root = [];
@@ -42,6 +41,4 @@ class ExistsTest extends TestCase
         $context->setIndex('test2');
         $this->assertTrue($matcher->validate($context));
     }
-
-
 }

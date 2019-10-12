@@ -57,5 +57,4 @@ class ChangedTest extends TestCase
 
         $this->assertSame(2, $rule->getCounter());
     }
-
 }

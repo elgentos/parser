@@ -12,7 +12,5 @@ use Elgentos\Parser\Context;
 
 interface MatcherInterface
 {
-
     public function validate(Context $context): bool;
-
 }

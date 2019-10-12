@@ -105,5 +105,4 @@ class MergeDownTest extends TestCase
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }
-
 }

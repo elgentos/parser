@@ -10,7 +10,6 @@ namespace Elgentos\Parser\Matcher;
 
 class IsTypeTest extends MatcherAbstract
 {
-
     public function testConstruct()
     {
         // Success
@@ -149,5 +148,4 @@ class IsTypeTest extends MatcherAbstract
         $current = 10.3;
         $this->assertTrue($isFloat->validate($context));
     }
-
 }
