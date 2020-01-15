@@ -8,7 +8,19 @@ usable arrays/objects.
 Supports json, yaml, csv, xml and plain text.
 
 ```php
+<?php
+/**
+ * Read a file, import recursive and return a merged array
+ */
 $data = Elgentos\Parser::readFile('file.json');
+```
+
+```php
+<?php
+/**
+ * Read a file, no recursion
+ */
+$data = Elgentos\Parser::readSimple('file.json');
 ```
 
 ## Instalation
@@ -46,7 +58,7 @@ othercontent:
 ```
 
 ### @import-dir
-Read a directory recusively. 
+Read a directory recursively.
 
 ```yaml
 base:
@@ -59,14 +71,15 @@ base:
 ```
 
 ## Customization
-We rely heavily on service contracts you can easily add your own;
+Due Service Contracts you can easily add your own functionality:
 - Rules `\Elgenttos\Parser\Interfaces\RuleInterface`
 - Matcher `\Elgenttos\Parser\Interfaces\MatcherInterface`
 - Parser `\Elgenttos\Parser\Interfaces\RuleInterface`
 - Stories `\Elgenttos\Parser\Interfaces\StoriesInterface`
- 
+
+## Automated creation of objects
+
+
+
 ## Technical description
 For our technical docs [docs/technical.md](docs/technical.md).
-
-## Examples
-We have a seperate section for some useful [docs/examples.md](docs/examples.md)
