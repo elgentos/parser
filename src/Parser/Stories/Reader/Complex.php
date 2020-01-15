@@ -141,8 +141,7 @@ class Complex implements StoriesInterface
             $this->getMetrics()->createStory(
                 self::IMPORT . '::csv' . ($checkIndex ? '+' : '-'),
                 new Trim,
-                new Explode,
-                new Csv(true),
+                new Csv(true, ',', '"', '""'),
                 $checkIndex ? new Rename(self::PREFIX . self::IMPORT) : new NoLogic(true)
             )
         );
@@ -173,7 +172,11 @@ class Complex implements StoriesInterface
         $importStory = $this->getMetrics()
             ->createStory(
                 self::IMPORT . ($checkIndex ? '+' : '-'),
-                $this->fromText($rootDir, $checkIndex), $this->fromJson($rootDir, $checkIndex), $this->fromXml($rootDir, $checkIndex), $this->fromYaml($rootDir, $checkIndex), $this->fromCsv($rootDir, $checkIndex)
+                $this->fromText($rootDir, $checkIndex),
+                $this->fromJson($rootDir, $checkIndex),
+                $this->fromXml($rootDir, $checkIndex),
+                $this->fromYaml($rootDir, $checkIndex),
+                $this->fromCsv($rootDir, $checkIndex)
             );
 
         $this->importStory[$index] = $importStory;

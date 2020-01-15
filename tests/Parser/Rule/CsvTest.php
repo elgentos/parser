@@ -21,12 +21,11 @@ class CsvTest extends TestCase
     public function setUp()
     {
         $root = [
-                '__csv' => [
-                        '"first1","first2","first3"',
-                        '"second1","second2"',
-                        '"third1","third2","third3","third4"',
-                        '"fourth1","fourth2","fourth3","fourth4","fourth5"',
-                ]
+                '__csv' => '"first1","first2","first3"' . "\n" .
+                        '"second1","second2"' . "\n" .
+                        '"third1","third2","third3","third4"' . "\n" .
+                        '"fourth1","fourth2","fourth3","fourth4' . "\n" .
+                        'multiline","fourth5"'
         ];
         $this->context = new Context($root);
     }
@@ -45,11 +44,7 @@ class CsvTest extends TestCase
 
     public function testSmallContextForFirstKeys()
     {
-        $root = [
-                '__csv' => [
-                        ['key1', 'key2']
-                ]
-        ];
+        $root = ['__csv' => 'key1,key2'];
         $context = new Context($root);
 
         $rule = new Csv(true);
@@ -60,9 +55,6 @@ class CsvTest extends TestCase
     public function testParseOneRowWithKeys()
     {
         $context = $this->context;
-
-        $current = &$context->getCurrent();
-        unset($current[2], $current[3]);
 
         $rule = new Csv(true);
         $this->assertTrue($rule->parse($context));
@@ -92,7 +84,7 @@ class CsvTest extends TestCase
                         'fourth1',
                         'fourth2',
                         'fourth3',
-                        'fourth4',
+                        "fourth4\nmultiline",
                         'fourth5',
                 ]
         ];
@@ -126,7 +118,7 @@ class CsvTest extends TestCase
                         'first1' => 'fourth1',
                         'first2' => 'fourth2',
                         'first3' => 'fourth3',
-                        3 => 'fourth4',
+                        3 => "fourth4\nmultiline",
                         4 => 'fourth5',
                 ]
         ];
@@ -145,7 +137,7 @@ class CsvTest extends TestCase
         $context = $this->context;
         $current = &$context->getCurrent();
 
-        $current = 'test';
+        $current = [''];
         $this->expectException(RuleInvalidContextException::class);
         $rule->parse($context);
     }

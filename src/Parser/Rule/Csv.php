@@ -18,6 +18,9 @@ class Csv implements RuleInterface
     const DEFAULT_ENCLOSURE = '"';
     const DEFAULT_ESCAPE = "\\";
 
+    const QUOTED_CHAR = '!!Q!!';
+    const STRING_ENCODED = '!!ENC!!';
+
     /** @var bool */
     private $firstHasKeys;
     /** @var string */
@@ -46,9 +49,26 @@ class Csv implements RuleInterface
         if (empty($current)) {
             return false;
         }
-        if (! \is_array($current)) {
-            throw new RuleInvalidContextException(sprintf("%s expects a array", self::class));
+        if (! \is_string($current)) {
+            throw new RuleInvalidContextException(sprintf("%s expects a string", self::class));
         }
+
+        // Explode with escaped lines
+        $quotedEnclosure = preg_quote($this->enclosure, '/');
+
+        $current = explode(
+            "\n",
+            preg_replace_callback(
+                '/' . $quotedEnclosure . '(.*?)' . $quotedEnclosure . '/s',
+                static function($field) {
+                    return self::STRING_ENCODED . urlencode(utf8_encode($field[1]));
+                },
+                preg_replace(
+                    '/(?<!' . $quotedEnclosure . ')'
+                    . preg_quote($this->escape, '/') . '/',
+                    self::QUOTED_CHAR, $current)
+            )
+        );
 
         if ($this->firstHasKeys && \count($current) < 2) {
             return false;
@@ -56,7 +76,8 @@ class Csv implements RuleInterface
         $context->changed();
 
         $length = [];
-        $current = \array_map(function (string $line) use (&$length) {
+        $encodedLength = strlen(self::STRING_ENCODED);
+        $current = \array_map(function (string $line) use (&$length, $encodedLength) {
             $result = \str_getcsv(
                     $line,
                     $this->delimiter,
@@ -65,7 +86,13 @@ class Csv implements RuleInterface
             );
 
             $length[] = \count($result);
-            return $result;
+            return array_map(function($field) use ($encodedLength) {
+                if (strpos($field, self::STRING_ENCODED) === false) {
+                    return $field;
+                }
+
+                return str_replace(self::QUOTED_CHAR, '"', utf8_decode(urldecode(substr($field, $encodedLength))));
+            }, $result);
         }, $current);
 
         if (! $this->firstHasKeys) {
