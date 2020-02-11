@@ -64,9 +64,10 @@ class Csv implements RuleInterface
                     return self::STRING_ENCODED . urlencode(utf8_encode($field[1]));
                 },
                 preg_replace(
-                    '/(?<!' . $quotedEnclosure . ')'
-                    . preg_quote($this->escape, '/') . '/',
-                    self::QUOTED_CHAR, $current)
+                    '/(?<!' . $quotedEnclosure . ')' . preg_quote($this->escape, '/') . '/',
+                    self::QUOTED_CHAR,
+                    $current
+                )
             )
         );
 
@@ -75,23 +76,26 @@ class Csv implements RuleInterface
         }
         $context->changed();
 
-        $length = [];
-        $encodedLength = strlen(self::STRING_ENCODED);
-        $current = \array_map(function (string $line) use (&$length, $encodedLength) {
+        $length     = [];
+        $enclosure  = &$this->enclosure;
+        $delimiter  = &$this->delimiter;
+        $escape     = &$this->escape;
+        $current = \array_map(function (string $line) use (&$length, &$enclosure, &$delimiter, &$escape) {
+
             $result = \str_getcsv(
                     $line,
-                    $this->delimiter,
-                    $this->enclosure,
-                    $this->escape
+                    $delimiter,
+                    $enclosure,
+                    $escape
             );
 
             $length[] = \count($result);
-            return array_map(function($field) use ($encodedLength) {
+            return array_map(static function($field) use (&$enclosure) {
                 if (strpos($field, self::STRING_ENCODED) === false) {
                     return $field;
                 }
 
-                return str_replace(self::QUOTED_CHAR, '"', utf8_decode(urldecode(substr($field, $encodedLength))));
+                return str_replace([self::STRING_ENCODED, self::QUOTED_CHAR], ['', $enclosure], utf8_decode(urldecode($field)));
             }, $result);
         }, $current);
 
