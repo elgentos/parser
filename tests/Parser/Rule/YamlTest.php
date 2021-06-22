@@ -21,7 +21,7 @@ class YamlTest extends TestCase
     /** @var array */
     private $yamlContent;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [
                 "test" => file_get_contents(PARSERTEST_DATA_DIR . '/jsonImportData.yaml')

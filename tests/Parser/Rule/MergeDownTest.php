@@ -18,7 +18,7 @@ class MergeDownTest extends TestCase
     /** @var Context */
     private $context;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [
                 'merge' => [

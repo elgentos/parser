@@ -72,7 +72,7 @@ class Xml implements RuleInterface
             $children[$key][] = $this->walkXml($current);
         }
 
-        $children = \array_map(function (&$child) {
+        $children = \array_map(function ($child) {
             if (\count($child) > 1) {
                 return $child;
             }

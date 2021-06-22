@@ -18,7 +18,7 @@ class ExplodeTest extends TestCase
     /** @var Context */
     private $context;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [
                 '__explode' =>

@@ -19,7 +19,7 @@ class DebugTest extends TestCase
     /** @var Debug */
     private $parserDebug;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->parserDebug = new Debug;
     }

@@ -57,7 +57,7 @@ class Filter implements RuleInterface
     {
         $root = &$context->getRoot();
 
-        $root = \array_filter($root, function (&$row) use ($index, $values, $inverse) {
+        $root = \array_filter($root, function ($row) use ($index, $values, $inverse) {
             if (! \is_array($row)) {
                 return true;
             }

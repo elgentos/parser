@@ -22,7 +22,7 @@ class JsonTest extends TestCase
     /** @var array */
     private $jsonContent;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [
                 'json' => file_get_contents(self::DATAPATH . '/jsonImportData.json')

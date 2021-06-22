@@ -22,7 +22,7 @@ class MatchTest extends TestCase
     /** @var MockObject */
     private $matchMock;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->matchMock = $this->getMockBuilder(MatcherInterface::class)
                 ->getMock();
@@ -33,7 +33,7 @@ class MatchTest extends TestCase
     public function testGetMatcher()
     {
         $matchMock = $this->matchMock;
-        $match = new Match($matchMock);
+        $match = new RuleMatch($matchMock);
 
         $this->assertSame($matchMock, $match->getMatcher());
     }
@@ -41,7 +41,7 @@ class MatchTest extends TestCase
     public function testImplementsRuleInterface()
     {
         $matchMock = $this->matchMock;
-        $match = new Match($matchMock);
+        $match = new RuleMatch($matchMock);
 
         $this->assertInstanceOf(RuleInterface::class, $match);
     }
@@ -49,7 +49,7 @@ class MatchTest extends TestCase
     public function testParse()
     {
         $matchMock = $this->matchMock;
-        $match = new Match($matchMock);
+        $match = new RuleMatch($matchMock);
 
         $matchMock->expects($this->exactly(2))
                 ->method('validate')
@@ -67,7 +67,7 @@ class MatchTest extends TestCase
         $matchMock = $this->matchMock;
         $ruleMock = $this->ruleMock;
 
-        $match = new Match($matchMock, $ruleMock);
+        $match = new RuleMatch($matchMock, $ruleMock);
 
         $matchMock->expects($this->exactly(2))
                 ->method('validate')

@@ -17,7 +17,7 @@ class CallbackTest extends TestCase
     /** @var Context */
     private $context;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [];
         $this->context = new Context($root);
