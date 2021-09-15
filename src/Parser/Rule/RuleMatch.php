@@ -12,7 +12,7 @@ use Elgentos\Parser\Context;
 use Elgentos\Parser\Interfaces\MatcherInterface;
 use Elgentos\Parser\Interfaces\RuleInterface;
 
-class Match implements RuleInterface
+class RuleMatch implements RuleInterface
 {
 
     /** @var MatcherInterface */

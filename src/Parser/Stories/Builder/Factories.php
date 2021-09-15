@@ -12,7 +12,7 @@ use Elgentos\Parser\Interfaces\StoriesInterface;
 use Elgentos\Parser\Matcher\IsArray;
 use Elgentos\Parser\Rule\Factory;
 use Elgentos\Parser\Rule\Iterate;
-use Elgentos\Parser\Rule\Match;
+use Elgentos\Parser\Rule\RuleMatch;
 use Elgentos\Parser\Rule\MergeDown;
 use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
@@ -80,7 +80,7 @@ class Factories implements StoriesInterface
         return $this->storyMetrics->createStory(
                 '1-iterate',
                 new Iterate(
-                        new Match(
+                        new RuleMatch(
                                 new IsArray,
                                 $this->factoryStory()
                         ),

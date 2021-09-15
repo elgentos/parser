@@ -22,7 +22,7 @@ class ImportTest extends TestCase
     /** @var string */
     private $content;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [
                 'import' => '/jsonImportData.json'

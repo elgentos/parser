@@ -13,11 +13,10 @@ use PHPUnit\Framework\TestCase;
 
 class AppendTest extends TestCase
 {
-
     /** @var Context */
     private $context;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [
                 1, 2, 3,

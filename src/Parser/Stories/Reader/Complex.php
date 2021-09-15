@@ -27,7 +27,7 @@ use Elgentos\Parser\Rule\Iterate;
 use Elgentos\Parser\Rule\Json;
 use Elgentos\Parser\Rule\LoopAll;
 use Elgentos\Parser\Rule\LoopAny;
-use Elgentos\Parser\Rule\Match;
+use Elgentos\Parser\Rule\RuleMatch;
 use Elgentos\Parser\Rule\MergeDown;
 use Elgentos\Parser\Rule\MergeUp;
 use Elgentos\Parser\Rule\NoLogic;
@@ -80,7 +80,7 @@ class Complex implements StoriesInterface
 
     protected function import(string $rootDir, string $pattern, bool $checkIndex): RuleInterface
     {
-        return new Match(
+        return new RuleMatch(
             new All(
                 new IsString,
                 $checkIndex
@@ -200,11 +200,11 @@ class Complex implements StoriesInterface
     protected function globStory(string $rootDir): RuleInterface
     {
         $isCsv = true;
-        $csvIsBefore = new Match(new EndsWith('.csv'));
-        $csvIsAfter = new Match(new IsArray);
+        $csvIsBefore = new RuleMatch(new EndsWith('.csv'));
+        $csvIsAfter = new RuleMatch(new IsArray);
 
         return new LoopAll(
-            new Match(
+            new RuleMatch(
                 new All(
                     new IsString,
                     new Exact(self::IMPORT_DIR, 'getIndex')
@@ -279,7 +279,7 @@ class Complex implements StoriesInterface
 
     protected function mergeImport(): RuleInterface
     {
-        return new Match(
+        return new RuleMatch(
             new All(
                 new IsArray,
                 new Exact(self::PREFIX . self::IMPORT, 'getIndex')
@@ -294,7 +294,7 @@ class Complex implements StoriesInterface
 
     protected function mergeText(): RuleInterface
     {
-        return new Match(
+        return new RuleMatch(
             new All(
                 new IsString,
                 new Exact(self::PREFIX . self::IMPORT, 'getIndex')
@@ -309,7 +309,7 @@ class Complex implements StoriesInterface
 
     protected function mergeGlob(): RuleInterface
     {
-        return new Match(
+        return new RuleMatch(
             new All(
                 new IsArray,
                 new Exact(self::PREFIX . self::IMPORT_DIR, 'getIndex')
@@ -317,7 +317,7 @@ class Complex implements StoriesInterface
             $this->getMetrics()->createStory(
                 '2.3-glob',
                 new Iterate(
-                    new Match(
+                    new RuleMatch(
                         new IsArray,
                         new MergeUp(true)
                     ),

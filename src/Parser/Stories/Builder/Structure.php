@@ -15,7 +15,7 @@ use Elgentos\Parser\Matcher\Exact;
 use Elgentos\Parser\Rule\Callback;
 use Elgentos\Parser\Rule\Factory;
 use Elgentos\Parser\Rule\Iterate;
-use Elgentos\Parser\Rule\Match;
+use Elgentos\Parser\Rule\RuleMatch;
 use Elgentos\Parser\Rule\MergeDown;
 use Elgentos\Parser\Story;
 use Elgentos\Parser\StoryMetrics;
@@ -101,7 +101,7 @@ class Structure implements StoriesInterface
                 $this->objectCallback($childContext);
 
                 return new Iterate(
-                    new Match(
+                    new RuleMatch(
                         new Exact((string)$index, 'getIndex'),
                         $childContext->getCurrent()
                     ),

@@ -16,7 +16,7 @@ class MatcherAbstract extends TestCase
     /** @var Context */
     protected $context;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [];
         $this->context = new Context($root);

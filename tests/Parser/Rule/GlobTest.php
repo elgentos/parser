@@ -21,7 +21,7 @@ class GlobTest extends TestCase
     /** @var array */
     private $files;
 
-    public function setUp()
+    public function setUp(): void
     {
         $root = [
                 'files' => '.'
