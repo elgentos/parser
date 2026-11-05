@@ -36,7 +36,7 @@ class Factory implements RuleInterface
      * @param bool $singleton
      * @throws \ReflectionException
      */
-    public function __construct(string $className, array $arguments = null, array $setters = null, bool $singleton = false)
+    public function __construct(string $className, ?array $arguments = null, ?array $setters = null, bool $singleton = false)
     {
         $this->className = new \ReflectionClass($className);
 

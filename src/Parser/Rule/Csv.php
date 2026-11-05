@@ -82,11 +82,13 @@ class Csv implements RuleInterface
         $escape     = &$this->escape;
         $current = \array_map(function (string $line) use (&$length, &$enclosure, &$delimiter, &$escape) {
 
+            // str_getcsv() accepts a single-byte escape only; PHP < 8.4 silently used the first byte
+            // of a longer string (e.g. '""'), PHP 8.4 throws a ValueError. Keep the old behaviour.
             $result = \str_getcsv(
                     $line,
                     $delimiter,
                     $enclosure,
-                    $escape
+                    \substr($escape, 0, 1)
             );
 
             $length[] = \count($result);

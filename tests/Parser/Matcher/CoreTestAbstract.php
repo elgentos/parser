@@ -16,7 +16,7 @@ abstract class CoreTestAbstract extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testExecute(CoreAbstract $abstract, bool $result, $haystack, string $message = null)
+    public function testExecute(CoreAbstract $abstract, bool $result, $haystack, ?string $message = null)
     {
         $message = $message ?? sprintf('%s->execute(%s)', get_class($abstract), $haystack);
         $this->assertSame($result, $abstract->execute($haystack), $message);
