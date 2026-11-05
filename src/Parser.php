@@ -30,7 +30,7 @@ class Parser
      * @param ParserInterface|null $parser
      * @return array
      */
-    public static function readFile(string $filename, string $rootDir = '.', ParserInterface $parser = null): array
+    public static function readFile(string $filename, string $rootDir = '.', ?ParserInterface $parser = null): array
     {
         $data = ['@import' => $filename];
 
@@ -49,7 +49,7 @@ class Parser
      * @param ParserInterface|null $parser
      * @return array
      */
-    public static function readSimple(string $filename, string $rootDir = '.', ParserInterface $parser = null): array
+    public static function readSimple(string $filename, string $rootDir = '.', ?ParserInterface $parser = null): array
     {
         $data = ['@import' => $filename];
 
@@ -68,7 +68,7 @@ class Parser
      * @param ParserInterface|null $parser
      * @return array
      */
-    public static function buildFactories(array $template, $singleton = false, ParserInterface $parser = null): array
+    public static function buildFactories(array $template, $singleton = false, ?ParserInterface $parser = null): array
     {
         $data = ['@template' => $template];
 
@@ -87,7 +87,7 @@ class Parser
      * @param ParserInterface|null $parser
      * @return RuleInterface
      */
-    public static function buildStructure(array $template, array $factories = [], ParserInterface $parser = null): RuleInterface
+    public static function buildStructure(array $template, array $factories = [], ?ParserInterface $parser = null): RuleInterface
     {
         $data = ['@template' => $template];
 

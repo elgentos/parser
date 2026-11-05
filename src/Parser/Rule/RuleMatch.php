@@ -20,7 +20,7 @@ class RuleMatch implements RuleInterface
     /** @var RuleInterface */
     private $nextRule;
 
-    public function __construct(MatcherInterface $matcher, RuleInterface $nextRule = null)
+    public function __construct(MatcherInterface $matcher, ?RuleInterface $nextRule = null)
     {
         $this->matcher = $matcher;
         $this->nextRule = $nextRule;
